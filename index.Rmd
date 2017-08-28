@@ -1,0 +1,12 @@
+---
+title: "Анализ Данных для лингвистов"
+author: "Г. Мороз"
+output:
+  html_document:
+    toc: false
+---
+
+### Библиотеки:
+```{r, message=FALSE}
+library(tidyverse); packageVersion("tidyverse")
+```

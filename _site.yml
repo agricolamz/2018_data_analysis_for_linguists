@@ -1,0 +1,10 @@
+--- 
+name: ""
+navbar: 
+  left: 
+    - href: index.html
+      text: Home
+    - href: 1_regression.html
+      text: "1. Регрессия"
+  title: ""
+output_dir: docs
