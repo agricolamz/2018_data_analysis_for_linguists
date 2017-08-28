@@ -28,49 +28,6 @@
 <script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 
 
-<style type="text/css">code{white-space: pre;}</style>
-<style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-</style>
-<style type="text/css">
-  pre:not([class]) {
-    background-color: white;
-  }
-</style>
 
 
 <style type="text/css">
@@ -323,10 +280,9 @@ div.tocify {
 
 
 <h1 class="title toc-ignore"><ol style="list-style-type: decimal">
-<li>Работа со строками</li>
+<li>Ограничения на пременение регрессии</li>
 </ol></h1>
 <h4 class="author"><em>Г. Мороз</em></h4>
-<h4 class="date"><em>25 июля 2017, АНДАН</em></h4>
 
 </div>
 
@@ -349,87 +305,14 @@ div.tocify {
 <div class="parallax">
 
 </div>
-<div id="--1" class="section level3">
-<h3>1. Как получить строку?<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></h3>
-<ul>
-<li>следите за кавычками</li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="st">&quot;the quick brown fox jumps over the lazy dog&quot;</span></code></pre></div>
-<pre><code>## [1] &quot;the quick brown fox jumps over the lazy dog&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="st">&#39;the quick brown fox jumps over the lazy dog&#39;</span></code></pre></div>
-<pre><code>## [1] &quot;the quick brown fox jumps over the lazy dog&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="st">&quot;the quick &#39;brown&#39; fox jumps over the lazy dog&quot;</span></code></pre></div>
-<pre><code>## [1] &quot;the quick &#39;brown&#39; fox jumps over the lazy dog&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="st">&#39;the quick &quot;brown&quot; fox jumps over the lazy dog&#39;</span></code></pre></div>
-<pre><code>## [1] &quot;the quick \&quot;brown\&quot; fox jumps over the lazy dog&quot;</code></pre>
-<ul>
-<li>пустая строка</li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="st">&quot;&quot;</span></code></pre></div>
-<pre><code>## [1] &quot;&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="st">&#39;&#39;</span></code></pre></div>
-<pre><code>## [1] &quot;&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">character</span>(<span class="dv">3</span>)</code></pre></div>
-<pre><code>## [1] &quot;&quot; &quot;&quot; &quot;&quot;</code></pre>
-<ul>
-<li>преобразование</li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">typeof</span>(<span class="dv">4</span>:<span class="dv">7</span>)</code></pre></div>
-<pre><code>## [1] &quot;integer&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">as.character</span>(<span class="dv">4</span>:<span class="dv">7</span>)</code></pre></div>
-<pre><code>## [1] &quot;4&quot; &quot;5&quot; &quot;6&quot; &quot;7&quot;</code></pre>
-<ul>
-<li>встроенные векторы</li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">letters</code></pre></div>
-<pre><code>##  [1] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot; &quot;f&quot; &quot;g&quot; &quot;h&quot; &quot;i&quot; &quot;j&quot; &quot;k&quot; &quot;l&quot; &quot;m&quot; &quot;n&quot; &quot;o&quot; &quot;p&quot; &quot;q&quot;
-## [18] &quot;r&quot; &quot;s&quot; &quot;t&quot; &quot;u&quot; &quot;v&quot; &quot;w&quot; &quot;x&quot; &quot;y&quot; &quot;z&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">LETTERS</code></pre></div>
-<pre><code>##  [1] &quot;A&quot; &quot;B&quot; &quot;C&quot; &quot;D&quot; &quot;E&quot; &quot;F&quot; &quot;G&quot; &quot;H&quot; &quot;I&quot; &quot;J&quot; &quot;K&quot; &quot;L&quot; &quot;M&quot; &quot;N&quot; &quot;O&quot; &quot;P&quot; &quot;Q&quot;
-## [18] &quot;R&quot; &quot;S&quot; &quot;T&quot; &quot;U&quot; &quot;V&quot; &quot;W&quot; &quot;X&quot; &quot;Y&quot; &quot;Z&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">month.name</code></pre></div>
-<pre><code>##  [1] &quot;January&quot;   &quot;February&quot;  &quot;March&quot;     &quot;April&quot;     &quot;May&quot;      
-##  [6] &quot;June&quot;      &quot;July&quot;      &quot;August&quot;    &quot;September&quot; &quot;October&quot;  
-## [11] &quot;November&quot;  &quot;December&quot;</code></pre>
-<ul>
-<li>пользовательские данные</li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(<span class="kw">data.frame</span>(letters[<span class="dv">6</span>:<span class="dv">10</span>], LETTERS[<span class="dv">4</span>:<span class="dv">8</span>]))</code></pre></div>
-<pre><code>## &#39;data.frame&#39;:    5 obs. of  2 variables:
-##  $ letters.6.10.: Factor w/ 5 levels &quot;f&quot;,&quot;g&quot;,&quot;h&quot;,&quot;i&quot;,..: 1 2 3 4 5
-##  $ LETTERS.4.8. : Factor w/ 5 levels &quot;D&quot;,&quot;E&quot;,&quot;F&quot;,&quot;G&quot;,..: 1 2 3 4 5</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(<span class="kw">data.frame</span>(letters[<span class="dv">6</span>:<span class="dv">10</span>], LETTERS[<span class="dv">4</span>:<span class="dv">8</span>], <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>))</code></pre></div>
-<pre><code>## &#39;data.frame&#39;:    5 obs. of  2 variables:
-##  $ letters.6.10.: chr  &quot;f&quot; &quot;g&quot; &quot;h&quot; &quot;i&quot; ...
-##  $ LETTERS.4.8. : chr  &quot;D&quot; &quot;E&quot; &quot;F&quot; &quot;G&quot; ...</code></pre>
-<ul>
-<li><code>stringi</code></li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">42</span>)
-stringi::<span class="kw">stri_rand_strings</span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">length =</span> <span class="dv">5</span>:<span class="dv">14</span>)</code></pre></div>
-<pre><code>##  [1] &quot;uwHpd&quot;          &quot;Wj8ehS&quot;         &quot;ivFSwy7&quot;        &quot;TYu8zw5V&quot;      
-##  [5] &quot;OuRpjoOg0&quot;      &quot;p0CubNR2yQ&quot;     &quot;xtdycKLOm2k&quot;    &quot;fAGVfylZqBGp&quot;  
-##  [9] &quot;gE28DTCi0NV0a&quot;  &quot;9MemYE55If0Cvv&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stringi::<span class="kw">stri_rand_shuffle</span>(<span class="st">&quot;любя, съешь щипцы, — вздохнёт мэр, — кайф жгуч&quot;</span>)</code></pre></div>
-<pre><code>## [1] &quot;вцд тэшс,г яло, х ми—паюызф ркнжьеу б—ъйёщ,  ч&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stringi::<span class="kw">stri_rand_shuffle</span>(month.name[<span class="dv">1</span>:<span class="dv">8</span>]) <span class="co"># на больших векторах глючит</span></code></pre></div>
-<pre><code>## [1] &quot;Jaurnay&quot;  &quot;byFarrue&quot; &quot;chMar&quot;    &quot;iAlrp&quot;    &quot;rMy&quot;      &quot;pJue&quot;    
-## [7] &quot;rJuy&quot;     &quot;uAugut&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stringi::<span class="kw">stri_rand_lipsum</span>(<span class="dt">nparagraphs =</span> <span class="dv">2</span>)</code></pre></div>
-<pre><code>## [1] &quot;Lorem ipsum dolor sit amet, pellentesque sit in vitae ligula nec pellentesque sed hac curabitur. Ut semper lectus justo ut suspendisse ut, at faucibus dolor nec non. Neque senectus donec sit nunc urna sed. Ultricies ac pharetra orci luctus iaculis ac tincidunt cum neque. Eu semper at sociosqu hendrerit eu aliquet lacus eu, hendrerit, donec aliquam. Eros risus, nibh quam in. Sit facilisi ipsum amet sem. Sed donec sed molestie scelerisque. Tincidunt nisl donec et. Facilisis interdum non sed dolor purus in ipsum.&quot;                                                                                                                                                                                                                                                                                                                         
-## [2] &quot;Dignissim torquent velit nec aliquam pellentesque, ac adipiscing neque et. At torquent vestibulum ullamcorper ad dictumst enim velit non, nulla felis habitant. Egestas placerat consectetur, dictum nostra sed nec erat phasellus dolor libero. Aliquam viverra vestibulum leo et. Suscipit, egestas in in montes sapien gravida conubia purus varius, ut nec feugiat risus. Eleifend magnis, neque diam suspendisse ullamcorper. Nulla adipiscing malesuada massa nisi sociosqu velit id. Et aliquam facilisis et, aenean parturient vel. Ac in convallis massa diam nibh, nulla interdum. Cursus et natoque, amet, ut praesent tortor ultrices a. Consectetur, augue natoque class faucibus ut sed arcu. Elementum magna dignissim ac facilisi quis ut nisl. Eu massa vitae consectetur non non quis, mollis. Justo in ac dolor adipiscing mattis tempus.&quot;</code></pre>
+<div id="--" class="section level3">
+<h3>1. Как получить строку?</h3>
 <div class="parallax">
 
 </div>
 </div>
 <div id="--" class="section level3">
 <h3>2. Операции со строками</h3>
-</div>
-<div class="footnotes">
-<hr />
-<ol>
-<li id="fn1"><p>Данная картинка – рисунок Бориса Аркадьевича Диодорова из книжки Яна Экхольма “Тутта Карлссон, первая и единственная, Людвиг Четырнадцатый и другие”<a href="#fnref1">↩</a></p></li>
-</ol>
 </div>
 
 

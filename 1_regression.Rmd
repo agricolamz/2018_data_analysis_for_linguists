@@ -1,6 +1,5 @@
 ---
-title: "1. Работа со строками"
-date: "25 июля 2017, АНДАН"
+title: "1. Ограничения на пременение регрессии"
 author: "Г. Мороз"
 ---
 
@@ -23,48 +22,8 @@ author: "Г. Мороз"
 <div class="parallax"></div>
 
 
-### 1. Как получить строку?[^1]
-[^1]: Данная картинка -- рисунок Бориса Аркадьевича Диодорова  из книжки Яна Экхольма "Тутта Карлссон, первая и единственная, Людвиг Четырнадцатый и другие"
-
-* следите за кавычками
-```{r}
-"the quick brown fox jumps over the lazy dog"
-'the quick brown fox jumps over the lazy dog'
-"the quick 'brown' fox jumps over the lazy dog"
-'the quick "brown" fox jumps over the lazy dog'
-```
-* пустая строка
-```{r}
-""
-''
-character(3)
-```
-* преобразование
-```{r}
-typeof(4:7)
-as.character(4:7)
-```
-* встроенные векторы
-```{r}
-letters
-LETTERS
-month.name
-```
-* пользовательские данные
-```{r}
-str(data.frame(letters[6:10], LETTERS[4:8]))
-str(data.frame(letters[6:10], LETTERS[4:8], stringsAsFactors = FALSE))
-```
-* `stringi`
-```{r}
-set.seed(42)
-stringi::stri_rand_strings(n = 10, length = 5:14)
-stringi::stri_rand_shuffle("любя, съешь щипцы, — вздохнёт мэр, — кайф жгуч")
-stringi::stri_rand_shuffle(month.name[1:8]) # на больших векторах глючит
-stringi::stri_rand_lipsum(nparagraphs = 2)
-```
+### 1. Как получить строку?
 
 <div class="parallax"></div>
-
 
 ### 2. Операции со строками
