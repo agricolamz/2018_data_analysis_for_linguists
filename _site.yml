@@ -1,10 +1,36 @@
---- 
 name: ""
 navbar: 
-  left: 
-    - href: index.html
-      text: Home
-    - href: 1_regression.html
-      text: "1. Регрессия"
-  title: ""
+  left:
+    - text: "регрессия"
+      icon: fa-gear
+      menu:
+      - text: "1. Ограничения на регрессию"
+        href: 1_regression.html
+      - text: "2. Реграссия со смешанными эффектами"
+        href: 2_mixed_effects.html
+      - text: "3. Нелинейная регрессия"
+        href: 3_nolinear.html
+      - text: "4. Ридж и лассо регрессия"
+        href: 4_ridge_lasso.html
+    - text: "ensemble learning"
+      icon: fa-gear
+      menu:
+        - text: "5. Бутстрэп"
+          href: 5_bootstrap.html
+        - text: "6. Градиентный спуск"
+          href: 6_gradient_boosting.html
+    - text: "уменьшение размерностей"
+      icon: fa-gear
+      menu:
+        - text: "7. Уменьшение размерностей"
+          href: 7_dimensionality_reduction.html
+    - text: "байесовская статистика"
+      icon: fa-gear
+      menu:
+        - text: "8. Эмпирический Байес"
+          href: 8_empirical_bayes.html
+        - text: "9. Байесовская проверка гипотез"
+          href: 9_bayes_hypothesis_testing.html
+        - text: "10. Бета биномиальная регрессия"
+          href: 10_beta_binomial_regression.html
 output_dir: docs
