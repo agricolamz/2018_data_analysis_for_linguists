@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Г. Мороз" />
+
+
+<title></title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/spacelab.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+<link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 52px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 57px;
+  margin-top: -57px;
+}
+
+.section h2 {
+  padding-top: 57px;
+  margin-top: -57px;
+}
+.section h3 {
+  padding-top: 57px;
+  margin-top: -57px;
+}
+.section h4 {
+  padding-top: 57px;
+  margin-top: -57px;
+}
+.section h5 {
+  padding-top: 57px;
+  margin-top: -57px;
+}
+.section h6 {
+  padding-top: 57px;
+  margin-top: -57px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3,h4",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html"></a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-gear"></span>
+     
+    биномиальные данные
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="1_binomial.html">1. Биномиальные данные</a>
+    </li>
+    <li>
+      <a href="2_binomial.html">2. Биномиальные данные</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-gear"></span>
+     
+    доверительные интервалы
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="3_conf_cred_boot.html">3. Доверительные интервалы</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-gear"></span>
+     
+    A/B  тесты
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="4_a_b_tests.html">4. A/B  тесты</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-gear"></span>
+     
+    регрессия
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="5_regression.html">5. Ограничения на применения регрессии</a>
+    </li>
+    <li>
+      <a href="6_mixed_effects.html">6. Регрессия со смешанными эффектами</a>
+    </li>
+    <li>
+      <a href="7_nolinear.html">7. Нелинейная регрессия</a>
+    </li>
+    <li>
+      <a href="8_ridge_lasso.html">8. Ридж и лассо регрессия</a>
+    </li>
+    <li>
+      <a href="9_gradient_boosting.html">9. Градиентный спуск</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-gear"></span>
+     
+    уменьшение размерностей
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="10_dimensionality_reduction.html">10. Уменьшение размерностей</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore"><ol style="list-style-type: decimal">
+<li>Биномиальные данные</li>
+</ol></h1>
+<h4 class="author"><em>Г. Мороз</em></h4>
+
+</div>
+
+
+<style>
+.parallax {
+    /* The image used */
+    background-image: url("1_coin.jpg");
+
+    /* Set a specific height */
+    min-height: 350px; 
+
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: auto;
+}
+</style>
+<div class="parallax">
+
+</div>
+<div class="section level3">
+<h3>1. Введение</h3>
+<ul>
+<li>ваши данные имет два возможных исхода
+<ul>
+<li>tail vs. head</li>
+<li>орел vs. решка</li>
+<li>1 vs. 0</li>
+<li>выпадение 6 на кубике</li>
+<li>употребление слова <em>кенгуру</em> в тексте</li>
+</ul></li>
+<li>у вас есть идеи по поводу возможного распределения</li>
+</ul>
+<div class="parallax">
+
+</div>
+</div>
+<div id="-" class="section level3">
+<h3>2. Биномиальное распределение</h3>
+<p><span class="math display">\[P(k | n, p) = \frac{n!}{k!(n-k)!} \times p^k \times (1-p)^{n-k} =  {n \choose k} \times p^k \times (1-p)^{n-k} \]</span></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">probabilities &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.23</span>, <span class="fl">0.33</span>, <span class="fl">0.73</span>)
+density &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">dbinom</span>(<span class="dt">x =</span> <span class="dv">1</span>:<span class="dv">83</span>, <span class="dt">size =</span> <span class="dv">83</span>, <span class="dt">prob =</span> probabilities[<span class="dv">1</span>]),
+             <span class="kw">dbinom</span>(<span class="dt">x =</span> <span class="dv">1</span>:<span class="dv">83</span>, <span class="dt">size =</span> <span class="dv">83</span>, <span class="dt">prob =</span> probabilities[<span class="dv">2</span>]),
+             <span class="kw">dbinom</span>(<span class="dt">x =</span> <span class="dv">1</span>:<span class="dv">83</span>, <span class="dt">size =</span> <span class="dv">83</span>, <span class="dt">prob =</span> probabilities[<span class="dv">3</span>]))
+params &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="kw">paste</span>(<span class="st">&quot;n = 83, p =&quot;</span>, probabilities), <span class="dt">each =</span> <span class="dv">83</span>)
+id &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">1</span>:<span class="dv">83</span>, <span class="dv">3</span>)
+binomials &lt;-<span class="st"> </span><span class="kw">data_frame</span>(density, params, id)
+
+binomials %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(id, density, <span class="dt">fill =</span> params))+
+<span class="st">  </span><span class="kw">geom_polygon</span>(<span class="dt">alpha =</span> <span class="fl">0.8</span>)+
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;PDF для трех биномиальных распределений&quot;</span>)+
+<span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
+<p><img src="1_binomial_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<p><span class="math display">\[E[X] = np\]</span></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">binomials %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(id, density, <span class="dt">fill =</span> params))+
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">83</span> *<span class="st"> </span>probabilities, <span class="dt">lty =</span> <span class="dv">2</span>)+<span class="st"> </span><span class="co"># обратите вниммание!</span>
+<span class="st">  </span><span class="kw">geom_polygon</span>(<span class="dt">alpha =</span> <span class="fl">0.8</span>)+
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;PDF для трех биномиальных распределений&quot;</span>)+
+<span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
+<p><img src="1_binomial_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<div class="parallax">
+
+</div>
+</div>
+<div id="-" class="section level3">
+<h3>3. Биномиальный тест</h3>
+<ul>
+<li>Нулевая гипотеза:</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">binomial_test &lt;-<span class="st"> </span><span class="kw">binom.test</span>(<span class="dt">x =</span> <span class="dv">27</span>, <span class="dt">n =</span> <span class="dv">83</span>, <span class="dt">p =</span> <span class="fl">0.23</span>)
+binomial_test</code></pre></div>
+<pre><code>## 
+## 
+## 
+## data:  27 out of 83
+## number of successes = 27, number of trials = 83, p-value = 0.04936
+## alternative hypothesis: true probability of success is not equal to 0.23
+## 95 percent confidence interval:
+##  0.2264864 0.4369985
+## sample estimates:
+## probability of success 
+##              0.3253012</code></pre>
+</div>
+<div id="-" class="section level3">
+<h3>4. Бета распределение</h3>
+<div class="parallax">
+
+</div>
+</div>
+<div id="-" class="section level3">
+<h3>5. Байесовский подход</h3>
+<div class="parallax">
+
+</div>
+</div>
+<div id="--" class="section level3">
+<h3>6. Хакерский подход: симуляция</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(mosaic)
+<span class="kw">set.seed</span>(<span class="dv">42</span>)
+<span class="kw">do</span>(<span class="dv">1000</span>)*
+<span class="st">  </span><span class="kw">sum</span>(<span class="kw">sample</span>(<span class="dt">x =</span> <span class="dv">1</span>:<span class="dv">0</span>, 
+             <span class="dt">size =</span> <span class="dv">83</span>, 
+             <span class="dt">prob =</span> <span class="kw">c</span>(<span class="fl">0.23</span>, <span class="fl">0.77</span>), 
+             <span class="dt">replace =</span> <span class="ot">TRUE</span>)) -&gt;
+<span class="st">  </span>simulations
+simulations %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">greater =</span> sum &gt;=<span class="st"> </span><span class="dv">27</span>) %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(greater) %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">number =</span> <span class="kw">n</span>())</code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["greater"],"name":[1],"type":["lgl"],"align":["right"]},{"label":["number"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"FALSE","2":"960"},{"1":"TRUE","2":"40"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">simulations %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(sum))+
+<span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">fill =</span> <span class="st">&quot;lightblue&quot;</span>)+
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">27</span>, <span class="dt">linetype =</span> <span class="dv">2</span>)+
+<span class="st">  </span><span class="kw">theme_bw</span>()+
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Распределение 1000 симуляций с параметрами n = 83, p = 0.23&quot;</span>)</code></pre></div>
+<p><img src="1_binomial_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<div class="parallax">
+
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

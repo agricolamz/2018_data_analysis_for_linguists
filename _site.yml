@@ -1,36 +1,39 @@
 name: ""
 navbar: 
   left:
+    - text: "биномиальные данные"
+      icon: fa-gear
+      menu:
+      - text: "1. Биномиальные данные"
+        href: 1_binomial.html
+      - text: "2. Биномиальные данные"
+        href: 2_binomial.html
+    - text: "доверительные интервалы"
+      icon: fa-gear
+      menu:  
+      - text: "3. Доверительные интервалы"
+        href: 3_conf_cred_boot.html
+    - text: "A/B  тесты"
+      icon: fa-gear
+      menu:  
+      - text: "4. A/B  тесты"
+        href: 4_a_b_tests.html
     - text: "регрессия"
       icon: fa-gear
-      menu:
-      - text: "1. Ограничения на регрессию"
-        href: 1_regression.html
-      - text: "2. Реграссия со смешанными эффектами"
-        href: 2_mixed_effects.html
-      - text: "3. Нелинейная регрессия"
-        href: 3_nolinear.html
-      - text: "4. Ридж и лассо регрессия"
-        href: 4_ridge_lasso.html
-    - text: "ensemble learning"
-      icon: fa-gear
-      menu:
-        - text: "5. Бутстрэп"
-          href: 5_bootstrap.html
-        - text: "6. Градиентный спуск"
-          href: 6_gradient_boosting.html
+      menu:  
+      - text: "5. Ограничения на применения регрессии"
+        href: 5_regression.html
+      - text: "6. Регрессия со смешанными эффектами"
+        href: 6_mixed_effects.html
+      - text: "7. Нелинейная регрессия"
+        href: 7_nolinear.html
+      - text: "8. Ридж и лассо регрессия"
+        href: 8_ridge_lasso.html
+      - text: "9. Градиентный спуск"
+        href: 9_gradient_boosting.html
     - text: "уменьшение размерностей"
       icon: fa-gear
       menu:
-        - text: "7. Уменьшение размерностей"
-          href: 7_dimensionality_reduction.html
-    - text: "байесовская статистика"
-      icon: fa-gear
-      menu:
-        - text: "8. Эмпирический Байес"
-          href: 8_empirical_bayes.html
-        - text: "9. Байесовская проверка гипотез"
-          href: 9_bayes_hypothesis_testing.html
-        - text: "10. Бета биномиальная регрессия"
-          href: 10_beta_binomial_regression.html
+        - text: "10. Уменьшение размерностей"
+          href: 10_dimensionality_reduction.html
 output_dir: docs

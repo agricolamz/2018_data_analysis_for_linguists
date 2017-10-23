@@ -1,0 +1,115 @@
+---
+title: "1. Биномиальные данные"
+author: "Г. Мороз"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+library(tidyverse)
+```
+
+<style>
+.parallax {
+    /* The image used */
+    background-image: url("1_coin.jpg");
+
+    /* Set a specific height */
+    min-height: 350px; 
+
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: auto;
+}
+</style>
+
+<div class="parallax"></div>
+
+
+### 1. Введение
+
+* ваши данные имет два возможных исхода
+    * tail vs.  head
+    * орел vs. решка
+    * 1 vs. 0
+    * выпадение 6 на кубике
+    * употребление слова _кенгуру_ в тексте 
+    
+* у вас есть идеи по поводу возможного распределения
+
+<div class="parallax"></div>
+
+### 2. Биномиальное  распределение
+
+$$P(k | n, p) = \frac{n!}{k!(n-k)!} \times p^k \times (1-p)^{n-k} =  {n \choose k} \times p^k \times (1-p)^{n-k} $$
+
+```{r}
+probabilities <- c(0.23, 0.33, 0.73)
+density <- c(dbinom(x = 1:83, size = 83, prob = probabilities[1]),
+             dbinom(x = 1:83, size = 83, prob = probabilities[2]),
+             dbinom(x = 1:83, size = 83, prob = probabilities[3]))
+params <- rep(paste("n = 83, p =", probabilities), each = 83)
+id <- rep(1:83, 3)
+binomials <- data_frame(density, params, id)
+
+binomials %>% 
+  ggplot(aes(id, density, fill = params))+
+  geom_polygon(alpha = 0.8)+
+  labs(title = "PDF для трех биномиальных распределений")+
+  theme_bw()
+```
+
+$$E[X] = np$$
+
+```{r}
+binomials %>% 
+  ggplot(aes(id, density, fill = params))+
+  geom_vline(xintercept = 83 * probabilities, lty = 2)+ # обратите вниммание!
+  geom_polygon(alpha = 0.8)+
+  labs(title = "PDF для трех биномиальных распределений")+
+  theme_bw()
+```
+
+<div class="parallax"></div>
+
+### 3. Биномиальный тест
+
+* Нулевая гипотеза: 
+
+```{r}
+binomial_test <- binom.test(x = 27, n = 83, p = 0.23)
+binomial_test
+```
+
+### 4. Бета распределение
+
+<div class="parallax"></div>
+
+### 5. Байесовский подход
+
+<div class="parallax"></div>
+
+### 6. Хакерский подход: симуляция
+```{r}
+library(mosaic)
+set.seed(42)
+do(1000)*
+  sum(sample(x = 1:0, 
+             size = 83, 
+             prob = c(0.23, 0.77), 
+             replace = TRUE)) ->
+  simulations
+simulations %>% 
+  mutate(greater = sum >= 27) %>% 
+  group_by(greater) %>% 
+  summarise(number = n())
+simulations %>% 
+  ggplot(aes(sum))+
+  geom_density(fill = "lightblue")+
+  geom_vline(xintercept = 27, linetype = 2)+
+  theme_bw()+
+  labs(title = "Распределение 1000 симуляций с параметрами n = 83, p = 0.23")
+```
+
+<div class="parallax"></div>

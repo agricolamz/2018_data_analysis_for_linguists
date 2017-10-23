@@ -1,12 +1,12 @@
 ---
-title: "8. Эмпирический Байес"
+title: "8. Ридж и лассо регрессия"
 author: "Г. Мороз"
 ---
 
 <style>
 .parallax {
     /* The image used */
-    background-image: url("1_strings.jpg");
+    background-image: url("1_coin.jpg");
 
     /* Set a specific height */
     min-height: 300px; 

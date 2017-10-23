@@ -1,12 +1,12 @@
 ---
-title: "9. Байесовская проверка гипотез"
+title: "9. Градиентный спуск"
 author: "Г. Мороз"
 ---
 
 <style>
 .parallax {
     /* The image used */
-    background-image: url("1_strings.jpg");
+    background-image: url("1_coin.jpg");
 
     /* Set a specific height */
     min-height: 300px; 
