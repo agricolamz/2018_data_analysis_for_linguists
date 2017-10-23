@@ -8,5 +8,6 @@ output:
 
 ### Библиотеки:
 ```{r, message=FALSE}
-library(tidyverse); packageVersion("tidyverse")
+packageVersion("tidyverse")
+packageVersion("mosaic")
 ```
