@@ -82,6 +82,23 @@ binomial_test <- binom.test(x = 27, n = 83, p = 0.23)
 binomial_test
 ```
 
+```{r}
+binomials %>% 
+  filter(params == "n = 83, p = 0.23") %>% 
+  ggplot(aes(id, density))+
+  geom_line()+
+  geom_area(aes(x = ifelse(id>=qbinom(0.025, 83, 0.23) &
+                           id<=qbinom(0.975, 83, 0.23), id, NA)),
+            fill = "lightblue")+
+  geom_vline(xintercept = 27, linetype = 2)+
+  scale_x_continuous(breaks = c(0, 12, 19, 27, 2:4*20))+
+  theme_bw()+
+  labs(title = "Биномиальное распределение с параметрами n = 83, p = 0.23",
+       subtitle = "Голубой — центральные 95% данных")
+```
+
+
+
 ### 4. Бета распределение
 
 <div class="parallax"></div>

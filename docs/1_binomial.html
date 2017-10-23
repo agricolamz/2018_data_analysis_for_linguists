@@ -482,9 +482,9 @@ binomials %&gt;%<span class="st"> </span>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">binomial_test &lt;-<span class="st"> </span><span class="kw">binom.test</span>(<span class="dt">x =</span> <span class="dv">27</span>, <span class="dt">n =</span> <span class="dv">83</span>, <span class="dt">p =</span> <span class="fl">0.23</span>)
 binomial_test</code></pre></div>
 <pre><code>## 
+##  Exact binomial test
 ## 
-## 
-## data:  27 out of 83
+## data:  27 and 83
 ## number of successes = 27, number of trials = 83, p-value = 0.04936
 ## alternative hypothesis: true probability of success is not equal to 0.23
 ## 95 percent confidence interval:
@@ -492,6 +492,19 @@ binomial_test</code></pre></div>
 ## sample estimates:
 ## probability of success 
 ##              0.3253012</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">binomials %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(params ==<span class="st"> &quot;n = 83, p = 0.23&quot;</span>) %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(id, density))+
+<span class="st">  </span><span class="kw">geom_line</span>()+
+<span class="st">  </span><span class="kw">geom_area</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">ifelse</span>(id&gt;=<span class="kw">qbinom</span>(<span class="fl">0.025</span>, <span class="dv">83</span>, <span class="fl">0.23</span>) &amp;
+<span class="st">                           </span>id&lt;=<span class="kw">qbinom</span>(<span class="fl">0.975</span>, <span class="dv">83</span>, <span class="fl">0.23</span>), id, <span class="ot">NA</span>)),
+            <span class="dt">fill =</span> <span class="st">&quot;lightblue&quot;</span>)+
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">27</span>, <span class="dt">linetype =</span> <span class="dv">2</span>)+
+<span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">12</span>, <span class="dv">19</span>, <span class="dv">27</span>, <span class="dv">2</span>:<span class="dv">4</span>*<span class="dv">20</span>))+
+<span class="st">  </span><span class="kw">theme_bw</span>()+
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Биномиальное распределение с параметрами n = 83, p = 0.23&quot;</span>,
+       <span class="dt">subtitle =</span> <span class="st">&quot;Голубой — центральные 95% данных&quot;</span>)</code></pre></div>
+<p><img src="1_binomial_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 </div>
 <div id="-" class="section level3">
 <h3>4. Бета распределение</h3>
@@ -530,7 +543,7 @@ simulations %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">27</span>, <span class="dt">linetype =</span> <span class="dv">2</span>)+
 <span class="st">  </span><span class="kw">theme_bw</span>()+
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Распределение 1000 симуляций с параметрами n = 83, p = 0.23&quot;</span>)</code></pre></div>
-<p><img src="1_binomial_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p><img src="1_binomial_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <div class="parallax">
 
 </div>
