@@ -438,7 +438,7 @@ div.tocify {
 </div>
 <div id="-" class="section level3">
 <h3>2. Биномиальное распределение</h3>
-<p><span class="math display">\[P(k | n, p) = \frac{n!}{k!(n-k)!} \times p^k \times (1-p)^{n-k} =  {n \choose k} \times p^k \times (1-p)^{n-k}; 0 \leq p \leq 1; n, k &gt; 0 \]</span></p>
+<p>$P(k | n, p) =  p^k (1-p)^{n-k} = {n k} p^k (1-p)^{n-k}; 0 p 1; n, k &gt; 0 $</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">probabilities &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.23</span>, <span class="fl">0.33</span>, <span class="fl">0.69</span>)
 density &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">dbinom</span>(<span class="dt">x =</span> <span class="dv">1</span>:<span class="dv">83</span>, <span class="dt">size =</span> <span class="dv">83</span>, <span class="dt">prob =</span> probabilities[<span class="dv">1</span>]),
              <span class="kw">dbinom</span>(<span class="dt">x =</span> <span class="dv">1</span>:<span class="dv">83</span>, <span class="dt">size =</span> <span class="dv">83</span>, <span class="dt">prob =</span> probabilities[<span class="dv">2</span>]),
@@ -453,7 +453,7 @@ binomials %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;PDF для трех биномиальных распределений&quot;</span>)+
 <span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
 <p><img src="1_binomial_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
-<p><span class="math display">\[E[X] = np; D[X] = np\times(n-1)\]</span></p>
+<p><span class="math inline">\(E[X] = np; D[X] = np\times(n-1)\)</span></p>
 <div class="parallax">
 
 </div>
@@ -524,7 +524,7 @@ simulations %&gt;%<span class="st"> </span>
 </div>
 <div id="-" class="section level3">
 <h3>5. Бета распределение</h3>
-<p><span class="math display">\[f(x; α, β) = \frac{1}{B(α, β)}\times x^{α-1}\times (1-x)^{β-1}; 0 \leq x \leq 1; α, β &gt; 0\]</span> Бета функция: <span class="math display">\[Β(α, β) = \frac{Γ(α)\times Γ(β)}{Γ(α+β)} = \frac{(α-1)!(β-1)!}{(α+β-1)!} \]</span></p>
+<p><span class="math inline">\(f(x; α, β) = \frac{1}{B(α, β)}\times x^{α-1}\times (1-x)^{β-1}; 0 \leq x \leq 1; α, β &gt; 0\)</span> Бета функция: $Β(α, β) =  =  $</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">length =</span> <span class="dv">100</span>)
 alpha &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">23</span>, <span class="dv">33</span>, <span class="dv">69</span>)
 beta &lt;-<span class="st"> </span><span class="dv">83</span>-alpha
@@ -547,7 +547,7 @@ betas %&gt;%<span class="st"> </span>
 </div>
 <div id="-" class="section level3">
 <h3>6. Байесовский подход</h3>
-<p><span class="math display">\[P(θ|y) = \frac{P(θ)P(y|θ)}{P(y)}\]</span></p>
+<p><span class="math inline">\(P(θ|y) = \frac{P(θ)P(y|θ)}{P(y)}\)</span> <span class="math inline">\(P(θ|y) \propto P(θ)P(y|θ)\)</span></p>
 <div class="parallax">
 
 </div>

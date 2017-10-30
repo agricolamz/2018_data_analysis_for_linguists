@@ -49,7 +49,7 @@ library(mosaic)
 
 ### 2. Биномиальное  распределение
 
-$$P(k | n, p) = \frac{n!}{k!(n-k)!} \times p^k \times (1-p)^{n-k} =  {n \choose k} \times p^k \times (1-p)^{n-k}; 0 \leq p \leq 1; n, k > 0 $$
+$P(k | n, p) = \frac{n!}{k!(n-k)!} \times p^k \times (1-p)^{n-k} =  {n \choose k} \times p^k \times (1-p)^{n-k}; 0 \leq p \leq 1; n, k > 0 $
 
 ```{r}
 probabilities <- c(0.23, 0.33, 0.69)
@@ -67,7 +67,7 @@ binomials %>%
   theme_bw()
 ```
 
-$$E[X] = np; D[X] = np\times(n-1)$$
+$E[X] = np; D[X] = np\times(n-1)$
 
 <div class="parallax"></div>
 
@@ -124,9 +124,9 @@ simulations %>%
 
 ### 5. Бета распределение
 
-$$f(x; α, β) = \frac{1}{B(α, β)}\times x^{α-1}\times (1-x)^{β-1}; 0 \leq x \leq 1; α, β > 0$$
+$f(x; α, β) = \frac{1}{B(α, β)}\times x^{α-1}\times (1-x)^{β-1}; 0 \leq x \leq 1; α, β > 0$
 Бета функция:
-$$Β(α, β) = \frac{Γ(α)\times Γ(β)}{Γ(α+β)} = \frac{(α-1)!(β-1)!}{(α+β-1)!} $$
+$Β(α, β) = \frac{Γ(α)\times Γ(β)}{Γ(α+β)} = \frac{(α-1)!(β-1)!}{(α+β-1)!} $
 
 ```{r}
 x <- seq(0, 1, length = 100)
@@ -152,6 +152,9 @@ $$Ε[X] = \frac{α}{α+β}; D[X] = \frac{α\times β}{(α+β)^2(α+β+1)}$$
 
 ### 6. Байесовский подход
 
-$$P(θ|y) = \frac{P(θ)P(y|θ)}{P(y)}$$
+$P(θ|y) = \frac{P(θ)P(y|θ)}{P(y)}$
+$P(θ|y) \propto P(θ)P(y|θ)$
+
+
 
 <div class="parallax"></div>
