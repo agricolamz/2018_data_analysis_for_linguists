@@ -10,4 +10,6 @@ output:
 ```{r, message=FALSE}
 packageVersion("tidyverse")
 packageVersion("mosaic")
+packageVersion("stringr")
+packageVersion("bootstrap")
 ```

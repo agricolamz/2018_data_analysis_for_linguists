@@ -318,7 +318,7 @@ div.tocify {
       <a href="1_binomial.html">1. Биномиальные данные</a>
     </li>
     <li>
-      <a href="2_binomial.html">2. Биномиальные данные</a>
+      <a href="2_binomial_ci.html">2. Binomial CI</a>
     </li>
   </ul>
 </li>
@@ -326,27 +326,13 @@ div.tocify {
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     <span class="fa fa-gear"></span>
      
-    доверительные интервалы
+    кластеризация
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="3_conf_cred_boot.html">3. Доверительные интервалы</a>
-    </li>
-  </ul>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-gear"></span>
-     
-    A/B  тесты
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="4_a_b_tests.html">4. A/B  тесты</a>
+      <a href="3_clusterisation.html">3. Кластеризация</a>
     </li>
   </ul>
 </li>
@@ -431,16 +417,21 @@ div.tocify {
 <div class="section level3">
 <h3>1. Введение</h3>
 <ul>
-<li>ваши данные имет два возможных исхода
+<li>ваши данные имеют два возможных исхода
 <ul>
-<li>tail vs. head</li>
+<li>head vs. tail</li>
 <li>орел vs. решка</li>
 <li>1 vs. 0</li>
 <li>выпадение 6 на кубике</li>
-<li>употребление слова <em>кенгуру</em> в тексте</li>
+<li>количество диалектных vs. недиалектных форм у одного информанта</li>
+<li>употребление слова <em>кенгуру</em> в некотором тексте</li>
+<li>…</li>
 </ul></li>
 <li>у вас есть идеи по поводу возможного распределения</li>
 </ul>
+<p>Библиотеки:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
+<span class="kw">library</span>(mosaic)</code></pre></div>
 <div class="parallax">
 
 </div>
@@ -461,15 +452,8 @@ binomials %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_polygon</span>(<span class="dt">alpha =</span> <span class="fl">0.8</span>)+
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;PDF для трех биномиальных распределений&quot;</span>)+
 <span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
-<p><img src="1_binomial_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
-<p><span class="math display">\[E[X] = np; D[X] = np\times(n-1)\]</span></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">binomials %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(id, density, <span class="dt">fill =</span> params))+
-<span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">83</span> *<span class="st"> </span>probabilities, <span class="dt">lty =</span> <span class="dv">2</span>)+
-<span class="st">  </span><span class="kw">geom_polygon</span>(<span class="dt">alpha =</span> <span class="fl">0.8</span>)+
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;PDF для трех биномиальных распределений&quot;</span>)+
-<span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
 <p><img src="1_binomial_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p><span class="math display">\[E[X] = np; D[X] = np\times(n-1)\]</span></p>
 <div class="parallax">
 
 </div>
@@ -482,9 +466,9 @@ binomials %&gt;%<span class="st"> </span>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">binomial_test &lt;-<span class="st"> </span><span class="kw">binom.test</span>(<span class="dt">x =</span> <span class="dv">27</span>, <span class="dt">n =</span> <span class="dv">83</span>, <span class="dt">p =</span> <span class="fl">0.23</span>)
 binomial_test</code></pre></div>
 <pre><code>## 
-##  Exact binomial test
 ## 
-## data:  27 and 83
+## 
+## data:  27 out of 83
 ## number of successes = 27, number of trials = 83, p-value = 0.04936
 ## alternative hypothesis: true probability of success is not equal to 0.23
 ## 95 percent confidence interval:
@@ -509,46 +493,9 @@ binomial_test</code></pre></div>
 
 </div>
 </div>
-<div id="-" class="section level3">
-<h3>4. Бета распределение</h3>
-<p><span class="math display">\[f(x; α, β) = \frac{1}{B(α, β)}\times x^{α-1}\times (1-x)^{β-1}; 0 \leq x \leq 1; α, β &gt; 0\]</span> Бета функция: <span class="math display">\[Β(α, β) = \frac{Γ(α)\times Γ(β)}{Γ(α+β)} = \frac{(α-1)!(β-1)!}{(α+β-1)!} \]</span></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">length =</span> <span class="dv">100</span>)
-alpha &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">23</span>, <span class="dv">33</span>, <span class="dv">69</span>)
-beta &lt;-<span class="st"> </span><span class="dv">83</span>-alpha
-density &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">dbeta</span>(x, <span class="dt">shape1 =</span> alpha[<span class="dv">1</span>], <span class="dt">shape2 =</span> beta[<span class="dv">1</span>]),
-             <span class="kw">dbeta</span>(x, <span class="dt">shape1 =</span> alpha[<span class="dv">2</span>], <span class="dt">shape2 =</span> beta[<span class="dv">2</span>]),
-             <span class="kw">dbeta</span>(x, <span class="dt">shape1 =</span> alpha[<span class="dv">3</span>], <span class="dt">shape2 =</span> beta[<span class="dv">3</span>]))
-params &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="kw">paste</span>(<span class="st">&quot;α =&quot;</span>, alpha, <span class="st">&quot;, β =&quot;</span>, beta), <span class="dt">each =</span> <span class="dv">100</span>)
-betas &lt;-<span class="st"> </span><span class="kw">data_frame</span>(density, params, <span class="dt">id =</span> <span class="kw">rep</span>(x, <span class="dv">3</span>))
-
-betas %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(id, density, <span class="dt">fill =</span> params))+
-<span class="st">  </span><span class="kw">geom_polygon</span>(<span class="dt">alpha =</span> <span class="fl">0.8</span>)+
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;PDF для трех бета распределений&quot;</span>)+
-<span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
-<p><img src="1_binomial_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
-<p><span class="math display">\[Ε[X] = \frac{α}{α+β}; D[X] = \frac{α\times β}{(α+β)^2(α+β+1)}\]</span></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">betas %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(id, density, <span class="dt">fill =</span> params))+
-<span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> alpha/(alpha+beta), <span class="dt">lty =</span> <span class="dv">2</span>)+
-<span class="st">  </span><span class="kw">geom_polygon</span>(<span class="dt">alpha =</span> <span class="fl">0.8</span>)+
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;PDF для трех бета распределений&quot;</span>)+
-<span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
-<p><img src="1_binomial_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
-<div class="parallax">
-
-</div>
-</div>
-<div id="-" class="section level3">
-<h3>5. Байесовский подход</h3>
-<div class="parallax">
-
-</div>
-</div>
 <div id="--" class="section level3">
-<h3>6. Хакерский подход: симуляция</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(mosaic)
-<span class="kw">set.seed</span>(<span class="dv">42</span>)
+<h3>4. Хакерский подход: симуляция</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">42</span>)
 <span class="kw">do</span>(<span class="dv">1000</span>)*
 <span class="st">  </span><span class="kw">sum</span>(<span class="kw">sample</span>(<span class="dt">x =</span> <span class="dv">1</span>:<span class="dv">0</span>, 
              <span class="dt">size =</span> <span class="dv">83</span>, 
@@ -570,7 +517,37 @@ simulations %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">27</span>, <span class="dt">linetype =</span> <span class="dv">2</span>)+
 <span class="st">  </span><span class="kw">theme_bw</span>()+
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Распределение 1000 симуляций с параметрами n = 83, p = 0.23&quot;</span>)</code></pre></div>
-<p><img src="1_binomial_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p><img src="1_binomial_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<div class="parallax">
+
+</div>
+</div>
+<div id="-" class="section level3">
+<h3>5. Бета распределение</h3>
+<p><span class="math display">\[f(x; α, β) = \frac{1}{B(α, β)}\times x^{α-1}\times (1-x)^{β-1}; 0 \leq x \leq 1; α, β &gt; 0\]</span> Бета функция: <span class="math display">\[Β(α, β) = \frac{Γ(α)\times Γ(β)}{Γ(α+β)} = \frac{(α-1)!(β-1)!}{(α+β-1)!} \]</span></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">length =</span> <span class="dv">100</span>)
+alpha &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">23</span>, <span class="dv">33</span>, <span class="dv">69</span>)
+beta &lt;-<span class="st"> </span><span class="dv">83</span>-alpha
+density &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">dbeta</span>(x, <span class="dt">shape1 =</span> alpha[<span class="dv">1</span>], <span class="dt">shape2 =</span> beta[<span class="dv">1</span>]),
+             <span class="kw">dbeta</span>(x, <span class="dt">shape1 =</span> alpha[<span class="dv">2</span>], <span class="dt">shape2 =</span> beta[<span class="dv">2</span>]),
+             <span class="kw">dbeta</span>(x, <span class="dt">shape1 =</span> alpha[<span class="dv">3</span>], <span class="dt">shape2 =</span> beta[<span class="dv">3</span>]))
+params &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="kw">paste</span>(<span class="st">&quot;α =&quot;</span>, alpha, <span class="st">&quot;, β =&quot;</span>, beta), <span class="dt">each =</span> <span class="dv">100</span>)
+betas &lt;-<span class="st"> </span><span class="kw">data_frame</span>(density, params, <span class="dt">id =</span> <span class="kw">rep</span>(x, <span class="dv">3</span>))
+
+betas %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(id, density, <span class="dt">fill =</span> params))+
+<span class="st">  </span><span class="kw">geom_polygon</span>(<span class="dt">alpha =</span> <span class="fl">0.8</span>)+
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;PDF для трех бета распределений&quot;</span>)+
+<span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
+<p><img src="1_binomial_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><span class="math display">\[Ε[X] = \frac{α}{α+β}; D[X] = \frac{α\times β}{(α+β)^2(α+β+1)}\]</span></p>
+<div class="parallax">
+
+</div>
+</div>
+<div id="-" class="section level3">
+<h3>6. Байесовский подход</h3>
+<p><span class="math display">\[P(θ|y) = \frac{P(θ)P(y|θ)}{P(y)}\]</span></p>
 <div class="parallax">
 
 </div>

@@ -1,0 +1,249 @@
+---
+title: "2. Биномиальные доверительные интервалы"
+author: "Г. Мороз"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+```
+
+<style>
+.parallax {
+    /* The image used */
+    background-image: url("1_coin.jpg");
+
+    /* Set a specific height */
+    min-height: 350px; 
+
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: auto;
+}
+</style>
+
+<div class="parallax"></div>
+
+### 1. Введение
+
+* ваши данные состоят их множества биномиальных исходов
+    * правильные vs. неправильные ответы у группы людей
+    * диалектные vs. недеалектные формы у информантов
+    * употребление предлога _в_ vs. остальные слова в группе текстов
+    * ...
+
+* Какая доля в среднем?
+* Какая доля у каждой единицы наблюдения?
+    * доля правильных ответов у каждого человека
+    * доля диалектных форм у каждого информанта
+    * доля употреблений предлога _в_ в каждом тексте
+* How much uncertainty is present in our point estimate?
+
+Библиотеки:
+```{r}
+library(tidyverse)
+library(stringr)
+library(bootstrap)
+library(mosaic)
+```
+
+Данные:
+```{r}
+chekhov <- read_tsv("data/tidy_chekhov.tsv")
+chekhov %>% 
+  mutate(trunc_titles = str_trunc(titles, 25, side = "right")) ->
+  chekhov
+```
+```{r, include=FALSE}
+n_novels <- length(unique(chekhov$titles))
+n_word <- length(unique(chekhov$word))
+```
+
+* `r n_novels` рассказов А. Чехова
+* число слов в каждом рассказе
+* `r n_word` уникальных слов в каждом рассказе
+
+<div class="parallax"></div>
+
+### 2. Averaging
+```{r}
+chekhov %>% 
+  mutate(average = n/n_words) %>% 
+  arrange(desc(average))  ->
+  chekhov
+
+chekhov %>% 
+  select(trunc_titles, word, average)
+```
+
+Давайте посмотрим только на частицу _не_:
+
+```{r}
+chekhov %>% 
+  filter(word == "не") %>% 
+  select(trunc_titles, word, average) %>% 
+  ggplot(aes(average)) +
+  geom_histogram(fill = "lightblue")+
+  geom_density(color = "red")+
+  theme_bw()+
+  labs(title = 'Частотность слова "не" на основе 305 рассказов А. Чехова')
+```
+
+#### 2.1 Grand mean
+```{r}
+chekhov %>% 
+  filter(word == "не") %>% 
+  summarise(g_mean = mean(average)) ->
+  grand_mean
+grand_mean
+```
+
+```{r}
+chekhov %>% 
+  filter(word == "не") %>% 
+  select(trunc_titles, word, average) %>% 
+  ggplot(aes(average)) +
+  geom_histogram(fill = "lightblue")+
+  geom_density(color = "red")+
+  theme_bw()+
+  labs(title = 'Частотность слова "не" на основе 305 рассказов А. Чехова')+
+  geom_vline(xintercept = unlist(grand_mean), lty = 2)
+```
+
+#### 2.2 Trimmed mean
+```{r}
+chekhov %>% 
+  filter(word == "не") %>% 
+  summarise(t_mean = mean(average, trim = 0.05)) ->
+  trimmed_mean
+trimmed_mean
+```
+
+```{r}
+chekhov %>% 
+  filter(word == "не") %>% 
+  select(trunc_titles, word, average) %>% 
+  ggplot(aes(average)) +
+  geom_histogram(fill = "lightblue")+
+  geom_density(color = "red")+
+  theme_bw()+
+  labs(title = 'Частотность слова "не" на основе 305 рассказов А. Чехова')+
+  geom_vline(xintercept = unlist(trimmed_mean), lty = 2)
+```
+
+#### 2.3 Weighted mean
+```{r}
+chekhov %>% 
+  filter(word == "не") %>% 
+  summarise(w_mean = weighted.mean(average, n_words)) ->
+  weighted_mean
+weighted_mean
+```
+
+```{r}
+chekhov %>% 
+  filter(word == "не") %>% 
+  select(trunc_titles, word, average) %>% 
+  ggplot(aes(average)) +
+  geom_histogram(fill = "lightblue")+
+  geom_density(color = "red")+
+  theme_bw()+
+  labs(title = 'Частотность слова "не" на основе 305 рассказов А. Чехова')+
+  geom_vline(xintercept = unlist(weighted_mean), lty = 2)
+```
+
+<div class="parallax"></div>
+
+### 3. Хакерский метод: бутстрэп
+
+Из наших данных возьмем 10000 выборок с повторением.
+
+```{r}
+set.seed(42)
+chekhov %>% 
+  filter(word == "не") ->
+  chekhov_bs
+
+chekhov_bs <- bootstrap(chekhov_bs$average, nboot = 10000, theta = mean)$thetastar
+
+# ggplot работает только с датафреймами
+chekhov_bs <- data_frame(means = chekhov_bs)  
+
+chekhov_bs %>% 
+  ggplot(aes(means)) +
+  geom_histogram(fill = "lightblue")+
+  theme_bw()+
+  labs(title = 'Средняя доля слова "не" на основе 305 рассказов А. Чехова', subtitle = "На основе 10000 бутстрэп-подвыборок")
+
+chekhov_bs %>%
+  summarise(mean = mean(means),
+            q1 = quantile(means, 0.025),
+            q2 = quantile(means, 0.975))->
+  chekhov_stats
+chekhov_stats
+
+chekhov_bs %>% 
+  ggplot(aes(means)) +
+  geom_histogram(fill = "lightblue")+
+  theme_bw()+
+  labs(title = 'Средняя доля слова "не" на основе 305 рассказов А. Чехова', subtitle = "Среднее и 95% бутстрэпнутый доверительный интервал на основе 10000 бутстрэп-подвыборок")+
+  geom_vline(xintercept = unlist(chekhov_stats), lty = c(2, 3, 3))
+```
+
+<div class="parallax"></div>
+
+### 4. Empirical Bayes prior
+
+Метод Empirical Bayes estimation -- один из байесовских методов, в рамках которого нужно:
+
+*  произвести оценку априорного распределения вероятностей на основании имеющихся данных
+* использовать полученное априорное распределение для получение апостериорной оценки для каждого наблюдения
+
+Наши данные:
+```{r}
+chekhov %>% 
+  filter(word == "не") %>% 
+  select(trunc_titles, word, average) %>% 
+  ggplot(aes(average)) +
+  geom_histogram(fill = "lightblue")+
+  geom_density(color = "red")+
+  theme_bw()+
+  labs(title = 'Частотность слова "не" на основе 305 рассказов А. Чехова')
+```
+
+В данном случае, данные можно подогнать под бета распределение $$Χ \sim Beta(α_0, β_0)$$ (это далеко не всегда так). Подгонку можно осуществлять множеством разных функций, я буду использовать функцию 
+
+
+<div class="parallax"></div>
+
+### 5. Доверительные интервалы для конкретных наблюдений
+#### 5.1 Биномиальный доверительные интервалы
+По-английски confidence interval. Существует уйма алгоритмов:
+
+* Clopper-Pearson
+* Score, Wilson
+* Wald
+* Agresti-Coull
+* Plus4
+
+```{r}
+chekhov %>% 
+  filter(word == "не") %>%
+  slice(1:30) %>% 
+  group_by(titles) %>% 
+  mutate(low_ci = binom.test(x = n, n = n_words, ci.method = "Clopper-Pearson")$conf.int[1],
+         up_ci = binom.test(x = n, n = n_words, ci.method = "Clopper-Pearson")$conf.int[2]) %>%
+  ggplot(aes(trunc_titles, average))+
+  geom_point()+
+  geom_pointrange(aes(ymin = low_ci, ymax = up_ci))+
+  theme_bw()+
+  coord_flip()+
+  labs(title = 'Среднее и 95% CI употребления "не" в рассказах А. Чехова',
+       x = "", y = "")
+```
+
+#### 5.2 Байесовский доверительный интервал
+По-английски credible interval.
+
+<div class="parallax"></div>

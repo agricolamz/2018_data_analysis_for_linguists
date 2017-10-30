@@ -6,18 +6,13 @@ navbar:
       menu:
       - text: "1. Биномиальные данные"
         href: 1_binomial.html
-      - text: "2. Биномиальные данные"
-        href: 2_binomial.html
-    - text: "доверительные интервалы"
+      - text: "2. Binomial CI"
+        href: 2_binomial_ci.html
+    - text: "кластеризация"
       icon: fa-gear
-      menu:  
-      - text: "3. Доверительные интервалы"
-        href: 3_conf_cred_boot.html
-    - text: "A/B  тесты"
-      icon: fa-gear
-      menu:  
-      - text: "4. A/B  тесты"
-        href: 4_a_b_tests.html
+      menu:
+      - text: "3. Кластеризация"
+        href: 3_clusterisation.html
     - text: "регрессия"
       icon: fa-gear
       menu:  

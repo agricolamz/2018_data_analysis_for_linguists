@@ -5,7 +5,6 @@ author: "Г. Мороз"
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(message = FALSE, warning = FALSE)
-library(tidyverse)
 ```
 
 <style>
@@ -29,14 +28,22 @@ library(tidyverse)
 
 ### 1. Введение
 
-* ваши данные имет два возможных исхода
-    * tail vs.  head
+* ваши данные имеют два возможных исхода
+    * head vs.  tail
     * орел vs. решка
     * 1 vs. 0
     * выпадение 6 на кубике
-    * употребление слова _кенгуру_ в тексте 
+    * количество диалектных vs. недиалектных форм у одного информанта
+    * употребление слова _кенгуру_ в некотором тексте
+    * ...
     
 * у вас есть идеи по поводу возможного распределения
+
+Библиотеки:
+```{r}
+library(tidyverse)
+library(mosaic)
+```
 
 <div class="parallax"></div>
 
@@ -61,15 +68,6 @@ binomials %>%
 ```
 
 $$E[X] = np; D[X] = np\times(n-1)$$
-
-```{r}
-binomials %>% 
-  ggplot(aes(id, density, fill = params))+
-  geom_vline(xintercept = 83 * probabilities, lty = 2)+
-  geom_polygon(alpha = 0.8)+
-  labs(title = "PDF для трех биномиальных распределений")+
-  theme_bw()
-```
 
 <div class="parallax"></div>
 
@@ -100,7 +98,31 @@ binomials %>%
 
 <div class="parallax"></div>
 
-### 4. Бета распределение
+### 4. Хакерский подход: симуляция
+```{r}
+set.seed(42)
+do(1000)*
+  sum(sample(x = 1:0, 
+             size = 83, 
+             prob = c(0.23, 0.77), 
+             replace = TRUE)) ->
+  simulations
+simulations %>% 
+  mutate(greater = sum >= 27) %>% 
+  group_by(greater) %>% 
+  summarise(number = n())
+simulations %>% 
+  ggplot(aes(sum))+
+  geom_density(fill = "lightblue")+
+  geom_vline(xintercept = 27, linetype = 2)+
+  theme_bw()+
+  labs(title = "Распределение 1000 симуляций с параметрами n = 83, p = 0.23")
+```
+
+<div class="parallax"></div>
+
+
+### 5. Бета распределение
 
 $$f(x; α, β) = \frac{1}{B(α, β)}\times x^{α-1}\times (1-x)^{β-1}; 0 \leq x \leq 1; α, β > 0$$
 Бета функция:
@@ -125,42 +147,11 @@ betas %>%
 
 $$Ε[X] = \frac{α}{α+β}; D[X] = \frac{α\times β}{(α+β)^2(α+β+1)}$$
 
-```{r}
-betas %>% 
-  ggplot(aes(id, density, fill = params))+
-  geom_vline(xintercept = alpha/(alpha+beta), lty = 2)+
-  geom_polygon(alpha = 0.8)+
-  labs(title = "PDF для трех бета распределений")+
-  theme_bw()
-```
-
 
 <div class="parallax"></div>
 
-### 5. Байесовский подход
+### 6. Байесовский подход
 
-<div class="parallax"></div>
-
-### 6. Хакерский подход: симуляция
-```{r}
-library(mosaic)
-set.seed(42)
-do(1000)*
-  sum(sample(x = 1:0, 
-             size = 83, 
-             prob = c(0.23, 0.77), 
-             replace = TRUE)) ->
-  simulations
-simulations %>% 
-  mutate(greater = sum >= 27) %>% 
-  group_by(greater) %>% 
-  summarise(number = n())
-simulations %>% 
-  ggplot(aes(sum))+
-  geom_density(fill = "lightblue")+
-  geom_vline(xintercept = 27, linetype = 2)+
-  theme_bw()+
-  labs(title = "Распределение 1000 симуляций с параметрами n = 83, p = 0.23")
-```
+$$P(θ|y) = \frac{P(θ)P(y|θ)}{P(y)}$$
 
 <div class="parallax"></div>
