@@ -8,11 +8,16 @@ navbar:
         href: 1_binomial.html
       - text: "2. Binomial CI"
         href: 2_binomial_ci.html
+    - text: "меры согласия"
+      icon: fa-gear
+      menu:
+      - text: "3. Меры согласия"
+        href: 3_agreement.html
     - text: "кластеризация"
       icon: fa-gear
       menu:
-      - text: "3. Кластеризация"
-        href: 3_clusterisation.html
+      - text: "4. Кластеризация"
+        href: 4_clusterisation.html
     - text: "регрессия"
       icon: fa-gear
       menu:  
