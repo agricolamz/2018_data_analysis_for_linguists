@@ -40,7 +40,7 @@ knitr::opts_chunk$set(message = FALSE, warning = FALSE)
     * доля употреблений предлога _в_ в каждом тексте
 * How much uncertainty is present in our point estimate?
 
-Библиотеки:
+#### 1.1 Библиотеки
 ```{r}
 library(tidyverse)
 library(stringr)
@@ -48,12 +48,13 @@ library(bootstrap)
 library(mosaic)
 ```
 
-Данные:
+#### 1.2 Рассказы А. Чехова
 ```{r}
 chekhov <- read_tsv("https://goo.gl/o18uj7")
 chekhov %>% 
   mutate(trunc_titles = str_trunc(titles, 25, side = "right")) ->
   chekhov
+head(chekhov)
 ```
 ```{r, include=FALSE}
 n_novels <- length(unique(chekhov$titles))

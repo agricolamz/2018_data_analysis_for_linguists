@@ -39,7 +39,7 @@ knitr::opts_chunk$set(message = FALSE, warning = FALSE)
     
 * у вас есть идеи по поводу возможного распределения
 
-Библиотеки:
+#### 1.1 Библиотеки:
 ```{r}
 library(tidyverse)
 library(mosaic)
