@@ -49,7 +49,7 @@ library(irr)
 В зиловском диалекте андийского языка существует два класса для неодушевленных предметов. В 2017 году был проведен эксперимент, чтобы проверить, наличие вариативности в отнесению к тому или иному классу заимствованой и исконной лексики.
 
 ```{r}
-zilo_classes <- read_csv("https://goo.gl/fipiKa")
+zilo_classes <- read_csv("https://goo.gl/miGq7Q")
 head(zilo_classes)
 ```
 
@@ -61,7 +61,7 @@ head(zilo_classes)
 * stimulus
 * translation_en
 * translation_ru
-* stimulus_source — тип лексики: исконная или заимствованная
+* stimulus_source — тип слова: исконное или заимствованное
 * class — класс слова, к которому испытуемый отнес слово
 
 #### 1.3 Данные: исследование маргинальных русских глаголов
@@ -72,7 +72,7 @@ head(zilo_classes)
 * искусственные слова (_ономить_, _укампить_)
 
 ```{r}
-marginal_verbs <- read_csv("https://goo.gl/rBM9sF")
+marginal_verbs <- read_csv("https://goo.gl/6Phok3")
 head(marginal_verbs)
 ```
 
@@ -81,11 +81,46 @@ head(marginal_verbs)
 * Gender
 * Age
 * AgeGroup — взрослые или школьники
-* Education — 
+* Education
+* City
+* SubjectCode — код испытуемого
+* Score — оценка, поставленная испытуемым (A — самая высокая, E  — самая низкая)
+* GivenScore — оценка, поставленная испытуемым (5 — самая высокая, 1  — самая низкая)
+* Stimulus
+* Prefix
+* WordType — тип слова: частотное, редкое, искусственное
+* CorpusFrequency — частотность в корпусе
 
 <div class="parallax"></div>
 
-### 2. Процент согласия
+### 2. Преобразования данных
+Все функции пакета `irr` не настроены на формат tidy data, и требует следующего формата:
 
+* каждый столбец — это суждения одного оценщика (rater)
+* каждая строчка — это объект оценки
+
+```{r}
+zilo_classes %>% 
+  select(s_id, stimulus, translation_ru, stimulus_source, class) %>% 
+  spread(key = s_id, value = class) ->
+  zilo_classes_short
+head(zilo_classes_short)
+
+marginal_verbs %>% 
+  select(SubjectCode, Stimulus, WordType, Prefix, GivenScore) %>% 
+  spread(key = SubjectCode, value = GivenScore) ->
+  marginal_verbs_short
+head(marginal_verbs_short)
+```
+
+<div class="parallax"></div>
+
+### 3. Процент согласия
+Процент согласия — это процент случаев, когда все оценщики идентичны в своих суждениях. Эту меру иногда ошибочно приводят как меру согласия оценщиков, однако она не учитывает возможность случайного совпадения / расхождения суждений.
+
+```{r}
+agree(zilo_classes_short[-c(1:3)])
+agree(marginal_verbs_short[-c(1:3)])
+```
 
 <div class="parallax"></div>
