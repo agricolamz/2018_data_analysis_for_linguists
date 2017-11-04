@@ -12,7 +12,7 @@
 <meta name="author" content="Г. Мороз" />
 
 
-<title>Анализ Данных для лингвистов</title>
+<title></title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -20,6 +20,9 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
 <script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
@@ -193,6 +196,101 @@ $(document).ready(function () {
 
 
 
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3,h4",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
 
 
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
@@ -304,28 +402,71 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Анализ Данных для лингвистов</h1>
+<h1 class="title toc-ignore"><ol start="3" style="list-style-type: decimal">
+<li>Меры согласия</li>
+</ol></h1>
 <h4 class="author"><em>Г. Мороз</em></h4>
 
 </div>
 
 
+<style>
+.parallax {
+    /* The image used */
+    background-image: url("3_agreement.jpg");
+    
+    /* Set a specific height */
+    min-height: 300px; 
+
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: auto;
+}
+</style>
+<div class="parallax">
+
+</div>
 <div class="section level3">
-<h3>Библиотеки:</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">packageVersion</span>(<span class="st">&quot;tidyverse&quot;</span>)</code></pre></div>
-<pre><code>## [1] &#39;1.1.1&#39;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">packageVersion</span>(<span class="st">&quot;mosaic&quot;</span>)</code></pre></div>
-<pre><code>## [1] &#39;1.1.0&#39;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">packageVersion</span>(<span class="st">&quot;stringr&quot;</span>)</code></pre></div>
-<pre><code>## [1] &#39;1.2.0&#39;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">packageVersion</span>(<span class="st">&quot;bootstrap&quot;</span>)</code></pre></div>
-<pre><code>## [1] &#39;2017.2&#39;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">packageVersion</span>(<span class="st">&quot;irr&quot;</span>)</code></pre></div>
-<pre><code>## [1] &#39;0.84&#39;</code></pre>
+<h3>1. Введение</h3>
+<ul>
+<li>ваши данные имеют два возможных исхода
+<ul>
+<li>head vs. tail</li>
+<li>орел vs. решка</li>
+<li>1 vs. 0</li>
+<li>выпадение 6 на кубике</li>
+<li>количество диалектных vs. недиалектных форм у одного информанта</li>
+<li>употребление слова <em>кенгуру</em> в некотором тексте</li>
+<li>…</li>
+</ul></li>
+<li>у вас есть идеи по поводу возможного распределения</li>
+</ul>
+<div class="section level4">
+<h4>1.1 Библиотеки</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
+<span class="kw">library</span>(irr)</code></pre></div>
+</div>
+<div id="--" class="section level4">
+<h4>1.2 Данные: зиловский эксперимент</h4>
+В зиловском диалекте существует два класса для неодушевленных предметов. В 2017 году был проведен эксперимент, чтобы проверить, наличие вариативности в отнесению к тому или иному классу заимствованой и исконной лексики. Каждый столбец в датасете — один из 16 информантов; каждая строчка — одно из 116 слов; значения в клетках — классная аффилиация (принимает значение либо b, либо r).
+<div class="parallax">
+
+</div>
+</div>
+</div>
+<div id="-" class="section level3">
+<h3>2. Процент согласия</h3>
+<div class="parallax">
+
+</div>
 </div>
 
 
 
+</div>
+</div>
 
 </div>
 

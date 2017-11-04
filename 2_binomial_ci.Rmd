@@ -50,7 +50,7 @@ library(mosaic)
 
 Данные:
 ```{r}
-chekhov <- read_tsv("data/tidy_chekhov.tsv")
+chekhov <- read_tsv("https://goo.gl/o18uj7")
 chekhov %>% 
   mutate(trunc_titles = str_trunc(titles, 25, side = "right")) ->
   chekhov

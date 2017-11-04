@@ -1,0 +1,55 @@
+---
+title: "3. Меры согласия"
+author: "Г. Мороз"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+```
+
+<style>
+.parallax {
+    /* The image used */
+    background-image: url("3_agreement.jpg");
+    
+    /* Set a specific height */
+    min-height: 300px; 
+
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: auto;
+}
+</style>
+
+<div class="parallax"></div>
+
+
+### 1. Введение
+
+* ваши данные имеют два возможных исхода
+    * head vs.  tail
+    * орел vs. решка
+    * 1 vs. 0
+    * выпадение 6 на кубике
+    * количество диалектных vs. недиалектных форм у одного информанта
+    * употребление слова _кенгуру_ в некотором тексте
+    * ...
+    
+* у вас есть идеи по поводу возможного распределения
+
+#### 1.1 Библиотеки
+```{r}
+library(tidyverse)
+library(irr)
+```
+
+#### 1.2 Данные: зиловский эксперимент
+В зиловском диалекте существует два класса для неодушевленных предметов. В 2017 году был проведен эксперимент, чтобы проверить, наличие вариативности в отнесению к тому или иному классу заимствованой и исконной лексики. Каждый столбец в датасете — один из 16 информантов; каждая строчка — одно из 116 слов; значения в клетках — классная аффилиация (принимает значение либо b, либо r). 
+<div class="parallax"></div>
+
+### 2. Процент согласия
+
+
+<div class="parallax"></div>
