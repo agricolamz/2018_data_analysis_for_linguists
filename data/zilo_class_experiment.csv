@@ -1,4 +1,4 @@
-s_id,sex,age_2017,w_id,stimulus,translation en,translation_ru,stimulus_source,class
+s_id,sex,age_2017,w_id,stimulus,translation_en,translation_ru,stimulus_source,class
 1,f,15,1,milki,hous,дом,native,b
 1,f,15,2,vaɡon,train wagon,вагон,loan,b
 1,f,15,3,inɡur,window,окно,native,b
