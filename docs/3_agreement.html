@@ -536,10 +536,10 @@ div.tocify {
 
 </div>
 </div>
-<div id="-" class="section level3">
-<h3>3. Процент согласия</h3>
-<p>Процент согласия — это процент случаев, когда все оценщики идентичны в своих суждениях.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">agree</span>(zilo_classes_short[-<span class="kw">c</span>(<span class="dv">1</span>:<span class="dv">3</span>)])</code></pre></div>
+<div id="--" class="section level3">
+<h3>3. Процент полного согласия</h3>
+<p>Процент полного согласия — это процент случаев, когда все оценщики идентичны в своих суждениях.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">agree</span>(zilo_classes_short[,-<span class="kw">c</span>(<span class="dv">1</span>:<span class="dv">3</span>)])</code></pre></div>
 <pre><code>##  Percentage agreement (Tolerance=0)
 ## 
 ##  Subjects = 106 
@@ -547,7 +547,7 @@ div.tocify {
 ##   %-agree = 74.5</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">round</span>(<span class="fl">74.5</span>*<span class="dv">106</span>/<span class="dv">100</span>) <span class="co"># количество случаев полного согласия</span></code></pre></div>
 <pre><code>## [1] 79</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">agree</span>(marginal_verbs_short[-<span class="kw">c</span>(<span class="dv">1</span>:<span class="dv">3</span>)])</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">agree</span>(marginal_verbs_short[,-<span class="kw">c</span>(<span class="dv">1</span>:<span class="dv">3</span>)])</code></pre></div>
 <pre><code>##  Percentage agreement (Tolerance=0)
 ## 
 ##  Subjects = 59 
@@ -559,6 +559,61 @@ div.tocify {
 <div class="parallax">
 
 </div>
+</div>
+<div id="-" class="section level3">
+<h3>4 Каппа Коэна</h3>
+<p>Каппа Коэна мера согласованности между двумя категориальными переменными <span class="math inline">\(X\)</span> и <span class="math inline">\(Y\)</span>. Обычно говорят о двух оценщиках, которые распеделяют <span class="math inline">\(n\)</span> наблюдений по <span class="math inline">\(s\)</span> категориям.</p>
+<p><span class="math inline">\(\kappa = \frac{p_o-p_e}{1-p_e},\)</span></p>
+<p>где <span class="math inline">\(p_o\)</span> — процент полного согласия, а <span class="math inline">\(p_e\)</span> — вероятность случайного согласия.</p>
+
+<p>Выберем двух спикиров из наших данных:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zilo_classes_2s &lt;-<span class="st"> </span>zilo_classes_short[,<span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">14</span>)]
+<span class="kw">agree</span>(zilo_classes_2s)</code></pre></div>
+<pre><code>##  Percentage agreement (Tolerance=0)
+## 
+##  Subjects = 106 
+##    Raters = 2 
+##   %-agree = 87.7</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(zilo_classes_2s)</code></pre></div>
+<pre><code>##    11
+## 1    b  r
+##   b 47  9
+##   r  4 46</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_o &lt;-<span class="st"> </span>(<span class="dv">47+46</span>)/(<span class="dv">47+46+4+9</span>)
+p_o</code></pre></div>
+<pre><code>## [1] 0.8773585</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_b &lt;-<span class="st"> </span>((<span class="dv">47+9</span>)/(<span class="dv">47+46+4+9</span>)) *<span class="st"> </span>((<span class="dv">47+4</span>)/(<span class="dv">47+46+4+9</span>))
+p_b</code></pre></div>
+<pre><code>## [1] 0.254183</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_r &lt;-<span class="st"> </span>((<span class="dv">46+4</span>)/(<span class="dv">47+46+4+9</span>)) *<span class="st"> </span>((<span class="dv">46+9</span>)/(<span class="dv">47+46+4+9</span>))
+p_r</code></pre></div>
+<pre><code>## [1] 0.244749</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_e &lt;-<span class="st"> </span>p_b +<span class="st"> </span>p_r
+p_e</code></pre></div>
+<pre><code>## [1] 0.498932</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">coehns_kappa &lt;-<span class="st"> </span>(p_o -<span class="st"> </span>p_e)/(<span class="dv">1</span> -<span class="st"> </span>p_e)
+coehns_kappa</code></pre></div>
+<pre><code>## [1] 0.7552398</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">kappa2</span>(zilo_classes_2s)</code></pre></div>
+<pre><code>##  Cohen&#39;s Kappa for 2 Raters (Weights: unweighted)
+## 
+##  Subjects = 106 
+##    Raters = 2 
+##     Kappa = 0.755 
+## 
+##         z = 7.81 
+##   p-value = 5.77e-15</code></pre>
+<p>Функция <code>kappa2</code> из пакета <code>irr</code> также приводит p-value, которое высчитывается для нулевой гипотезы, что каппа Коэна равна нулю.</p>
+<p>Если вы хотите, чтобы ваши оценщики не оценивались как равноценные, вы можете использовать взвешенную каппу Коэна.</p>
+<p>В [Landis, Koch 1977] предложена следующая интерпретация каппы Коэна:</p>
+<ul>
+<li>κ &lt; 0 no agreement</li>
+<li>0–0.20 slight agreement</li>
+<li>0.21–0.40 fair agreement</li>
+<li>0.41–0.60 moderate agreement</li>
+<li>0.61–0.80 substantial agreement</li>
+<li>0.81–1 almost perfect agreement</li>
+</ul>
 </div>
 
 
