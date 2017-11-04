@@ -509,8 +509,8 @@ div.tocify {
 <h3>2. Преобразования данных</h3>
 <p>Все функции пакета <code>irr</code> не настроены на формат tidy data, и требует следующего формата:</p>
 <ul>
-<li>каждый столбец — это суждения одного оценщика (rater)</li>
-<li>каждая строчка — это объект оценки</li>
+<li>каждый столбец — это суждения одного оценщика (raters)</li>
+<li>каждая строчка — это то, что оценивают (subjects)</li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zilo_classes %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">select</span>(s_id, stimulus, translation_ru, stimulus_source, class) %&gt;%<span class="st"> </span>
@@ -538,19 +538,24 @@ div.tocify {
 </div>
 <div id="-" class="section level3">
 <h3>3. Процент согласия</h3>
-<p>Процент согласия — это процент случаев, когда все оценщики идентичны в своих суждениях. Эту меру иногда ошибочно приводят как меру согласия оценщиков, однако она не учитывает возможность случайного совпадения / расхождения суждений.</p>
+<p>Процент согласия — это процент случаев, когда все оценщики идентичны в своих суждениях.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">agree</span>(zilo_classes_short[-<span class="kw">c</span>(<span class="dv">1</span>:<span class="dv">3</span>)])</code></pre></div>
 <pre><code>##  Percentage agreement (Tolerance=0)
 ## 
 ##  Subjects = 106 
 ##    Raters = 16 
 ##   %-agree = 74.5</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">round</span>(<span class="fl">74.5</span>*<span class="dv">106</span>/<span class="dv">100</span>) <span class="co"># количество случаев полного согласия</span></code></pre></div>
+<pre><code>## [1] 79</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">agree</span>(marginal_verbs_short[-<span class="kw">c</span>(<span class="dv">1</span>:<span class="dv">3</span>)])</code></pre></div>
 <pre><code>##  Percentage agreement (Tolerance=0)
 ## 
 ##  Subjects = 59 
 ##    Raters = 121 
 ##   %-agree = 10.2</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">round</span>(<span class="fl">10.2</span>*<span class="dv">59</span>/<span class="dv">100</span>) <span class="co"># количество случаев полного согласия</span></code></pre></div>
+<pre><code>## [1] 6</code></pre>
+<p>Эту меру иногда ошибочно приводят как меру согласия оценщиков, однако она не учитывает возможность случайного совпадения / расхождения суждений.</p>
 <div class="parallax">
 
 </div>
