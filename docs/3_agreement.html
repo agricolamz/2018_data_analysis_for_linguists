@@ -431,17 +431,7 @@ div.tocify {
 <div class="section level3">
 <h3>1. Введение</h3>
 <ul>
-<li>ваши данные имеют два возможных исхода
-<ul>
-<li>head vs. tail</li>
-<li>орел vs. решка</li>
-<li>1 vs. 0</li>
-<li>выпадение 6 на кубике</li>
-<li>количество диалектных vs. недиалектных форм у одного информанта</li>
-<li>употребление слова <em>кенгуру</em> в некотором тексте</li>
-<li>…</li>
-</ul></li>
-<li>у вас есть идеи по поводу возможного распределения</li>
+<li>ваши данные — много</li>
 </ul>
 <div class="section level4">
 <h4>1.1 Библиотеки</h4>
@@ -654,7 +644,7 @@ coehns_kappa</code></pre></div>
 P_o</code></pre></div>
 <pre><code>##   P_o 
 ## 0.925</code></pre>
-<p>Ожидаемое значение:</p>
+<p>Для того, чтобы посчитать вероятность случайного согласия, найдем доли:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zilo_classes %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">group_by</span>(class) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n =</span> <span class="kw">n</span>()) %&gt;%<span class="st"> </span>
@@ -664,6 +654,7 @@ P_o</code></pre></div>
 {"columns":[{"label":["class"],"name":[1],"type":["chr"],"align":["left"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]},{"label":["freq"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"b","2":"918","3":"0.5412736"},{"1":"r","2":"778","3":"0.4587264"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
+<p>Возведем их в квадрат и сложим:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zilo_classes %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">group_by</span>(class) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n =</span> <span class="kw">n</span>()) %&gt;%<span class="st"> </span>
@@ -691,8 +682,8 @@ Fleiss_kappa</code></pre></div>
 
 </div>
 </div>
-<div id="intra-class-correlation-icc" class="section level3">
-<h3>6. Intra-class correlation (ICC)</h3>
+<div id="intra-class-correlation-coefficient-icc" class="section level3">
+<h3>6. Intra-class correlation coefficient (ICC)</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">icc</span>(marginal_verbs_short[-<span class="kw">c</span>(<span class="dv">1</span>:<span class="dv">3</span>)])</code></pre></div>
 <pre><code>##  Single Score Intraclass Correlation
 ## 

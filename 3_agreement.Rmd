@@ -28,16 +28,8 @@ knitr::opts_chunk$set(message = FALSE, warning = FALSE)
 
 ### 1. Введение
 
-* ваши данные имеют два возможных исхода
-    * head vs.  tail
-    * орел vs. решка
-    * 1 vs. 0
-    * выпадение 6 на кубике
-    * количество диалектных vs. недиалектных форм у одного информанта
-    * употребление слова _кенгуру_ в некотором тексте
-    * ...
+* ваши данные — много 
     
-* у вас есть идеи по поводу возможного распределения
 
 #### 1.1 Библиотеки
 ```{r}
@@ -210,7 +202,7 @@ zilo_classes %>%
 P_o
 ```
 
-Ожидаемое значение:
+Для того, чтобы посчитать вероятность случайного согласия, найдем доли:
 ```{r}
 zilo_classes %>% 
   group_by(class) %>% 
@@ -218,6 +210,7 @@ zilo_classes %>%
   mutate(freq = n / sum(n))
 ```
 
+Возведем их в квадрат и сложим:
 ```{r}
 zilo_classes %>% 
   group_by(class) %>% 
@@ -238,7 +231,7 @@ kappam.fleiss(zilo_classes_short[,-c(1:3)])
 
 <div class="parallax"></div>
 
-### 6. Intra-class correlation (ICC)
+### 6. Intra-class correlation coefficient (ICC)
 
 
 ```{r}
