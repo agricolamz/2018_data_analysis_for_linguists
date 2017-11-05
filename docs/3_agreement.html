@@ -431,7 +431,14 @@ div.tocify {
 <div class="section level3">
 <h3>1. Введение</h3>
 <ul>
-<li>ваши данные — много</li>
+<li>ваши данные представляют собой много наблюдений одного и того же полученные разным способом
+<ul>
+<li>несколько докторов ставит диагноз нескольким пациентам</li>
+<li>несколько информантов оценили род в некотором списке слов</li>
+<li>несколько информантов оценили приемлимость высказываний на школе от 1 до 5</li>
+<li>разметчики независимо разметили какие-то явления на одном и том же материале</li>
+</ul></li>
+<li><strong>Насколько суждения разных оценщиков (<em>raters</em>) относительно субъектов оценки (<em>subjects</em>) согласуются между собой?</strong></li>
 </ul>
 <div class="section level4">
 <h4>1.1 Библиотеки</h4>
@@ -499,8 +506,8 @@ div.tocify {
 <h3>2. Преобразования данных</h3>
 <p>Все функции пакета <code>irr</code> не настроены на формат tidy data, и требует следующего формата:</p>
 <ul>
-<li>каждый столбец — это суждения одного оценщика (raters)</li>
-<li>каждая строчка — это то, что оценивают (subjects)</li>
+<li>каждый столбец — это суждения одного оценщика</li>
+<li>каждая строчка — это то, что оценивают</li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zilo_classes %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">select</span>(s_id, stimulus, translation_ru, stimulus_source, class) %&gt;%<span class="st"> </span>
@@ -552,9 +559,36 @@ div.tocify {
 </div>
 <div id="-" class="section level3">
 <h3>4. Каппа Коэна</h3>
-<p>Каппа Коэна мера согласованности между двумя категориальными переменными <span class="math inline">\(X\)</span> и <span class="math inline">\(Y\)</span>. Обычно говорят о двух оценщиках, которые распеделяют <span class="math inline">\(n\)</span> наблюдений по <span class="math inline">\(s\)</span> категориям.</p>
+<p>Каппа Коэна мера согласованности между двумя категориальными переменными. Обычно говорят о двух оценщиках, которые распеделяют <span class="math inline">\(n\)</span> наблюдений по <span class="math inline">\(s\)</span> категориям.</p>
 <p><span class="math inline">\(\kappa = \frac{p_o-p_e}{1-p_e},\)</span></p>
 <p>где <span class="math inline">\(p_o\)</span> — доля полного согласия, а <span class="math inline">\(p_e\)</span> — вероятность случайного согласия.</p>
+<p>Для случая <span class="math inline">\(s\)</span> = 2, можно нарисовать следующую таблицу сопряженности:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center"></th>
+<th align="center"><span class="math inline">\(s_1\)</span></th>
+<th align="center"><span class="math inline">\(s_2\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><span class="math inline">\(s_1\)</span></td>
+<td align="center">a</td>
+<td align="center">b</td>
+</tr>
+<tr class="even">
+<td align="center"><span class="math inline">\(s_2\)</span></td>
+<td align="center">c</td>
+<td align="center">d</td>
+</tr>
+</tbody>
+</table>
+<p>В таком случае:</p>
+<ul>
+<li><span class="math inline">\(p_o = \frac{a+d}{a+b+c+d}\)</span></li>
+<li><span class="math inline">\(p_e = \frac{(a+b)\times(a+c) + (d+b)\times(d+c)}{(a+b+c+d)^2}\)</span></li>
+</ul>
 
 <p>Выберем двух спикиров из наших данных:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zilo_classes_2s &lt;-<span class="st"> </span>zilo_classes_short[,<span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">14</span>)]
@@ -572,13 +606,7 @@ div.tocify {
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_o &lt;-<span class="st"> </span>(<span class="dv">47+46</span>)/(<span class="dv">47+46+4+9</span>)
 p_o</code></pre></div>
 <pre><code>## [1] 0.8773585</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_b &lt;-<span class="st"> </span>((<span class="dv">47+9</span>)/(<span class="dv">47+46+4+9</span>)) *<span class="st"> </span>((<span class="dv">47+4</span>)/(<span class="dv">47+46+4+9</span>))
-p_b</code></pre></div>
-<pre><code>## [1] 0.254183</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_r &lt;-<span class="st"> </span>((<span class="dv">46+4</span>)/(<span class="dv">47+46+4+9</span>)) *<span class="st"> </span>((<span class="dv">46+9</span>)/(<span class="dv">47+46+4+9</span>))
-p_r</code></pre></div>
-<pre><code>## [1] 0.244749</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_e &lt;-<span class="st"> </span>p_b +<span class="st"> </span>p_r
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_e &lt;-<span class="st"> </span>((<span class="dv">47+9</span>)*(<span class="dv">47+4</span>)+(<span class="dv">46+9</span>)*(<span class="dv">46+4</span>))/(<span class="dv">47+9+4+46</span>)^<span class="dv">2</span>
 p_e</code></pre></div>
 <pre><code>## [1] 0.498932</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">coehns_kappa &lt;-<span class="st"> </span>(p_o -<span class="st"> </span>p_e)/(<span class="dv">1</span> -<span class="st"> </span>p_e)
@@ -597,21 +625,21 @@ coehns_kappa</code></pre></div>
 <p>Если вы хотите, чтобы ваши оценщики не оценивались как равноценные, вы можете использовать взвешенную каппу Коэна.</p>
 <p>В [Landis, Koch 1977] предложена следующая интерпретация каппы Коэна:</p>
 <ul>
-<li>κ &lt; 0 no agreement</li>
+<li>κ &lt; 0 poor agreement</li>
 <li>0–0.20 slight agreement</li>
 <li>0.21–0.40 fair agreement</li>
 <li>0.41–0.60 moderate agreement</li>
 <li>0.61–0.80 substantial agreement</li>
 <li>0.81–1 almost perfect agreement</li>
 </ul>
-<p>Каппа Коэна — не единственная мера согласия между двумя оценщиками.</p>
+<p>Каппа Коэна — не единственная мера согласия между двумя оценщиками. Существуют работы, в которых каппу Коэна ругают.</p>
 <div class="parallax">
 
 </div>
 </div>
 <div id="-" class="section level3">
 <h3>5. Каппа Фляйса</h3>
-<p>Обощением каппы Коэна для оценщиков больше 2 является каппа Фляйса. <span class="math inline">\(k\)</span> оценщиков распеделяют <span class="math inline">\(n\)</span> наблюдений по <span class="math inline">\(s\)</span> категориям.</p>
+<p>Обощением каппы Коэна для оценщиков больше двух является каппа Фляйса. <span class="math inline">\(k\)</span> оценщиков распеделяют <span class="math inline">\(n\)</span> наблюдений по <span class="math inline">\(s\)</span> категориям.</p>
 <p><span class="math inline">\(\kappa = \frac{\bar{P}_o-\bar{P}_e}{1-\bar{P}_e},\)</span></p>
 <p>где <span class="math inline">\(\bar{P}_o\)</span> — средняя доля пар согласных оценщиков из всех пар, а <span class="math inline">\(\bar{P}_e\)</span> — вероятность случайного согласия.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zilo_classes_short[,-<span class="kw">c</span>(<span class="dv">1</span>:<span class="dv">3</span>)]</code></pre></div>
