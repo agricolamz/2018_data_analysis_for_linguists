@@ -2,38 +2,35 @@ name: ""
 navbar: 
   left:
     - text: "биномиальные данные"
-      icon: fa-gear
+      icon: caret-down
       menu:
       - text: "1. Биномиальные данные"
         href: 1_binomial.html
       - text: "2. Binomial CI"
         href: 2_binomial_ci.html
     - text: "меры согласия"
-      icon: fa-gear
+      icon: caret-down
       menu:
       - text: "3. Меры согласия"
         href: 3_agreement.html
-    - text: "кластеризация"
-      icon: fa-gear
+    - text: "multivariat analysis"
+      icon: caret-down
       menu:
-      - text: "4. Кластеризация"
-        href: 4_clusterisation.html
+      - text: "4. PCA, CA, MCA"
+        href: 4_PCA_CA_MCA.html
+      - text: "5. Кластеризация"
+        href: 5_Clustering.html
     - text: "регрессия"
-      icon: fa-gear
+      icon: caret-down
       menu:  
-      - text: "5. Ограничения на применения регрессии"
-        href: 5_regression.html
-      - text: "6. Регрессия со смешанными эффектами"
-        href: 6_mixed_effects.html
-      - text: "7. Нелинейная регрессия"
-        href: 7_nolinear.html
-      - text: "8. Ридж и лассо регрессия"
-        href: 8_ridge_lasso.html
-      - text: "9. Градиентный спуск"
-        href: 9_gradient_boosting.html
-    - text: "уменьшение размерностей"
-      icon: fa-gear
-      menu:
-        - text: "10. Уменьшение размерностей"
-          href: 10_dimensionality_reduction.html
+      - text: "6. Ограничения на применения регрессии"
+        href: 6_regression.html
+      - text: "7. Регрессия со смешанными эффектами"
+        href: 7_mixed_effects.html
+      - text: "8. Нелинейная регрессия"
+        href: 8_nolinear.html
+      - text: "9. Ридж и лассо регрессия"
+        href: 9_ridge_lasso.html
+      - text: "10. Градиентный спуск"
+        href: 10_gradient_boosting.html
 output_dir: docs
