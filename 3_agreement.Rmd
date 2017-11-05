@@ -35,6 +35,10 @@ knitr::opts_chunk$set(message = FALSE, warning = FALSE)
     * разметчики независимо разметили какие-то явления на одном и том же материале
     
 * __Насколько суждения разных оценщиков (*raters*) относительно субъектов оценки (*subjects*) согласуются между собой?__
+* Почему не эти методы?
+    * коэфициенты корреляции
+    * парный t-test
+    * χ², тест Фишера
     
 #### 1.1 Библиотеки
 ```{r}
@@ -240,14 +244,21 @@ Fleiss_kappa <- (P_o-P_e)/(1-P_e)
 Fleiss_kappa <- unname(Fleiss_kappa)
 Fleiss_kappa
 kappam.fleiss(zilo_classes_short[,-c(1:3)])
+kappam.fleiss(marginal_verbs_short[,-c(1:3)])
 ```
 
 <div class="parallax"></div>
 
 ### 6. Intra-class correlation coefficient (ICC)
 
+В работе (Shrout, Fleiss, 1979) различают три ситуации:
+
+> * _One-way random effects model_ — each target is rated by a different set of $k$ judges, randomly selected froma a larger population of judges.
+> * _Two-way random effects model_ — a random sample of $k$ judges is selected from a larger population, and each judge rated each target that is, each judge rates $n$ targets alltogether.
+> * _Two-way mixed model_ —  each target is rated by each of the same $k$ judges, who are the only judges of interest.
+
 ```{r}
-icc(marginal_verbs_short[-c(1:3)])
+icc(marginal_verbs_short[-c(1:3)], model = "twoway", type = "agreement")
 ```
 
 <div class="parallax"></div>

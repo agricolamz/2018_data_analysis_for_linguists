@@ -439,6 +439,12 @@ div.tocify {
 <li>разметчики независимо разметили какие-то явления на одном и том же материале</li>
 </ul></li>
 <li><strong>Насколько суждения разных оценщиков (<em>raters</em>) относительно субъектов оценки (<em>subjects</em>) согласуются между собой?</strong></li>
+<li>Почему не эти методы?
+<ul>
+<li>коэфициенты корреляции</li>
+<li>парный t-test</li>
+<li>χ², тест Фишера</li>
+</ul></li>
 </ul>
 <div class="section level4">
 <h4>1.1 Библиотеки</h4>
@@ -706,27 +712,44 @@ Fleiss_kappa</code></pre></div>
 ## 
 ##         z = 95.7 
 ##   p-value = 0</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">kappam.fleiss</span>(marginal_verbs_short[,-<span class="kw">c</span>(<span class="dv">1</span>:<span class="dv">3</span>)])</code></pre></div>
+<pre><code>##  Fleiss&#39; Kappa for m Raters
+## 
+##  Subjects = 59 
+##    Raters = 121 
+##     Kappa = 0.394 
+## 
+##         z = 452 
+##   p-value = 0</code></pre>
 <div class="parallax">
 
 </div>
 </div>
 <div id="intra-class-correlation-coefficient-icc" class="section level3">
 <h3>6. Intra-class correlation coefficient (ICC)</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">icc</span>(marginal_verbs_short[-<span class="kw">c</span>(<span class="dv">1</span>:<span class="dv">3</span>)])</code></pre></div>
+<p>В работе (Shrout, Fleiss, 1979) различают три ситуации:</p>
+<blockquote>
+<ul>
+<li><em>One-way random effects model</em> — each target is rated by a different set of <span class="math inline">\(k\)</span> judges, randomly selected froma a larger population of judges.</li>
+<li><em>Two-way random effects model</em> — a random sample of <span class="math inline">\(k\)</span> judges is selected from a larger population, and each judge rated each target that is, each judge rates <span class="math inline">\(n\)</span> targets alltogether.</li>
+<li><em>Two-way mixed model</em> — each target is rated by each of the same <span class="math inline">\(k\)</span> judges, who are the only judges of interest.</li>
+</ul>
+</blockquote>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">icc</span>(marginal_verbs_short[-<span class="kw">c</span>(<span class="dv">1</span>:<span class="dv">3</span>)], <span class="dt">model =</span> <span class="st">&quot;twoway&quot;</span>, <span class="dt">type =</span> <span class="st">&quot;agreement&quot;</span>)</code></pre></div>
 <pre><code>##  Single Score Intraclass Correlation
 ## 
-##    Model: oneway 
-##    Type : consistency 
+##    Model: twoway 
+##    Type : agreement 
 ## 
 ##    Subjects = 59 
 ##      Raters = 121 
-##      ICC(1) = 0.757
+##    ICC(A,1) = 0.757
 ## 
 ##  F-Test, H0: r0 = 0 ; H1: r0 &gt; 0 
-##  F(58,7080) = 377 , p = 0 
+##  F(58,3300) = 439 , p = 0 
 ## 
 ##  95%-Confidence Interval for ICC Population Values:
-##   0.69 &lt; ICC &lt; 0.823</code></pre>
+##   0.689 &lt; ICC &lt; 0.823</code></pre>
 <div class="parallax">
 
 </div>
