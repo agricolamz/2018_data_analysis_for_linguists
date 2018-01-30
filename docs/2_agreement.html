@@ -306,75 +306,82 @@ div.tocify {
       <ul class="nav navbar-nav">
         <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="caret caret-down"></span>
-     
-    биномиальные данные
+    tidyverse
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="1_binomial.html">1. Биномиальные данные</a>
-    </li>
-    <li>
-      <a href="2_binomial_ci.html">2. Binomial CI</a>
+      <a href="1_tidyverse.html">1. tidyverse</a>
     </li>
   </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="caret caret-down"></span>
-     
     меры согласия
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="3_agreement.html">3. Меры согласия</a>
+      <a href="2_agreement.html">2. Меры согласия</a>
     </li>
   </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="caret caret-down"></span>
+    биномиальные данные
      
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="3_binomial.html">3. Биномиальные данные</a>
+    </li>
+    <li>
+      <a href="4_binomial_ci.html">4. Binomial CI</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     multivariat analysis
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="4_PCA_CA_MCA.html">4. PCA, CA, MCA</a>
+      <a href="5_PCA.html">5. PCA</a>
     </li>
     <li>
-      <a href="5_Clustering.html">5. Кластеризация</a>
+      <a href="6_CA_MCA.html">6. CA, MCA</a>
+    </li>
+    <li>
+      <a href="7_Clustering.html">7. Кластеризация</a>
     </li>
   </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="caret caret-down"></span>
-     
     регрессия
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="6_regression.html">6. Ограничения на применения регрессии</a>
+      <a href="8_regression.html">8. Ограничения на применения регрессии</a>
     </li>
     <li>
-      <a href="7_mixed_effects.html">7. Регрессия со смешанными эффектами</a>
+      <a href="9_mixed_effects.html">9. Регрессия со смешанными эффектами</a>
     </li>
     <li>
-      <a href="8_nolinear.html">8. Нелинейная регрессия</a>
+      <a href="10_nolinear.html">9. Нелинейная регрессия</a>
     </li>
     <li>
-      <a href="9_ridge_lasso.html">9. Ридж и лассо регрессия</a>
+      <a href="11_ridge_lasso.html">11. Ридж и лассо регрессия</a>
     </li>
     <li>
-      <a href="10_gradient_boosting.html">10. Градиентный спуск</a>
+      <a href="12_gradient_boosting.html">12. Градиентный спуск</a>
     </li>
   </ul>
 </li>
@@ -390,7 +397,7 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore"><ol start="3" style="list-style-type: decimal">
+<h1 class="title toc-ignore"><ol start="2" style="list-style-type: decimal">
 <li>Меры согласия</li>
 </ol></h1>
 <h4 class="author"><em>Г. Мороз</em></h4>
@@ -401,7 +408,7 @@ div.tocify {
 <style>
 .parallax {
     /* The image used */
-    background-image: url("3_argue.jpg");
+    background-image: url("2_argue.jpg");
     
     /* Set a specific height */
     min-height: 300px; 
@@ -503,8 +510,8 @@ div.tocify {
 <li>каждый столбец — это суждения одного оценщика</li>
 <li>каждая строчка — это то, что оценивают</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zilo_classes %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">select</span>(s_id, stimulus, translation_ru, stimulus_source, class) %&gt;%<span class="st"> </span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zilo_classes <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">select</span>(s_id, stimulus, translation_ru, stimulus_source, class) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">spread</span>(<span class="dt">key =</span> s_id, <span class="dt">value =</span> class) -&gt;
 <span class="st">  </span>zilo_classes_short
 <span class="kw">head</span>(zilo_classes_short)</code></pre></div>
@@ -513,8 +520,8 @@ div.tocify {
 {"columns":[{"label":["stimulus"],"name":[1],"type":["chr"],"align":["left"]},{"label":["translation_ru"],"name":[2],"type":["chr"],"align":["left"]},{"label":["stimulus_source"],"name":[3],"type":["chr"],"align":["left"]},{"label":["1"],"name":[4],"type":["chr"],"align":["left"]},{"label":["2"],"name":[5],"type":["chr"],"align":["left"]},{"label":["3"],"name":[6],"type":["chr"],"align":["left"]},{"label":["4"],"name":[7],"type":["chr"],"align":["left"]},{"label":["5"],"name":[8],"type":["chr"],"align":["left"]},{"label":["6"],"name":[9],"type":["chr"],"align":["left"]},{"label":["7"],"name":[10],"type":["chr"],"align":["left"]},{"label":["8"],"name":[11],"type":["chr"],"align":["left"]},{"label":["9"],"name":[12],"type":["chr"],"align":["left"]},{"label":["10"],"name":[13],"type":["chr"],"align":["left"]},{"label":["11"],"name":[14],"type":["chr"],"align":["left"]},{"label":["12"],"name":[15],"type":["chr"],"align":["left"]},{"label":["13"],"name":[16],"type":["chr"],"align":["left"]},{"label":["14"],"name":[17],"type":["chr"],"align":["left"]},{"label":["15"],"name":[18],"type":["chr"],"align":["left"]},{"label":["16"],"name":[19],"type":["chr"],"align":["left"]}],"data":[{"1":"ala","2":"крышка","3":"native","4":"r","5":"r","6":"r","7":"r","8":"r","9":"r","10":"r","11":"r","12":"r","13":"r","14":"r","15":"r","16":"r","17":"r","18":"r","19":"r"},{"1":"ʁan","2":"лепешка","3":"native","4":"b","5":"b","6":"b","7":"b","8":"b","9":"b","10":"b","11":"b","12":"b","13":"b","14":"b","15":"b","16":"b","17":"b","18":"b","19":"b"},{"1":"antena","2":"антенна","3":"loan","4":"r","5":"b","6":"r","7":"r","8":"r","9":"b","10":"r","11":"b","12":"r","13":"r","14":"r","15":"r","16":"r","17":"r","18":"r","19":"r"},{"1":"anzi","2":"снег","3":"native","4":"r","5":"r","6":"r","7":"r","8":"r","9":"r","10":"r","11":"r","12":"r","13":"r","14":"r","15":"r","16":"r","17":"r","18":"r","19":"r"},{"1":"aptsʲeka","2":"аптека","3":"loan","4":"b","5":"b","6":"b","7":"b","8":"b","9":"b","10":"b","11":"b","12":"b","13":"b","14":"b","15":"b","16":"b","17":"b","18":"b","19":"b"},{"1":"arkom","2":"ложка","3":"native","4":"b","5":"b","6":"b","7":"b","8":"b","9":"b","10":"b","11":"b","12":"b","13":"b","14":"b","15":"b","16":"b","17":"b","18":"b","19":"b"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">marginal_verbs %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">select</span>(SubjectCode, Stimulus, WordType, Prefix, GivenScore) %&gt;%<span class="st"> </span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">marginal_verbs <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">select</span>(SubjectCode, Stimulus, WordType, Prefix, GivenScore) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">spread</span>(<span class="dt">key =</span> SubjectCode, <span class="dt">value =</span> GivenScore) -&gt;
 <span class="st">  </span>marginal_verbs_short
 <span class="kw">head</span>(marginal_verbs_short)</code></pre></div>
@@ -530,21 +537,21 @@ div.tocify {
 <div id="--" class="section level3">
 <h3>3. Процент полного согласия</h3>
 <p>Процент полного согласия — это процент случаев, когда все оценщики идентичны в своих суждениях.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">agree</span>(zilo_classes_short[,-<span class="kw">c</span>(<span class="dv">1</span>:<span class="dv">3</span>)])</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">agree</span>(zilo_classes_short[,<span class="op">-</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>)])</code></pre></div>
 <pre><code>##  Percentage agreement (Tolerance=0)
 ## 
 ##  Subjects = 106 
 ##    Raters = 16 
 ##   %-agree = 74.5</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">round</span>(<span class="fl">74.5</span>*<span class="dv">106</span>/<span class="dv">100</span>) <span class="co"># количество случаев полного согласия</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">round</span>(<span class="fl">74.5</span><span class="op">*</span><span class="dv">106</span><span class="op">/</span><span class="dv">100</span>) <span class="co"># количество случаев полного согласия</span></code></pre></div>
 <pre><code>## [1] 79</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">agree</span>(marginal_verbs_short[,-<span class="kw">c</span>(<span class="dv">1</span>:<span class="dv">3</span>)])</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">agree</span>(marginal_verbs_short[,<span class="op">-</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>)])</code></pre></div>
 <pre><code>##  Percentage agreement (Tolerance=0)
 ## 
 ##  Subjects = 59 
 ##    Raters = 121 
 ##   %-agree = 10.2</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">round</span>(<span class="fl">10.2</span>*<span class="dv">59</span>/<span class="dv">100</span>) <span class="co"># количество случаев полного согласия</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">round</span>(<span class="fl">10.2</span><span class="op">*</span><span class="dv">59</span><span class="op">/</span><span class="dv">100</span>) <span class="co"># количество случаев полного согласия</span></code></pre></div>
 <pre><code>## [1] 6</code></pre>
 <p>Эту меру иногда ошибочно приводят как меру согласия оценщиков, однако она не учитывает возможность случайного совпадения / расхождения суждений.</p>
 <div class="parallax">
@@ -597,13 +604,13 @@ div.tocify {
 ## 1    b  r
 ##   b 47  9
 ##   r  4 46</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_o &lt;-<span class="st"> </span>(<span class="dv">47+46</span>)/(<span class="dv">47+46+4+9</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_o &lt;-<span class="st"> </span>(<span class="dv">47</span><span class="op">+</span><span class="dv">46</span>)<span class="op">/</span>(<span class="dv">47</span><span class="op">+</span><span class="dv">46</span><span class="op">+</span><span class="dv">4</span><span class="op">+</span><span class="dv">9</span>)
 p_o</code></pre></div>
 <pre><code>## [1] 0.8773585</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_e &lt;-<span class="st"> </span>((<span class="dv">47+9</span>)*(<span class="dv">47+4</span>)+(<span class="dv">46+9</span>)*(<span class="dv">46+4</span>))/(<span class="dv">47+9+4+46</span>)^<span class="dv">2</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_e &lt;-<span class="st"> </span>((<span class="dv">47</span><span class="op">+</span><span class="dv">9</span>)<span class="op">*</span>(<span class="dv">47</span><span class="op">+</span><span class="dv">4</span>)<span class="op">+</span>(<span class="dv">46</span><span class="op">+</span><span class="dv">9</span>)<span class="op">*</span>(<span class="dv">46</span><span class="op">+</span><span class="dv">4</span>))<span class="op">/</span>(<span class="dv">47</span><span class="op">+</span><span class="dv">9</span><span class="op">+</span><span class="dv">4</span><span class="op">+</span><span class="dv">46</span>)<span class="op">^</span><span class="dv">2</span>
 p_e</code></pre></div>
 <pre><code>## [1] 0.498932</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">coehns_kappa &lt;-<span class="st"> </span>(p_o -<span class="st"> </span>p_e)/(<span class="dv">1</span> -<span class="st"> </span>p_e)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">coehns_kappa &lt;-<span class="st"> </span>(p_o <span class="op">-</span><span class="st"> </span>p_e)<span class="op">/</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>p_e)
 coehns_kappa</code></pre></div>
 <pre><code>## [1] 0.7552398</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">kappa2</span>(zilo_classes_2s)</code></pre></div>
@@ -636,7 +643,7 @@ coehns_kappa</code></pre></div>
 <p>Обощением каппы Коэна для оценщиков больше двух является каппа Фляйса. <span class="math inline">\(k\)</span> оценщиков распеделяют <span class="math inline">\(n\)</span> наблюдений по <span class="math inline">\(s\)</span> категориям.</p>
 <p><span class="math inline">\(\kappa = \frac{\bar{P}_o-\bar{P}_e}{1-\bar{P}_e},\)</span></p>
 <p>где <span class="math inline">\(\bar{P}_o\)</span> — средняя доля пар согласных оценщиков из всех пар, а <span class="math inline">\(\bar{P}_e\)</span> — вероятность случайного согласия.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zilo_classes_short[,-<span class="kw">c</span>(<span class="dv">1</span>:<span class="dv">3</span>)]</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zilo_classes_short[,<span class="op">-</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>)]</code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["1"],"name":[1],"type":["chr"],"align":["left"]},{"label":["2"],"name":[2],"type":["chr"],"align":["left"]},{"label":["3"],"name":[3],"type":["chr"],"align":["left"]},{"label":["4"],"name":[4],"type":["chr"],"align":["left"]},{"label":["5"],"name":[5],"type":["chr"],"align":["left"]},{"label":["6"],"name":[6],"type":["chr"],"align":["left"]},{"label":["7"],"name":[7],"type":["chr"],"align":["left"]},{"label":["8"],"name":[8],"type":["chr"],"align":["left"]},{"label":["9"],"name":[9],"type":["chr"],"align":["left"]},{"label":["10"],"name":[10],"type":["chr"],"align":["left"]},{"label":["11"],"name":[11],"type":["chr"],"align":["left"]},{"label":["12"],"name":[12],"type":["chr"],"align":["left"]},{"label":["13"],"name":[13],"type":["chr"],"align":["left"]},{"label":["14"],"name":[14],"type":["chr"],"align":["left"]},{"label":["15"],"name":[15],"type":["chr"],"align":["left"]},{"label":["16"],"name":[16],"type":["chr"],"align":["left"]}],"data":[{"1":"r","2":"r","3":"r","4":"r","5":"r","6":"r","7":"r","8":"r","9":"r","10":"r","11":"r","12":"r","13":"r","14":"r","15":"r","16":"r"},{"1":"b","2":"b","3":"b","4":"b","5":"b","6":"b","7":"b","8":"b","9":"b","10":"b","11":"b","12":"b","13":"b","14":"b","15":"b","16":"b"},{"1":"r","2":"b","3":"r","4":"r","5":"r","6":"b","7":"r","8":"b","9":"r","10":"r","11":"r","12":"r","13":"r","14":"r","15":"r","16":"r"},{"1":"r","2":"r","3":"r","4":"r","5":"r","6":"r","7":"r","8":"r","9":"r","10":"r","11":"r","12":"r","13":"r","14":"r","15":"r","16":"r"},{"1":"b","2":"b","3":"b","4":"b","5":"b","6":"b","7":"b","8":"b","9":"b","10":"b","11":"b","12":"b","13":"b","14":"b","15":"b","16":"b"},{"1":"b","2":"b","3":"b","4":"b","5":"b","6":"b","7":"b","8":"b","9":"b","10":"b","11":"b","12":"b","13":"b","14":"b","15":"b","16":"b"},{"1":"b","2":"b","3":"b","4":"b","5":"b","6":"b","7":"b","8":"b","9":"b","10":"b","11":"b","12":"b","13":"b","14":"b","15":"b","16":"b"},{"1":"r","2":"r","3":"r","4":"r","5":"r","6":"r","7":"r","8":"r","9":"r","10":"r","11":"r","12":"r","13":"r","14":"r","15":"r","16":"r"},{"1":"b","2":"b","3":"b","4":"b","5":"b","6":"b","7":"b","8":"b","9":"b","10":"b","11":"b","12":"b","13":"b","14":"b","15":"b","16":"b"},{"1":"b","2":"b","3":"b","4":"b","5":"b","6":"b","7":"b","8":"b","9":"b","10":"b","11":"b","12":"b","13":"b","14":"b","15":"b","16":"b"},{"1":"b","2":"b","3":"b","4":"b","5":"b","6":"b","7":"b","8":"b","9":"b","10":"b","11":"b","12":"b","13":"b","14":"b","15":"b","16":"b"},{"1":"b","2":"b","3":"b","4":"b","5":"b","6":"b","7":"b","8":"b","9":"b","10":"b","11":"b","12":"b","13":"b","14":"b","15":"b","16":"b"},{"1":"b","2":"b","3":"b","4":"b","5":"b","6":"b","7":"b","8":"b","9":"b","10":"b","11":"b","12":"b","13":"b","14":"b","15":"b","16":"b"},{"1":"b","2":"b","3":"b","4":"b","5":"b","6":"b","7":"b","8":"b","9":"b","10":"b","11":"b","12":"b","13":"b","14":"b","15":"b","16":"b"},{"1":"r","2":"r","3":"r","4":"r","5":"r","6":"b","7":"r","8":"r","9":"r","10":"r","11":"r","12":"r","13":"r","14":"r","15":"r","16":"r"},{"1":"b","2":"b","3":"b","4":"b","5":"b","6":"b","7":"b","8":"b","9":"b","10":"b","11":"b","12":"b","13":"b","14":"b","15":"b","16":"b"},{"1":"b","2":"b","3":"b","4":"b","5":"b","6":"b","7":"b","8":"b","9":"b","10":"b","11":"b","12":"b","13":"b","14":"b","15":"b","16":"b"},{"1":"r","2":"r","3":"r","4":"r","5":"r","6":"r","7":"r","8":"r","9":"r","10":"r","11":"r","12":"r","13":"r","14":"r","15":"r","16":"r"},{"1":"r","2":"r","3":"r","4":"r","5":"r","6":"r","7":"r","8":"r","9":"r","10":"r","11":"r","12":"r","13":"r","14":"r","15":"r","16":"r"},{"1":"b","2":"b","3":"b","4":"b","5":"b","6":"b","7":"b","8":"b","9":"b","10":"b","11":"b","12":"b","13":"b","14":"b","15":"b","16":"b"},{"1":"r","2":"r","3":"r","4":"r","5":"r","6":"r","7":"r","8":"r","9":"r","10":"r","11":"r","12":"r","13":"r","14":"r","15":"r","16":"r"},{"1":"b","2":"b","3":"b","4":"b","5":"b","6":"b","7":"b","8":"b","9":"b","10":"b","11":"b","12":"b","13":"b","14":"b","15":"b","16":"b"},{"1":"r","2":"r","3":"r","4":"r","5":"r","6":"r","7":"r","8":"r","9":"r","10":"r","11":"r","12":"r","13":"r","14":"r","15":"r","16":"r"},{"1":"b","2":"b","3":"b","4":"b","5":"b","6":"b","7":"b","8":"b","9":"b","10":"b","11":"b","12":"b","13":"b","14":"b","15":"b","16":"b"},{"1":"r","2":"r","3":"r","4":"r","5":"r","6":"r","7":"r","8":"r","9":"r","10":"r","11":"r","12":"r","13":"r","14":"r","15":"r","16":"r"},{"1":"r","2":"r","3":"r","4":"r","5":"r","6":"r","7":"r","8":"r","9":"r","10":"r","11":"r","12":"r","13":"r","14":"r","15":"r","16":"r"},{"1":"r","2":"r","3":"r","4":"r","5":"r","6":"r","7":"r","8":"r","9":"r","10":"r","11":"r","12":"r","13":"r","14":"r","15":"r","16":"r"},{"1":"b","2":"b","3":"b","4":"b","5":"b","6":"b","7":"b","8":"b","9":"b","10":"b","11":"b","12":"b","13":"b","14":"b","15":"b","16":"b"},{"1":"b","2":"b","3":"b","4":"b","5":"b","6":"b","7":"b","8":"b","9":"b","10":"b","11":"b","12":"b","13":"b","14":"b","15":"b","16":"b"},{"1":"b","2":"b","3":"b","4":"b","5":"b","6":"b","7":"b","8":"b","9":"b","10":"b","11":"b","12":"r","13":"b","14":"b","15":"b","16":"b"},{"1":"b","2":"b","3":"b","4":"b","5":"b","6":"b","7":"b","8":"b","9":"b","10":"b","11":"b","12":"b","13":"b","14":"b","15":"b","16":"b"},{"1":"r","2":"r","3":"r","4":"r","5":"r","6":"r","7":"r","8":"r","9":"r","10":"r","11":"r","12":"r","13":"r","14":"r","15":"r","16":"r"},{"1":"r","2":"b","3":"b","4":"b","5":"b","6":"r","7":"r","8":"b","9":"r","10":"b","11":"r","12":"r","13":"b","14":"b","15":"r","16":"b"},{"1":"r","2":"r","3":"r","4":"r","5":"r","6":"r","7":"r","8":"r","9":"r","10":"r","11":"r","12":"r","13":"r","14":"r","15":"r","16":"r"},{"1":"b","2":"b","3":"b","4":"b","5":"b","6":"b","7":"b","8":"b","9":"b","10":"b","11":"r","12":"b","13":"b","14":"b","15":"b","16":"b"},{"1":"b","2":"b","3":"b","4":"b","5":"b","6":"b","7":"b","8":"b","9":"b","10":"b","11":"b","12":"b","13":"b","14":"b","15":"b","16":"b"},{"1":"r","2":"r","3":"r","4":"r","5":"r","6":"r","7":"r","8":"r","9":"r","10":"r","11":"r","12":"r","13":"r","14":"r","15":"r","16":"r"},{"1":"b","2":"b","3":"b","4":"b","5":"b","6":"b","7":"b","8":"b","9":"b","10":"b","11":"b","12":"b","13":"b","14":"b","15":"b","16":"b"},{"1":"b","2":"b","3":"b","4":"b","5":"b","6":"b","7":"r","8":"r","9":"b","10":"b","11":"b","12":"b","13":"b","14":"b","15":"b","16":"b"},{"1":"b","2":"b","3":"b","4":"b","5":"b","6":"b","7":"b","8":"b","9":"b","10":"b","11":"b","12":"b","13":"b","14":"b","15":"b","16":"b"},{"1":"r","2":"r","3":"r","4":"r","5":"r","6":"b","7":"r","8":"r","9":"r","10":"r","11":"r","12":"r","13":"r","14":"r","15":"r","16":"r"},{"1":"b","2":"b","3":"b","4":"b","5":"b","6":"b","7":"b","8":"b","9":"b","10":"b","11":"b","12":"b","13":"b","14":"b","15":"b","16":"b"},{"1":"b","2":"b","3":"b","4":"b","5":"b","6":"b","7":"b","8":"b","9":"b","10":"b","11":"b","12":"b","13":"b","14":"b","15":"b","16":"b"},{"1":"b","2":"b","3":"b","4":"b","5":"b","6":"r","7":"b","8":"b","9":"b","10":"b","11":"b","12":"b","13":"b","14":"b","15":"r","16":"b"},{"1":"r","2":"r","3":"r","4":"r","5":"r","6":"r","7":"r","8":"r","9":"r","10":"r","11":"r","12":"r","13":"r","14":"r","15":"r","16":"r"},{"1":"b","2":"b","3":"b","4":"b","5":"b","6":"b","7":"b","8":"b","9":"b","10":"b","11":"b","12":"b","13":"b","14":"b","15":"b","16":"b"},{"1":"r","2":"r","3":"r","4":"r","5":"r","6":"r","7":"r","8":"r","9":"r","10":"r","11":"r","12":"r","13":"r","14":"r","15":"r","16":"r"},{"1":"b","2":"b","3":"b","4":"b","5":"b","6":"b","7":"b","8":"b","9":"b","10":"b","11":"b","12":"b","13":"b","14":"b","15":"b","16":"b"},{"1":"b","2":"b","3":"b","4":"b","5":"b","6":"b","7":"b","8":"b","9":"b","10":"b","11":"b","12":"b","13":"b","14":"b","15":"b","16":"b"},{"1":"b","2":"b","3":"b","4":"b","5":"b","6":"b","7":"b","8":"b","9":"b","10":"b","11":"b","12":"b","13":"b","14":"b","15":"b","16":"b"},{"1":"b","2":"b","3":"b","4":"b","5":"b","6":"b","7":"b","8":"b","9":"b","10":"b","11":"b","12":"b","13":"b","14":"b","15":"b","16":"b"},{"1":"r","2":"b","3":"b","4":"r","5":"b","6":"r","7":"b","8":"b","9":"b","10":"r","11":"b","12":"b","13":"b","14":"r","15":"r","16":"r"},{"1":"r","2":"r","3":"r","4":"r","5":"r","6":"r","7":"r","8":"r","9":"r","10":"r","11":"r","12":"r","13":"r","14":"r","15":"r","16":"r"},{"1":"r","2":"b","3":"r","4":"b","5":"b","6":"r","7":"r","8":"r","9":"r","10":"r","11":"r","12":"r","13":"b","14":"r","15":"r","16":"b"},{"1":"r","2":"r","3":"r","4":"r","5":"r","6":"r","7":"r","8":"r","9":"r","10":"r","11":"b","12":"b","13":"r","14":"r","15":"r","16":"b"},{"1":"r","2":"r","3":"r","4":"r","5":"r","6":"r","7":"r","8":"r","9":"r","10":"r","11":"r","12":"r","13":"r","14":"r","15":"r","16":"r"},{"1":"b","2":"r","3":"r","4":"b","5":"r","6":"r","7":"r","8":"r","9":"r","10":"r","11":"r","12":"r","13":"b","14":"r","15":"r","16":"r"},{"1":"b","2":"b","3":"b","4":"b","5":"b","6":"b","7":"b","8":"b","9":"b","10":"b","11":"b","12":"b","13":"b","14":"b","15":"b","16":"b"},{"1":"r","2":"b","3":"b","4":"r","5":"r","6":"b","7":"b","8":"b","9":"b","10":"r","11":"r","12":"b","13":"b","14":"b","15":"r","16":"b"},{"1":"r","2":"r","3":"r","4":"r","5":"r","6":"r","7":"r","8":"r","9":"r","10":"r","11":"r","12":"r","13":"r","14":"r","15":"r","16":"r"},{"1":"r","2":"b","3":"b","4":"b","5":"b","6":"b","7":"b","8":"b","9":"b","10":"b","11":"b","12":"b","13":"b","14":"b","15":"b","16":"b"},{"1":"b","2":"r","3":"r","4":"r","5":"r","6":"r","7":"r","8":"b","9":"b","10":"r","11":"r","12":"r","13":"r","14":"b","15":"r","16":"r"},{"1":"b","2":"b","3":"b","4":"b","5":"b","6":"b","7":"b","8":"b","9":"b","10":"b","11":"b","12":"b","13":"b","14":"b","15":"b","16":"b"},{"1":"b","2":"b","3":"b","4":"b","5":"b","6":"b","7":"b","8":"b","9":"b","10":"b","11":"b","12":"b","13":"b","14":"b","15":"b","16":"b"},{"1":"r","2":"r","3":"r","4":"b","5":"r","6":"r","7":"r","8":"r","9":"r","10":"r","11":"r","12":"r","13":"r","14":"r","15":"r","16":"r"},{"1":"b","2":"b","3":"b","4":"b","5":"b","6":"b","7":"b","8":"b","9":"b","10":"b","11":"b","12":"b","13":"b","14":"b","15":"b","16":"b"},{"1":"b","2":"b","3":"b","4":"b","5":"b","6":"r","7":"b","8":"b","9":"b","10":"b","11":"r","12":"b","13":"b","14":"r","15":"r","16":"b"},{"1":"r","2":"r","3":"r","4":"r","5":"r","6":"r","7":"r","8":"r","9":"r","10":"r","11":"r","12":"r","13":"r","14":"r","15":"r","16":"r"},{"1":"r","2":"r","3":"r","4":"r","5":"r","6":"r","7":"r","8":"r","9":"r","10":"r","11":"r","12":"r","13":"r","14":"r","15":"r","16":"r"},{"1":"r","2":"r","3":"r","4":"r","5":"r","6":"r","7":"r","8":"r","9":"r","10":"r","11":"r","12":"r","13":"r","14":"r","15":"r","16":"r"},{"1":"r","2":"r","3":"r","4":"r","5":"r","6":"r","7":"r","8":"r","9":"r","10":"r","11":"r","12":"r","13":"r","14":"r","15":"r","16":"r"},{"1":"b","2":"b","3":"b","4":"b","5":"b","6":"b","7":"b","8":"b","9":"b","10":"b","11":"b","12":"b","13":"b","14":"b","15":"b","16":"b"},{"1":"r","2":"r","3":"r","4":"r","5":"r","6":"r","7":"r","8":"r","9":"r","10":"r","11":"r","12":"r","13":"r","14":"r","15":"r","16":"r"},{"1":"r","2":"r","3":"r","4":"r","5":"r","6":"r","7":"r","8":"r","9":"r","10":"r","11":"r","12":"r","13":"r","14":"r","15":"r","16":"r"},{"1":"r","2":"r","3":"r","4":"r","5":"r","6":"r","7":"r","8":"r","9":"r","10":"r","11":"r","12":"r","13":"r","14":"r","15":"r","16":"r"},{"1":"r","2":"r","3":"r","4":"r","5":"r","6":"r","7":"r","8":"r","9":"r","10":"r","11":"r","12":"r","13":"r","14":"r","15":"r","16":"r"},{"1":"b","2":"b","3":"b","4":"b","5":"b","6":"b","7":"b","8":"b","9":"b","10":"b","11":"b","12":"b","13":"b","14":"b","15":"b","16":"b"},{"1":"b","2":"b","3":"b","4":"b","5":"b","6":"b","7":"b","8":"b","9":"b","10":"b","11":"b","12":"b","13":"b","14":"b","15":"b","16":"b"},{"1":"r","2":"r","3":"r","4":"r","5":"r","6":"r","7":"r","8":"r","9":"r","10":"r","11":"r","12":"r","13":"r","14":"r","15":"r","16":"r"},{"1":"b","2":"b","3":"b","4":"b","5":"b","6":"b","7":"b","8":"b","9":"b","10":"b","11":"b","12":"b","13":"b","14":"b","15":"b","16":"b"},{"1":"r","2":"b","3":"r","4":"b","5":"r","6":"r","7":"r","8":"r","9":"r","10":"b","11":"r","12":"r","13":"b","14":"b","15":"r","16":"b"},{"1":"r","2":"r","3":"r","4":"r","5":"r","6":"r","7":"r","8":"r","9":"r","10":"r","11":"r","12":"r","13":"r","14":"r","15":"r","16":"r"},{"1":"b","2":"b","3":"b","4":"b","5":"b","6":"b","7":"b","8":"r","9":"r","10":"b","11":"r","12":"b","13":"b","14":"b","15":"r","16":"b"},{"1":"b","2":"b","3":"b","4":"b","5":"b","6":"b","7":"b","8":"b","9":"b","10":"b","11":"b","12":"b","13":"b","14":"b","15":"b","16":"b"},{"1":"r","2":"r","3":"r","4":"r","5":"r","6":"r","7":"r","8":"r","9":"r","10":"r","11":"r","12":"r","13":"r","14":"r","15":"r","16":"r"},{"1":"b","2":"b","3":"b","4":"b","5":"b","6":"b","7":"b","8":"b","9":"b","10":"b","11":"b","12":"b","13":"b","14":"r","15":"b","16":"b"},{"1":"r","2":"r","3":"r","4":"r","5":"r","6":"r","7":"r","8":"r","9":"r","10":"r","11":"r","12":"r","13":"r","14":"r","15":"r","16":"r"},{"1":"r","2":"r","3":"r","4":"r","5":"r","6":"r","7":"r","8":"r","9":"r","10":"r","11":"r","12":"r","13":"r","14":"r","15":"r","16":"r"},{"1":"b","2":"b","3":"b","4":"b","5":"b","6":"b","7":"b","8":"b","9":"b","10":"r","11":"b","12":"b","13":"b","14":"b","15":"b","16":"b"},{"1":"b","2":"b","3":"b","4":"b","5":"b","6":"b","7":"b","8":"b","9":"b","10":"b","11":"b","12":"b","13":"b","14":"b","15":"b","16":"b"},{"1":"r","2":"r","3":"r","4":"r","5":"r","6":"r","7":"r","8":"r","9":"r","10":"r","11":"r","12":"r","13":"r","14":"r","15":"r","16":"r"},{"1":"r","2":"r","3":"r","4":"r","5":"r","6":"r","7":"r","8":"r","9":"r","10":"r","11":"r","12":"r","13":"r","14":"r","15":"r","16":"r"},{"1":"b","2":"b","3":"b","4":"b","5":"b","6":"b","7":"b","8":"b","9":"b","10":"b","11":"b","12":"b","13":"b","14":"b","15":"b","16":"b"},{"1":"r","2":"r","3":"r","4":"r","5":"r","6":"r","7":"r","8":"r","9":"r","10":"r","11":"r","12":"r","13":"r","14":"r","15":"r","16":"r"},{"1":"b","2":"b","3":"b","4":"b","5":"b","6":"b","7":"b","8":"b","9":"b","10":"b","11":"r","12":"b","13":"b","14":"b","15":"b","16":"b"},{"1":"r","2":"r","3":"r","4":"r","5":"r","6":"r","7":"r","8":"r","9":"r","10":"r","11":"r","12":"r","13":"r","14":"r","15":"r","16":"r"},{"1":"b","2":"b","3":"b","4":"b","5":"b","6":"b","7":"b","8":"b","9":"b","10":"b","11":"b","12":"b","13":"b","14":"b","15":"b","16":"b"},{"1":"b","2":"b","3":"b","4":"b","5":"b","6":"b","7":"b","8":"b","9":"b","10":"b","11":"b","12":"b","13":"b","14":"b","15":"b","16":"b"},{"1":"r","2":"r","3":"r","4":"r","5":"r","6":"r","7":"r","8":"r","9":"r","10":"r","11":"r","12":"r","13":"r","14":"r","15":"r","16":"r"},{"1":"b","2":"b","3":"b","4":"b","5":"b","6":"b","7":"r","8":"r","9":"b","10":"b","11":"r","12":"b","13":"r","14":"r","15":"r","16":"r"},{"1":"r","2":"b","3":"b","4":"b","5":"b","6":"b","7":"b","8":"b","9":"b","10":"b","11":"b","12":"b","13":"b","14":"b","15":"b","16":"b"},{"1":"r","2":"r","3":"r","4":"r","5":"r","6":"r","7":"r","8":"r","9":"r","10":"r","11":"r","12":"r","13":"r","14":"r","15":"r","16":"r"},{"1":"b","2":"b","3":"b","4":"b","5":"b","6":"b","7":"b","8":"b","9":"b","10":"b","11":"r","12":"b","13":"b","14":"b","15":"b","16":"b"},{"1":"b","2":"b","3":"b","4":"r","5":"r","6":"r","7":"r","8":"b","9":"r","10":"r","11":"r","12":"r","13":"b","14":"r","15":"r","16":"b"},{"1":"b","2":"b","3":"b","4":"b","5":"b","6":"b","7":"b","8":"b","9":"b","10":"b","11":"b","12":"b","13":"b","14":"b","15":"b","16":"b"},{"1":"r","2":"r","3":"r","4":"r","5":"b","6":"r","7":"r","8":"r","9":"r","10":"r","11":"r","12":"b","13":"b","14":"b","15":"r","16":"r"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -644,54 +651,54 @@ coehns_kappa</code></pre></div>
 </div>
 <p>В нашем датасете <span class="math inline">\(k\)</span> = 16, <span class="math inline">\(n\)</span> = 106, <span class="math inline">\(s\)</span> = 2.</p>
 <p>Посчитаем, насколько оценщики согласны относительно третьего слова (3 b, 13 r). Для этого посчитаем долю пар оценщиков, которые согласны, среди всех возможных пар:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">P_3 &lt;-<span class="st"> </span>(<span class="kw">choose</span>(<span class="dv">13</span>, <span class="dv">2</span>) +<span class="st"> </span><span class="kw">choose</span>(<span class="dv">3</span>, <span class="dv">2</span>))/<span class="st"> </span><span class="kw">choose</span>(<span class="dv">16</span>, <span class="dv">2</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">P_<span class="dv">3</span> &lt;-<span class="st"> </span>(<span class="kw">choose</span>(<span class="dv">13</span>, <span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">choose</span>(<span class="dv">3</span>, <span class="dv">2</span>))<span class="op">/</span><span class="st"> </span><span class="kw">choose</span>(<span class="dv">16</span>, <span class="dv">2</span>)</code></pre></div>
 <p>Посчитаем это значение для каждого слова:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zilo_classes %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">count</span>(w_id, class) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">spread</span>(<span class="dt">key =</span> class, <span class="dt">value =</span> n, <span class="dt">fill =</span> <span class="dv">0</span>) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">P_i =</span> (<span class="kw">choose</span>(b, <span class="dv">2</span>) +<span class="st"> </span><span class="kw">choose</span>(r, <span class="dv">2</span>))/<span class="st"> </span><span class="kw">choose</span>(<span class="dv">16</span>, <span class="dv">2</span>))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zilo_classes <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">count</span>(w_id, class) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">spread</span>(<span class="dt">key =</span> class, <span class="dt">value =</span> n, <span class="dt">fill =</span> <span class="dv">0</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">P_i =</span> (<span class="kw">choose</span>(b, <span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">choose</span>(r, <span class="dv">2</span>))<span class="op">/</span><span class="st"> </span><span class="kw">choose</span>(<span class="dv">16</span>, <span class="dv">2</span>))</code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["w_id"],"name":[1],"type":["int"],"align":["right"]},{"label":["b"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["r"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["P_i"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"16","3":"0","4":"1.0000000"},{"1":"2","2":"9","3":"7","4":"0.4750000"},{"1":"3","2":"15","3":"1","4":"0.8750000"},{"1":"4","2":"16","3":"0","4":"1.0000000"},{"1":"5","2":"16","3":"0","4":"1.0000000"},{"1":"6","2":"0","3":"16","4":"1.0000000"},{"1":"7","2":"0","3":"16","4":"1.0000000"},{"1":"8","2":"16","3":"0","4":"1.0000000"},{"1":"9","2":"16","3":"0","4":"1.0000000"},{"1":"10","2":"16","3":"0","4":"1.0000000"},{"1":"11","2":"1","3":"15","4":"0.8750000"},{"1":"12","2":"0","3":"16","4":"1.0000000"},{"1":"13","2":"0","3":"16","4":"1.0000000"},{"1":"14","2":"15","3":"1","4":"0.8750000"},{"1":"15","2":"0","3":"16","4":"1.0000000"},{"1":"16","2":"16","3":"0","4":"1.0000000"},{"1":"17","2":"4","3":"12","4":"0.6000000"},{"1":"18","2":"16","3":"0","4":"1.0000000"},{"1":"19","2":"0","3":"16","4":"1.0000000"},{"1":"20","2":"9","3":"7","4":"0.4750000"},{"1":"21","2":"6","3":"10","4":"0.5000000"},{"1":"22","2":"16","3":"0","4":"1.0000000"},{"1":"23","2":"0","3":"16","4":"1.0000000"},{"1":"24","2":"6","3":"10","4":"0.5000000"},{"1":"25","2":"16","3":"0","4":"1.0000000"},{"1":"26","2":"0","3":"16","4":"1.0000000"},{"1":"27","2":"15","3":"1","4":"0.8750000"},{"1":"28","2":"15","3":"1","4":"0.8750000"},{"1":"29","2":"16","3":"0","4":"1.0000000"},{"1":"30","2":"0","3":"16","4":"1.0000000"},{"1":"31","2":"16","3":"0","4":"1.0000000"},{"1":"32","2":"0","3":"16","4":"1.0000000"},{"1":"33","2":"0","3":"16","4":"1.0000000"},{"1":"34","2":"0","3":"16","4":"1.0000000"},{"1":"35","2":"0","3":"16","4":"1.0000000"},{"1":"36","2":"16","3":"0","4":"1.0000000"},{"1":"37","2":"0","3":"16","4":"1.0000000"},{"1":"38","2":"16","3":"0","4":"1.0000000"},{"1":"39","2":"9","3":"7","4":"0.4750000"},{"1":"40","2":"16","3":"0","4":"1.0000000"},{"1":"41","2":"12","3":"4","4":"0.6000000"},{"1":"42","2":"0","3":"16","4":"1.0000000"},{"1":"43","2":"16","3":"0","4":"1.0000000"},{"1":"44","2":"4","3":"12","4":"0.6000000"},{"1":"45","2":"3","3":"13","4":"0.6750000"},{"1":"46","2":"15","3":"1","4":"0.8750000"},{"1":"47","2":"0","3":"16","4":"1.0000000"},{"1":"48","2":"16","3":"0","4":"1.0000000"},{"1":"49","2":"16","3":"0","4":"1.0000000"},{"1":"50","2":"16","3":"0","4":"1.0000000"},{"1":"51","2":"16","3":"0","4":"1.0000000"},{"1":"52","2":"0","3":"16","4":"1.0000000"},{"1":"53","2":"0","3":"16","4":"1.0000000"},{"1":"54","2":"0","3":"16","4":"1.0000000"},{"1":"55","2":"16","3":"0","4":"1.0000000"},{"1":"56","2":"0","3":"16","4":"1.0000000"},{"1":"57","2":"0","3":"16","4":"1.0000000"},{"1":"58","2":"0","3":"16","4":"1.0000000"},{"1":"59","2":"0","3":"16","4":"1.0000000"},{"1":"60","2":"0","3":"16","4":"1.0000000"},{"1":"61","2":"16","3":"0","4":"1.0000000"},{"1":"62","2":"0","3":"16","4":"1.0000000"},{"1":"63","2":"15","3":"1","4":"0.8750000"},{"1":"64","2":"3","3":"13","4":"0.6750000"},{"1":"65","2":"16","3":"0","4":"1.0000000"},{"1":"66","2":"16","3":"0","4":"1.0000000"},{"1":"67","2":"16","3":"0","4":"1.0000000"},{"1":"68","2":"16","3":"0","4":"1.0000000"},{"1":"69","2":"0","3":"16","4":"1.0000000"},{"1":"70","2":"5","3":"11","4":"0.5416667"},{"1":"71","2":"14","3":"2","4":"0.7666667"},{"1":"72","2":"14","3":"2","4":"0.7666667"},{"1":"73","2":"0","3":"16","4":"1.0000000"},{"1":"74","2":"0","3":"16","4":"1.0000000"},{"1":"75","2":"10","3":"6","4":"0.5000000"},{"1":"76","2":"15","3":"1","4":"0.8750000"},{"1":"77","2":"16","3":"0","4":"1.0000000"},{"1":"78","2":"0","3":"16","4":"1.0000000"},{"1":"79","2":"0","3":"16","4":"1.0000000"},{"1":"80","2":"0","3":"16","4":"1.0000000"},{"1":"81","2":"16","3":"0","4":"1.0000000"},{"1":"82","2":"0","3":"16","4":"1.0000000"},{"1":"83","2":"16","3":"0","4":"1.0000000"},{"1":"84","2":"16","3":"0","4":"1.0000000"},{"1":"85","2":"0","3":"16","4":"1.0000000"},{"1":"86","2":"16","3":"0","4":"1.0000000"},{"1":"87","2":"16","3":"0","4":"1.0000000"},{"1":"88","2":"16","3":"0","4":"1.0000000"},{"1":"89","2":"16","3":"0","4":"1.0000000"},{"1":"90","2":"16","3":"0","4":"1.0000000"},{"1":"91","2":"0","3":"16","4":"1.0000000"},{"1":"92","2":"0","3":"16","4":"1.0000000"},{"1":"93","2":"16","3":"0","4":"1.0000000"},{"1":"94","2":"0","3":"16","4":"1.0000000"},{"1":"95","2":"16","3":"0","4":"1.0000000"},{"1":"96","2":"16","3":"0","4":"1.0000000"},{"1":"97","2":"1","3":"15","4":"0.8750000"},{"1":"98","2":"12","3":"4","4":"0.6000000"},{"1":"99","2":"16","3":"0","4":"1.0000000"},{"1":"100","2":"15","3":"1","4":"0.8750000"},{"1":"101","2":"3","3":"13","4":"0.6750000"},{"1":"102","2":"0","3":"16","4":"1.0000000"},{"1":"103","2":"1","3":"15","4":"0.8750000"},{"1":"104","2":"16","3":"0","4":"1.0000000"},{"1":"105","2":"16","3":"0","4":"1.0000000"},{"1":"106","2":"16","3":"0","4":"1.0000000"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <p>Возьмем среднее этой меры:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zilo_classes %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">count</span>(w_id, class) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">spread</span>(<span class="dt">key =</span> class, <span class="dt">value =</span> n, <span class="dt">fill =</span> <span class="dv">0</span>) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">P_i =</span> (<span class="kw">choose</span>(b, <span class="dv">2</span>) +<span class="st"> </span><span class="kw">choose</span>(r, <span class="dv">2</span>))/<span class="st"> </span><span class="kw">choose</span>(<span class="dv">16</span>, <span class="dv">2</span>)) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">P_o =</span> <span class="kw">mean</span>(P_i)) %&gt;%<span class="st"> </span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zilo_classes <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">count</span>(w_id, class) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">spread</span>(<span class="dt">key =</span> class, <span class="dt">value =</span> n, <span class="dt">fill =</span> <span class="dv">0</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">P_i =</span> (<span class="kw">choose</span>(b, <span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">choose</span>(r, <span class="dv">2</span>))<span class="op">/</span><span class="st"> </span><span class="kw">choose</span>(<span class="dv">16</span>, <span class="dv">2</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">P_o =</span> <span class="kw">mean</span>(P_i)) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span>unlist -&gt;
 <span class="st">  </span>P_o
 P_o</code></pre></div>
 <pre><code>##   P_o 
 ## 0.925</code></pre>
 <p>Для того, чтобы посчитать вероятность случайного согласия, найдем доли:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zilo_classes %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">group_by</span>(class) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n =</span> <span class="kw">n</span>()) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">freq =</span> n /<span class="st"> </span><span class="kw">sum</span>(n))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zilo_classes <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(class) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">freq =</span> n <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(n))</code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["class"],"name":[1],"type":["chr"],"align":["left"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]},{"label":["freq"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"b","2":"918","3":"0.5412736"},{"1":"r","2":"778","3":"0.4587264"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <p>Возведем их в квадрат и сложим:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zilo_classes %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">group_by</span>(class) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n =</span> <span class="kw">n</span>()) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">freq_2 =</span> (n /<span class="st"> </span><span class="kw">sum</span>(n))^<span class="dv">2</span>) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">P_e =</span> <span class="kw">sum</span>(freq_2)) %&gt;%<span class="st"> </span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zilo_classes <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(class) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">freq_2 =</span> (n <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(n))<span class="op">^</span><span class="dv">2</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">P_e =</span> <span class="kw">sum</span>(freq_<span class="dv">2</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span>unlist -&gt;
 <span class="st">  </span>P_e
 P_e</code></pre></div>
 <pre><code>##      P_e 
 ## 0.503407</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Fleiss_kappa &lt;-<span class="st"> </span>(P_o-P_e)/(<span class="dv">1</span>-P_e)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Fleiss_kappa &lt;-<span class="st"> </span>(P_o<span class="op">-</span>P_e)<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>P_e)
 Fleiss_kappa &lt;-<span class="st"> </span><span class="kw">unname</span>(Fleiss_kappa)
 Fleiss_kappa</code></pre></div>
 <pre><code>## [1] 0.8489709</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">kappam.fleiss</span>(zilo_classes_short[,-<span class="kw">c</span>(<span class="dv">1</span>:<span class="dv">3</span>)])</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">kappam.fleiss</span>(zilo_classes_short[,<span class="op">-</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>)])</code></pre></div>
 <pre><code>##  Fleiss&#39; Kappa for m Raters
 ## 
 ##  Subjects = 106 
@@ -700,7 +707,7 @@ Fleiss_kappa</code></pre></div>
 ## 
 ##         z = 95.7 
 ##   p-value = 0</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">kappam.fleiss</span>(marginal_verbs_short[,-<span class="kw">c</span>(<span class="dv">1</span>:<span class="dv">3</span>)])</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">kappam.fleiss</span>(marginal_verbs_short[,<span class="op">-</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>)])</code></pre></div>
 <pre><code>##  Fleiss&#39; Kappa for m Raters
 ## 
 ##  Subjects = 59 
@@ -723,7 +730,7 @@ Fleiss_kappa</code></pre></div>
 <li><em>Two-way mixed model</em> — each target is rated by each of the same <span class="math inline">\(k\)</span> judges, who are the only judges of interest.</li>
 </ul>
 </blockquote>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">icc</span>(marginal_verbs_short[-<span class="kw">c</span>(<span class="dv">1</span>:<span class="dv">3</span>)], <span class="dt">model =</span> <span class="st">&quot;twoway&quot;</span>, <span class="dt">type =</span> <span class="st">&quot;agreement&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">icc</span>(marginal_verbs_short[<span class="op">-</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>)], <span class="dt">model =</span> <span class="st">&quot;twoway&quot;</span>, <span class="dt">type =</span> <span class="st">&quot;agreement&quot;</span>)</code></pre></div>
 <pre><code>##  Single Score Intraclass Correlation
 ## 
 ##    Model: twoway 
@@ -743,6 +750,9 @@ Fleiss_kappa</code></pre></div>
 </div>
 </div>
 
+<br><br><br>
+<p><center> &copy; Г. Мороз 2018 с помощью RMarkdown. Исходный код на 
+<a href="https://github.com/agricolamz/2018_data_analysis_for_linguists"> GitHub <img src="https://assets-cdn.github.com/images/modules/logos_page/GitHub-Mark.png"  style="width:30px;height:30px;border:0"></a></center> </p>
 
 
 </div>

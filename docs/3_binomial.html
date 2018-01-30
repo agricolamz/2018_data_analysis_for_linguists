@@ -306,75 +306,82 @@ div.tocify {
       <ul class="nav navbar-nav">
         <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="caret caret-down"></span>
-     
-    биномиальные данные
+    tidyverse
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="1_binomial.html">1. Биномиальные данные</a>
-    </li>
-    <li>
-      <a href="2_binomial_ci.html">2. Binomial CI</a>
+      <a href="1_tidyverse.html">1. tidyverse</a>
     </li>
   </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="caret caret-down"></span>
-     
     меры согласия
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="3_agreement.html">3. Меры согласия</a>
+      <a href="2_agreement.html">2. Меры согласия</a>
     </li>
   </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="caret caret-down"></span>
+    биномиальные данные
      
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="3_binomial.html">3. Биномиальные данные</a>
+    </li>
+    <li>
+      <a href="4_binomial_ci.html">4. Binomial CI</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     multivariat analysis
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="4_PCA_CA_MCA.html">4. PCA, CA, MCA</a>
+      <a href="5_PCA.html">5. PCA</a>
     </li>
     <li>
-      <a href="5_Clustering.html">5. Кластеризация</a>
+      <a href="6_CA_MCA.html">6. CA, MCA</a>
+    </li>
+    <li>
+      <a href="7_Clustering.html">7. Кластеризация</a>
     </li>
   </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="caret caret-down"></span>
-     
     регрессия
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="6_regression.html">6. Ограничения на применения регрессии</a>
+      <a href="8_regression.html">8. Ограничения на применения регрессии</a>
     </li>
     <li>
-      <a href="7_mixed_effects.html">7. Регрессия со смешанными эффектами</a>
+      <a href="9_mixed_effects.html">9. Регрессия со смешанными эффектами</a>
     </li>
     <li>
-      <a href="8_nolinear.html">8. Нелинейная регрессия</a>
+      <a href="10_nolinear.html">9. Нелинейная регрессия</a>
     </li>
     <li>
-      <a href="9_ridge_lasso.html">9. Ридж и лассо регрессия</a>
+      <a href="11_ridge_lasso.html">11. Ридж и лассо регрессия</a>
     </li>
     <li>
-      <a href="10_gradient_boosting.html">10. Градиентный спуск</a>
+      <a href="12_gradient_boosting.html">12. Градиентный спуск</a>
     </li>
   </ul>
 </li>
@@ -390,7 +397,7 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore"><ol style="list-style-type: decimal">
+<h1 class="title toc-ignore"><ol start="3" style="list-style-type: decimal">
 <li>Биномиальные данные</li>
 </ol></h1>
 <h4 class="author"><em>Г. Мороз</em></h4>
@@ -401,7 +408,7 @@ div.tocify {
 <style>
 .parallax {
     /* The image used */
-    background-image: url("1_coin.jpg");
+    background-image: url("3_coin.jpg");
 
     /* Set a specific height */
     min-height: 350px; 
@@ -444,19 +451,19 @@ div.tocify {
 <h3>2. Биномиальное распределение</h3>
 <p>$P(k | n, p) =  p^k (1-p)^{n-k} = {n k} p^k (1-p)^{n-k}; 0 p 1; n, k &gt; 0 $</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">probabilities &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.23</span>, <span class="fl">0.33</span>, <span class="fl">0.69</span>)
-density &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">dbinom</span>(<span class="dt">x =</span> <span class="dv">1</span>:<span class="dv">83</span>, <span class="dt">size =</span> <span class="dv">83</span>, <span class="dt">prob =</span> probabilities[<span class="dv">1</span>]),
-             <span class="kw">dbinom</span>(<span class="dt">x =</span> <span class="dv">1</span>:<span class="dv">83</span>, <span class="dt">size =</span> <span class="dv">83</span>, <span class="dt">prob =</span> probabilities[<span class="dv">2</span>]),
-             <span class="kw">dbinom</span>(<span class="dt">x =</span> <span class="dv">1</span>:<span class="dv">83</span>, <span class="dt">size =</span> <span class="dv">83</span>, <span class="dt">prob =</span> probabilities[<span class="dv">3</span>]))
+density &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">dbinom</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">83</span>, <span class="dt">size =</span> <span class="dv">83</span>, <span class="dt">prob =</span> probabilities[<span class="dv">1</span>]),
+             <span class="kw">dbinom</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">83</span>, <span class="dt">size =</span> <span class="dv">83</span>, <span class="dt">prob =</span> probabilities[<span class="dv">2</span>]),
+             <span class="kw">dbinom</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">83</span>, <span class="dt">size =</span> <span class="dv">83</span>, <span class="dt">prob =</span> probabilities[<span class="dv">3</span>]))
 params &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="kw">paste</span>(<span class="st">&quot;n = 83, p =&quot;</span>, probabilities), <span class="dt">each =</span> <span class="dv">83</span>)
-id &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">1</span>:<span class="dv">83</span>, <span class="dv">3</span>)
+id &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">83</span>, <span class="dv">3</span>)
 binomials &lt;-<span class="st"> </span><span class="kw">data_frame</span>(density, params, id)
 
-binomials %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(id, density, <span class="dt">fill =</span> params))+
-<span class="st">  </span><span class="kw">geom_polygon</span>(<span class="dt">alpha =</span> <span class="fl">0.8</span>)+
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;PDF для трех биномиальных распределений&quot;</span>)+
+binomials <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(id, density, <span class="dt">fill =</span> params))<span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_polygon</span>(<span class="dt">alpha =</span> <span class="fl">0.8</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;PDF для трех биномиальных распределений&quot;</span>)<span class="op">+</span>
 <span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
-<p><img src="1_binomial_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p><img src="3_binomial_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 <p><span class="math inline">\(E[X] = np; D[X] = np\times(n-1)\)</span></p>
 <div class="parallax">
 
@@ -480,19 +487,19 @@ binomial_test</code></pre></div>
 ## sample estimates:
 ## probability of success 
 ##              0.3253012</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">binomials %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">filter</span>(params ==<span class="st"> &quot;n = 83, p = 0.23&quot;</span>) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(id, density))+
-<span class="st">  </span><span class="kw">geom_line</span>()+
-<span class="st">  </span><span class="kw">geom_area</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">ifelse</span>(id&gt;=<span class="kw">qbinom</span>(<span class="fl">0.025</span>, <span class="dv">83</span>, <span class="fl">0.23</span>) &amp;
-<span class="st">                           </span>id&lt;=<span class="kw">qbinom</span>(<span class="fl">0.975</span>, <span class="dv">83</span>, <span class="fl">0.23</span>), id, <span class="ot">NA</span>)),
-            <span class="dt">fill =</span> <span class="st">&quot;lightblue&quot;</span>)+
-<span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">27</span>, <span class="dt">linetype =</span> <span class="dv">2</span>)+
-<span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">12</span>, <span class="dv">19</span>, <span class="dv">27</span>, <span class="dv">2</span>:<span class="dv">4</span>*<span class="dv">20</span>))+
-<span class="st">  </span><span class="kw">theme_bw</span>()+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">binomials <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(params <span class="op">==</span><span class="st"> &quot;n = 83, p = 0.23&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(id, density))<span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_line</span>()<span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_area</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">ifelse</span>(id<span class="op">&gt;=</span><span class="kw">qbinom</span>(<span class="fl">0.025</span>, <span class="dv">83</span>, <span class="fl">0.23</span>) <span class="op">&amp;</span>
+<span class="st">                           </span>id<span class="op">&lt;=</span><span class="kw">qbinom</span>(<span class="fl">0.975</span>, <span class="dv">83</span>, <span class="fl">0.23</span>), id, <span class="ot">NA</span>)),
+            <span class="dt">fill =</span> <span class="st">&quot;lightblue&quot;</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">27</span>, <span class="dt">linetype =</span> <span class="dv">2</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">12</span>, <span class="dv">19</span>, <span class="dv">27</span>, <span class="dv">2</span><span class="op">:</span><span class="dv">4</span><span class="op">*</span><span class="dv">20</span>))<span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_bw</span>()<span class="op">+</span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Биномиальное распределение с параметрами n = 83, p = 0.23&quot;</span>,
        <span class="dt">subtitle =</span> <span class="st">&quot;Голубой — центральные 95% данных&quot;</span>)</code></pre></div>
-<p><img src="1_binomial_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p><img src="3_binomial_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <div class="parallax">
 
 </div>
@@ -500,28 +507,28 @@ binomial_test</code></pre></div>
 <div id="--" class="section level3">
 <h3>4. Хакерский подход: симуляция</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">42</span>)
-<span class="kw">do</span>(<span class="dv">1000</span>)*
-<span class="st">  </span><span class="kw">sum</span>(<span class="kw">sample</span>(<span class="dt">x =</span> <span class="dv">1</span>:<span class="dv">0</span>, 
+<span class="kw">do</span>(<span class="dv">1000</span>)<span class="op">*</span>
+<span class="st">  </span><span class="kw">sum</span>(<span class="kw">sample</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">0</span>, 
              <span class="dt">size =</span> <span class="dv">83</span>, 
              <span class="dt">prob =</span> <span class="kw">c</span>(<span class="fl">0.23</span>, <span class="fl">0.77</span>), 
              <span class="dt">replace =</span> <span class="ot">TRUE</span>)) -&gt;
 <span class="st">  </span>simulations
-simulations %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">greater =</span> sum &gt;=<span class="st"> </span><span class="dv">27</span>) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">group_by</span>(greater) %&gt;%<span class="st"> </span>
+simulations <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">greater =</span> sum <span class="op">&gt;=</span><span class="st"> </span><span class="dv">27</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(greater) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">summarise</span>(<span class="dt">number =</span> <span class="kw">n</span>())</code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["greater"],"name":[1],"type":["lgl"],"align":["right"]},{"label":["number"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"FALSE","2":"960"},{"1":"TRUE","2":"40"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">simulations %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(sum))+
-<span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">fill =</span> <span class="st">&quot;lightblue&quot;</span>)+
-<span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">27</span>, <span class="dt">linetype =</span> <span class="dv">2</span>)+
-<span class="st">  </span><span class="kw">theme_bw</span>()+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">simulations <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(sum))<span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">fill =</span> <span class="st">&quot;lightblue&quot;</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">27</span>, <span class="dt">linetype =</span> <span class="dv">2</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_bw</span>()<span class="op">+</span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Распределение 1000 симуляций с параметрами n = 83, p = 0.23&quot;</span>)</code></pre></div>
-<p><img src="1_binomial_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p><img src="3_binomial_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <div class="parallax">
 
 </div>
@@ -531,19 +538,19 @@ simulations %&gt;%<span class="st"> </span>
 <p><span class="math inline">\(f(x; α, β) = \frac{1}{B(α, β)}\times x^{α-1}\times (1-x)^{β-1}; 0 \leq x \leq 1; α, β &gt; 0\)</span> Бета функция: $Β(α, β) =  =  $</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">length =</span> <span class="dv">100</span>)
 alpha &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">23</span>, <span class="dv">33</span>, <span class="dv">69</span>)
-beta &lt;-<span class="st"> </span><span class="dv">83</span>-alpha
+beta &lt;-<span class="st"> </span><span class="dv">83</span><span class="op">-</span>alpha
 density &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">dbeta</span>(x, <span class="dt">shape1 =</span> alpha[<span class="dv">1</span>], <span class="dt">shape2 =</span> beta[<span class="dv">1</span>]),
              <span class="kw">dbeta</span>(x, <span class="dt">shape1 =</span> alpha[<span class="dv">2</span>], <span class="dt">shape2 =</span> beta[<span class="dv">2</span>]),
              <span class="kw">dbeta</span>(x, <span class="dt">shape1 =</span> alpha[<span class="dv">3</span>], <span class="dt">shape2 =</span> beta[<span class="dv">3</span>]))
 params &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="kw">paste</span>(<span class="st">&quot;α =&quot;</span>, alpha, <span class="st">&quot;, β =&quot;</span>, beta), <span class="dt">each =</span> <span class="dv">100</span>)
 betas &lt;-<span class="st"> </span><span class="kw">data_frame</span>(density, params, <span class="dt">id =</span> <span class="kw">rep</span>(x, <span class="dv">3</span>))
 
-betas %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(id, density, <span class="dt">fill =</span> params))+
-<span class="st">  </span><span class="kw">geom_polygon</span>(<span class="dt">alpha =</span> <span class="fl">0.8</span>)+
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;PDF для трех бета распределений&quot;</span>)+
+betas <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(id, density, <span class="dt">fill =</span> params))<span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_polygon</span>(<span class="dt">alpha =</span> <span class="fl">0.8</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;PDF для трех бета распределений&quot;</span>)<span class="op">+</span>
 <span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
-<p><img src="1_binomial_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><img src="3_binomial_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <p><span class="math display">\[Ε[X] = \frac{α}{α+β}; D[X] = \frac{α\times β}{(α+β)^2(α+β+1)}\]</span></p>
 <div class="parallax">
 
@@ -557,6 +564,9 @@ betas %&gt;%<span class="st"> </span>
 </div>
 </div>
 
+<br><br><br>
+<p><center> &copy; Г. Мороз 2018 с помощью RMarkdown. Исходный код на 
+<a href="https://github.com/agricolamz/2018_data_analysis_for_linguists"> GitHub <img src="https://assets-cdn.github.com/images/modules/logos_page/GitHub-Mark.png"  style="width:30px;height:30px;border:0"></a></center> </p>
 
 
 </div>

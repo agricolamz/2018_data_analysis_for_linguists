@@ -306,75 +306,82 @@ div.tocify {
       <ul class="nav navbar-nav">
         <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="caret caret-down"></span>
-     
-    биномиальные данные
+    tidyverse
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="1_binomial.html">1. Биномиальные данные</a>
-    </li>
-    <li>
-      <a href="2_binomial_ci.html">2. Binomial CI</a>
+      <a href="1_tidyverse.html">1. tidyverse</a>
     </li>
   </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="caret caret-down"></span>
-     
     меры согласия
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="3_agreement.html">3. Меры согласия</a>
+      <a href="2_agreement.html">2. Меры согласия</a>
     </li>
   </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="caret caret-down"></span>
+    биномиальные данные
      
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="3_binomial.html">3. Биномиальные данные</a>
+    </li>
+    <li>
+      <a href="4_binomial_ci.html">4. Binomial CI</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     multivariat analysis
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="4_PCA_CA_MCA.html">4. PCA, CA, MCA</a>
+      <a href="5_PCA.html">5. PCA</a>
     </li>
     <li>
-      <a href="5_Clustering.html">5. Кластеризация</a>
+      <a href="6_CA_MCA.html">6. CA, MCA</a>
+    </li>
+    <li>
+      <a href="7_Clustering.html">7. Кластеризация</a>
     </li>
   </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="caret caret-down"></span>
-     
     регрессия
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="6_regression.html">6. Ограничения на применения регрессии</a>
+      <a href="8_regression.html">8. Ограничения на применения регрессии</a>
     </li>
     <li>
-      <a href="7_mixed_effects.html">7. Регрессия со смешанными эффектами</a>
+      <a href="9_mixed_effects.html">9. Регрессия со смешанными эффектами</a>
     </li>
     <li>
-      <a href="8_nolinear.html">8. Нелинейная регрессия</a>
+      <a href="10_nolinear.html">9. Нелинейная регрессия</a>
     </li>
     <li>
-      <a href="9_ridge_lasso.html">9. Ридж и лассо регрессия</a>
+      <a href="11_ridge_lasso.html">11. Ридж и лассо регрессия</a>
     </li>
     <li>
-      <a href="10_gradient_boosting.html">10. Градиентный спуск</a>
+      <a href="12_gradient_boosting.html">12. Градиентный спуск</a>
     </li>
   </ul>
 </li>
@@ -390,7 +397,7 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore"><ol start="2" style="list-style-type: decimal">
+<h1 class="title toc-ignore"><ol start="4" style="list-style-type: decimal">
 <li>Биномиальные доверительные интервалы</li>
 </ol></h1>
 <h4 class="author"><em>Г. Мороз</em></h4>
@@ -401,7 +408,7 @@ div.tocify {
 <style>
 .parallax {
     /* The image used */
-    background-image: url("2_conf.png");
+    background-image: url("4_conf.png");
 
     /* Set a specific height */
     min-height: 350px; 
@@ -445,7 +452,7 @@ div.tocify {
 <div id="-.-" class="section level4">
 <h4>1.2 Рассказы А. Чехова</h4>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chekhov &lt;-<span class="st"> </span><span class="kw">read_tsv</span>(<span class="st">&quot;https://goo.gl/o18uj7&quot;</span>)
-chekhov %&gt;%<span class="st"> </span>
+chekhov <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">trunc_titles =</span> <span class="kw">str_trunc</span>(titles, <span class="dv">25</span>, <span class="dt">side =</span> <span class="st">&quot;right&quot;</span>)) -&gt;
 <span class="st">  </span>chekhov
 <span class="kw">head</span>(chekhov)</code></pre></div>
@@ -466,12 +473,12 @@ chekhov %&gt;%<span class="st"> </span>
 </div>
 <div id="averaging" class="section level3">
 <h3>2. Averaging</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chekhov %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">average =</span> n/n_words) %&gt;%<span class="st"> </span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chekhov <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">average =</span> n<span class="op">/</span>n_words) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(average))  -&gt;
 <span class="st">  </span>chekhov
 
-chekhov %&gt;%<span class="st"> </span>
+chekhov <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">select</span>(trunc_titles, word, average)</code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
@@ -479,19 +486,19 @@ chekhov %&gt;%<span class="st"> </span>
   </script>
 </div>
 <p>Давайте посмотрим только на частицу <em>не</em>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chekhov %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">filter</span>(word ==<span class="st"> &quot;не&quot;</span>) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">select</span>(trunc_titles, word, average) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(average)) +
-<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">fill =</span> <span class="st">&quot;lightblue&quot;</span>)+
-<span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">color =</span> <span class="st">&quot;red&quot;</span>)+
-<span class="st">  </span><span class="kw">theme_bw</span>()+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chekhov <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(word <span class="op">==</span><span class="st"> &quot;не&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">select</span>(trunc_titles, word, average) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(average)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">fill =</span> <span class="st">&quot;lightblue&quot;</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">color =</span> <span class="st">&quot;red&quot;</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_bw</span>()<span class="op">+</span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&#39;Частотность слова &quot;не&quot; на основе 305 рассказов А. Чехова&#39;</span>)</code></pre></div>
-<p><img src="2_binomial_ci_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p><img src="4_binomial_ci_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <div id="grand-mean" class="section level4">
 <h4>2.1 Grand mean</h4>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chekhov %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">filter</span>(word ==<span class="st"> &quot;не&quot;</span>) %&gt;%<span class="st"> </span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chekhov <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(word <span class="op">==</span><span class="st"> &quot;не&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">summarise</span>(<span class="dt">g_mean =</span> <span class="kw">mean</span>(average)) -&gt;
 <span class="st">  </span>grand_mean
 grand_mean</code></pre></div>
@@ -500,21 +507,21 @@ grand_mean</code></pre></div>
 {"columns":[{"label":["g_mean"],"name":[1],"type":["dbl"],"align":["right"]}],"data":[{"1":"0.02229915"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chekhov %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">filter</span>(word ==<span class="st"> &quot;не&quot;</span>) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">select</span>(trunc_titles, word, average) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(average)) +
-<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">fill =</span> <span class="st">&quot;lightblue&quot;</span>)+
-<span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">color =</span> <span class="st">&quot;red&quot;</span>)+
-<span class="st">  </span><span class="kw">theme_bw</span>()+
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&#39;Частотность слова &quot;не&quot; на основе 305 рассказов А. Чехова&#39;</span>)+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chekhov <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(word <span class="op">==</span><span class="st"> &quot;не&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">select</span>(trunc_titles, word, average) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(average)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">fill =</span> <span class="st">&quot;lightblue&quot;</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">color =</span> <span class="st">&quot;red&quot;</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_bw</span>()<span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&#39;Частотность слова &quot;не&quot; на основе 305 рассказов А. Чехова&#39;</span>)<span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="kw">unlist</span>(grand_mean), <span class="dt">lty =</span> <span class="dv">2</span>)</code></pre></div>
-<p><img src="2_binomial_ci_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p><img src="4_binomial_ci_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 </div>
 <div id="trimmed-mean" class="section level4">
 <h4>2.2 Trimmed mean</h4>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chekhov %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">filter</span>(word ==<span class="st"> &quot;не&quot;</span>) %&gt;%<span class="st"> </span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chekhov <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(word <span class="op">==</span><span class="st"> &quot;не&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">summarise</span>(<span class="dt">t_mean =</span> <span class="kw">mean</span>(average, <span class="dt">trim =</span> <span class="fl">0.05</span>)) -&gt;
 <span class="st">  </span>trimmed_mean
 trimmed_mean</code></pre></div>
@@ -523,21 +530,21 @@ trimmed_mean</code></pre></div>
 {"columns":[{"label":["t_mean"],"name":[1],"type":["dbl"],"align":["right"]}],"data":[{"1":"0.02177227"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chekhov %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">filter</span>(word ==<span class="st"> &quot;не&quot;</span>) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">select</span>(trunc_titles, word, average) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(average)) +
-<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">fill =</span> <span class="st">&quot;lightblue&quot;</span>)+
-<span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">color =</span> <span class="st">&quot;red&quot;</span>)+
-<span class="st">  </span><span class="kw">theme_bw</span>()+
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&#39;Частотность слова &quot;не&quot; на основе 305 рассказов А. Чехова&#39;</span>)+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chekhov <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(word <span class="op">==</span><span class="st"> &quot;не&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">select</span>(trunc_titles, word, average) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(average)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">fill =</span> <span class="st">&quot;lightblue&quot;</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">color =</span> <span class="st">&quot;red&quot;</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_bw</span>()<span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&#39;Частотность слова &quot;не&quot; на основе 305 рассказов А. Чехова&#39;</span>)<span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="kw">unlist</span>(trimmed_mean), <span class="dt">lty =</span> <span class="dv">2</span>)</code></pre></div>
-<p><img src="2_binomial_ci_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p><img src="4_binomial_ci_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 </div>
 <div id="weighted-mean" class="section level4">
 <h4>2.3 Weighted mean</h4>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chekhov %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">filter</span>(word ==<span class="st"> &quot;не&quot;</span>) %&gt;%<span class="st"> </span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chekhov <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(word <span class="op">==</span><span class="st"> &quot;не&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">summarise</span>(<span class="dt">w_mean =</span> <span class="kw">weighted.mean</span>(average, n_words)) -&gt;
 <span class="st">  </span>weighted_mean
 weighted_mean</code></pre></div>
@@ -546,16 +553,16 @@ weighted_mean</code></pre></div>
 {"columns":[{"label":["w_mean"],"name":[1],"type":["dbl"],"align":["right"]}],"data":[{"1":"0.02287195"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chekhov %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">filter</span>(word ==<span class="st"> &quot;не&quot;</span>) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">select</span>(trunc_titles, word, average) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(average)) +
-<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">fill =</span> <span class="st">&quot;lightblue&quot;</span>)+
-<span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">color =</span> <span class="st">&quot;red&quot;</span>)+
-<span class="st">  </span><span class="kw">theme_bw</span>()+
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&#39;Частотность слова &quot;не&quot; на основе 305 рассказов А. Чехова&#39;</span>)+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chekhov <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(word <span class="op">==</span><span class="st"> &quot;не&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">select</span>(trunc_titles, word, average) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(average)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">fill =</span> <span class="st">&quot;lightblue&quot;</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">color =</span> <span class="st">&quot;red&quot;</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_bw</span>()<span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&#39;Частотность слова &quot;не&quot; на основе 305 рассказов А. Чехова&#39;</span>)<span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="kw">unlist</span>(weighted_mean), <span class="dt">lty =</span> <span class="dv">2</span>)</code></pre></div>
-<p><img src="2_binomial_ci_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p><img src="4_binomial_ci_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
 <div class="parallax">
 
 </div>
@@ -565,22 +572,22 @@ weighted_mean</code></pre></div>
 <h3>3. Хакерский метод: бутстрэп</h3>
 <p>Из наших данных возьмем 10000 выборок с повторением.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">42</span>)
-chekhov %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">filter</span>(word ==<span class="st"> &quot;не&quot;</span>) -&gt;
+chekhov <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(word <span class="op">==</span><span class="st"> &quot;не&quot;</span>) -&gt;
 <span class="st">  </span>chekhov_bs
 
-chekhov_bs &lt;-<span class="st"> </span><span class="kw">bootstrap</span>(chekhov_bs$average, <span class="dt">nboot =</span> <span class="dv">10000</span>, <span class="dt">theta =</span> mean)$thetastar
+chekhov_bs &lt;-<span class="st"> </span><span class="kw">bootstrap</span>(chekhov_bs<span class="op">$</span>average, <span class="dt">nboot =</span> <span class="dv">10000</span>, <span class="dt">theta =</span> mean)<span class="op">$</span>thetastar
 
 <span class="co"># ggplot работает только с датафреймами</span>
 chekhov_bs &lt;-<span class="st"> </span><span class="kw">data_frame</span>(<span class="dt">means =</span> chekhov_bs)  
 
-chekhov_bs %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(means)) +
-<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">fill =</span> <span class="st">&quot;lightblue&quot;</span>)+
-<span class="st">  </span><span class="kw">theme_bw</span>()+
+chekhov_bs <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(means)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">fill =</span> <span class="st">&quot;lightblue&quot;</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_bw</span>()<span class="op">+</span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&#39;Средняя доля слова &quot;не&quot; на основе 305 рассказов А. Чехова&#39;</span>, <span class="dt">subtitle =</span> <span class="st">&quot;На основе 10000 бутстрэп-подвыборок&quot;</span>)</code></pre></div>
-<p><img src="2_binomial_ci_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chekhov_bs %&gt;%
+<p><img src="4_binomial_ci_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chekhov_bs <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(means),
             <span class="dt">q1 =</span> <span class="kw">quantile</span>(means, <span class="fl">0.025</span>),
             <span class="dt">q2 =</span> <span class="kw">quantile</span>(means, <span class="fl">0.975</span>))-&gt;
@@ -591,13 +598,13 @@ chekhov_stats</code></pre></div>
 {"columns":[{"label":["mean"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["q1"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["q2"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"0.02230418","2":"0.02127782","3":"0.02342567","_row":"2.5%"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chekhov_bs %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(means)) +
-<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">fill =</span> <span class="st">&quot;lightblue&quot;</span>)+
-<span class="st">  </span><span class="kw">theme_bw</span>()+
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&#39;Средняя доля слова &quot;не&quot; на основе 305 рассказов А. Чехова&#39;</span>, <span class="dt">subtitle =</span> <span class="st">&quot;Среднее и 95% бутстрэпнутый доверительный интервал на основе 10000 бутстрэп-подвыборок&quot;</span>)+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chekhov_bs <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(means)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">fill =</span> <span class="st">&quot;lightblue&quot;</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_bw</span>()<span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&#39;Средняя доля слова &quot;не&quot; на основе 305 рассказов А. Чехова&#39;</span>, <span class="dt">subtitle =</span> <span class="st">&quot;Среднее и 95% бутстрэпнутый доверительный интервал на основе 10000 бутстрэп-подвыборок&quot;</span>)<span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="kw">unlist</span>(chekhov_stats), <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">3</span>))</code></pre></div>
-<p><img src="2_binomial_ci_files/figure-html/unnamed-chunk-12-2.png" width="672" /></p>
+<p><img src="4_binomial_ci_files/figure-html/unnamed-chunk-12-2.png" width="672" /></p>
 <div class="parallax">
 
 </div>
@@ -610,15 +617,15 @@ chekhov_stats</code></pre></div>
 <li>использовать полученное априорное распределение для получение апостериорной оценки для каждого наблюдения</li>
 </ul>
 <p>Наши данные:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chekhov %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">filter</span>(word ==<span class="st"> &quot;не&quot;</span>) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">select</span>(trunc_titles, word, average) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(average)) +
-<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">fill =</span> <span class="st">&quot;lightblue&quot;</span>)+
-<span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">color =</span> <span class="st">&quot;red&quot;</span>)+
-<span class="st">  </span><span class="kw">theme_bw</span>()+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chekhov <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(word <span class="op">==</span><span class="st"> &quot;не&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">select</span>(trunc_titles, word, average) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(average)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">fill =</span> <span class="st">&quot;lightblue&quot;</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">color =</span> <span class="st">&quot;red&quot;</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_bw</span>()<span class="op">+</span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&#39;Частотность слова &quot;не&quot; на основе 305 рассказов А. Чехова&#39;</span>)</code></pre></div>
-<p><img src="2_binomial_ci_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p><img src="4_binomial_ci_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 <p>В данном случае, данные можно подогнать под бета распределение <span class="math inline">\(Χ \sim Beta(α_0, β_0)\)</span> (это далеко не всегда так). Подгонку можно осуществлять множеством разных функций, я буду использовать функцию</p>
 <div class="parallax">
 
@@ -637,20 +644,20 @@ chekhov_stats</code></pre></div>
 <li>Agresti-Coull</li>
 <li>Plus4</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chekhov %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">filter</span>(word ==<span class="st"> &quot;не&quot;</span>) %&gt;%
-<span class="st">  </span><span class="kw">slice</span>(<span class="dv">1</span>:<span class="dv">30</span>) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">group_by</span>(titles) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">low_ci =</span> <span class="kw">binom.test</span>(<span class="dt">x =</span> n, <span class="dt">n =</span> n_words, <span class="dt">ci.method =</span> <span class="st">&quot;Clopper-Pearson&quot;</span>)$conf.int[<span class="dv">1</span>],
-         <span class="dt">up_ci =</span> <span class="kw">binom.test</span>(<span class="dt">x =</span> n, <span class="dt">n =</span> n_words, <span class="dt">ci.method =</span> <span class="st">&quot;Clopper-Pearson&quot;</span>)$conf.int[<span class="dv">2</span>]) %&gt;%
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(trunc_titles, average))+
-<span class="st">  </span><span class="kw">geom_point</span>()+
-<span class="st">  </span><span class="kw">geom_pointrange</span>(<span class="kw">aes</span>(<span class="dt">ymin =</span> low_ci, <span class="dt">ymax =</span> up_ci))+
-<span class="st">  </span><span class="kw">theme_bw</span>()+
-<span class="st">  </span><span class="kw">coord_flip</span>()+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chekhov <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(word <span class="op">==</span><span class="st"> &quot;не&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">slice</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">30</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(titles) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">low_ci =</span> <span class="kw">binom.test</span>(<span class="dt">x =</span> n, <span class="dt">n =</span> n_words, <span class="dt">ci.method =</span> <span class="st">&quot;Clopper-Pearson&quot;</span>)<span class="op">$</span>conf.int[<span class="dv">1</span>],
+         <span class="dt">up_ci =</span> <span class="kw">binom.test</span>(<span class="dt">x =</span> n, <span class="dt">n =</span> n_words, <span class="dt">ci.method =</span> <span class="st">&quot;Clopper-Pearson&quot;</span>)<span class="op">$</span>conf.int[<span class="dv">2</span>]) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(trunc_titles, average))<span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>()<span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_pointrange</span>(<span class="kw">aes</span>(<span class="dt">ymin =</span> low_ci, <span class="dt">ymax =</span> up_ci))<span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_bw</span>()<span class="op">+</span>
+<span class="st">  </span><span class="kw">coord_flip</span>()<span class="op">+</span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&#39;Среднее и 95% CI употребления &quot;не&quot; в рассказах А. Чехова&#39;</span>,
        <span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;&quot;</span>)</code></pre></div>
-<p><img src="2_binomial_ci_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p><img src="4_binomial_ci_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
 </div>
 <div id="--" class="section level4">
 <h4>5.2 Байесовский доверительный интервал</h4>
@@ -661,6 +668,9 @@ chekhov_stats</code></pre></div>
 </div>
 </div>
 
+<br><br><br>
+<p><center> &copy; Г. Мороз 2018 с помощью RMarkdown. Исходный код на 
+<a href="https://github.com/agricolamz/2018_data_analysis_for_linguists"> GitHub <img src="https://assets-cdn.github.com/images/modules/logos_page/GitHub-Mark.png"  style="width:30px;height:30px;border:0"></a></center> </p>
 
 
 </div>

@@ -9,8 +9,11 @@ output:
 ### Библиотеки:
 ```{r, message=FALSE}
 packageVersion("tidyverse")
+packageVersion("readxl")
 packageVersion("mosaic")
 packageVersion("stringr")
 packageVersion("bootstrap")
 packageVersion("irr")
+packageVersion("ca")
+packageVersion("MASS")
 ```

@@ -263,75 +263,82 @@ div.tocify {
       <ul class="nav navbar-nav">
         <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="caret caret-down"></span>
-     
-    биномиальные данные
+    tidyverse
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="1_binomial.html">1. Биномиальные данные</a>
-    </li>
-    <li>
-      <a href="2_binomial_ci.html">2. Binomial CI</a>
+      <a href="1_tidyverse.html">1. tidyverse</a>
     </li>
   </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="caret caret-down"></span>
-     
     меры согласия
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="3_agreement.html">3. Меры согласия</a>
+      <a href="2_agreement.html">2. Меры согласия</a>
     </li>
   </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="caret caret-down"></span>
+    биномиальные данные
      
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="3_binomial.html">3. Биномиальные данные</a>
+    </li>
+    <li>
+      <a href="4_binomial_ci.html">4. Binomial CI</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     multivariat analysis
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="4_PCA_CA_MCA.html">4. PCA, CA, MCA</a>
+      <a href="5_PCA.html">5. PCA</a>
     </li>
     <li>
-      <a href="5_Clustering.html">5. Кластеризация</a>
+      <a href="6_CA_MCA.html">6. CA, MCA</a>
+    </li>
+    <li>
+      <a href="7_Clustering.html">7. Кластеризация</a>
     </li>
   </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="caret caret-down"></span>
-     
     регрессия
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="6_regression.html">6. Ограничения на применения регрессии</a>
+      <a href="8_regression.html">8. Ограничения на применения регрессии</a>
     </li>
     <li>
-      <a href="7_mixed_effects.html">7. Регрессия со смешанными эффектами</a>
+      <a href="9_mixed_effects.html">9. Регрессия со смешанными эффектами</a>
     </li>
     <li>
-      <a href="8_nolinear.html">8. Нелинейная регрессия</a>
+      <a href="10_nolinear.html">9. Нелинейная регрессия</a>
     </li>
     <li>
-      <a href="9_ridge_lasso.html">9. Ридж и лассо регрессия</a>
+      <a href="11_ridge_lasso.html">11. Ридж и лассо регрессия</a>
     </li>
     <li>
-      <a href="10_gradient_boosting.html">10. Градиентный спуск</a>
+      <a href="12_gradient_boosting.html">12. Градиентный спуск</a>
     </li>
   </ul>
 </li>
@@ -347,8 +354,8 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore"><ol start="5" style="list-style-type: decimal">
-<li>Кластерный анализ</li>
+<h1 class="title toc-ignore"><ol style="list-style-type: decimal">
+<li>tidyverse</li>
 </ol></h1>
 <h4 class="author"><em>Г. Мороз</em></h4>
 
@@ -358,8 +365,8 @@ div.tocify {
 <style>
 .parallax {
     /* The image used */
-    background-image: url("1_coin.jpg");
-
+    background-image: url("1_tidyverse.png");
+    
     /* Set a specific height */
     min-height: 300px; 
 
@@ -375,14 +382,32 @@ div.tocify {
 </div>
 <div class="section level3">
 <h3>1. Введение</h3>
+<p><a href="https://www.tidyverse.org"><em>tidyverse</em></a> — это набор пакетов:</p>
+<ul>
+<li><em>dplyr</em>, для преобразованиия данных</li>
+<li><em>ggplot2</em>, для визуализации</li>
+<li><em>tidyr</em>, для формата tidy data</li>
+<li><em>readr</em>, для чтения файлов в R</li>
+<li><em>purrr</em>, для функционального программирования</li>
+<li><em>tibble</em>, для работы с тибблами, современный вариант датафрейма</li>
+</ul>
+<p>Полезно также знать:</p>
+<ul>
+<li><em>readxl</em>, для чтения .xls и .xlsx</li>
+<li><em>jsonlite</em>, для работы с JSON</li>
+<li><em>rvest</em>, для веб-скреппинга</li>
+<li><em>lubridate</em>, для работы с временем</li>
+<li><em>tidytext</em>, для работы с текстами и корпусами</li>
+<li><em>broom</em>, для перевода в tidy формат статистические модели</li>
+</ul>
 <div class="parallax">
 
 </div>
 </div>
-<div id="section" class="section level3">
-<h3>2.</h3>
-</div>
 
+<br><br><br>
+<p><center> &copy; Г. Мороз 2018 с помощью RMarkdown. Исходный код на 
+<a href="https://github.com/agricolamz/2018_data_analysis_for_linguists"> GitHub <img src="https://assets-cdn.github.com/images/modules/logos_page/GitHub-Mark.png"  style="width:30px;height:30px;border:0"></a></center> </p>
 
 
 </div>

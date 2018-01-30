@@ -1,36 +1,50 @@
 name: ""
 navbar: 
   left:
-    - text: "биномиальные данные"
-      icon: caret-down
+    - text: "tidyverse"
       menu:
-      - text: "1. Биномиальные данные"
-        href: 1_binomial.html
-      - text: "2. Binomial CI"
-        href: 2_binomial_ci.html
+      - text: "1. tidyverse"
+        href: 1_tidyverse.html
     - text: "меры согласия"
-      icon: caret-down
       menu:
-      - text: "3. Меры согласия"
-        href: 3_agreement.html
+      - text: "2. Меры согласия"
+        href: 2_agreement.html
+    - text: "биномиальные данные"
+      menu:
+      - text: "3. Биномиальные данные"
+        href: 3_binomial.html
+      - text: "4. Binomial CI"
+        href: 4_binomial_ci.html
     - text: "multivariat analysis"
-      icon: caret-down
       menu:
-      - text: "4. PCA, CA, MCA"
-        href: 4_PCA_CA_MCA.html
-      - text: "5. Кластеризация"
-        href: 5_Clustering.html
+      - text: "5. PCA"
+        href: 5_PCA.html
+      - text: "6. CA, MCA"
+        href: 6_CA_MCA.html
+      - text: "7. Кластеризация"
+        href: 7_Clustering.html
     - text: "регрессия"
-      icon: caret-down
       menu:  
-      - text: "6. Ограничения на применения регрессии"
-        href: 6_regression.html
-      - text: "7. Регрессия со смешанными эффектами"
-        href: 7_mixed_effects.html
-      - text: "8. Нелинейная регрессия"
-        href: 8_nolinear.html
-      - text: "9. Ридж и лассо регрессия"
-        href: 9_ridge_lasso.html
-      - text: "10. Градиентный спуск"
-        href: 10_gradient_boosting.html
+      - text: "8. Ограничения на применения регрессии"
+        href: 8_regression.html
+      - text: "9. Регрессия со смешанными эффектами"
+        href: 9_mixed_effects.html
+      - text: "9. Нелинейная регрессия"
+        href: 10_nolinear.html
+      - text: "11. Ридж и лассо регрессия"
+        href: 11_ridge_lasso.html
+      - text: "12. Градиентный спуск"
+        href: 12_gradient_boosting.html
 output_dir: docs
+output:
+  html_document:
+      theme: spacelab
+      highlight: pygments
+      toc: yes
+      toc_position: right
+      toc_depth: 4
+      toc_float: yes
+      smooth_scroll: false
+      df_print: paged
+      include:
+        after_body: footer.html

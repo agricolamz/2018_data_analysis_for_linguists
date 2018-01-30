@@ -1,5 +1,5 @@
 ---
-title: "3. Меры согласия"
+title: "2. Меры согласия"
 author: "Г. Мороз"
 ---
 
@@ -10,7 +10,7 @@ knitr::opts_chunk$set(message = FALSE, warning = FALSE)
 <style>
 .parallax {
     /* The image used */
-    background-image: url("3_argue.jpg");
+    background-image: url("2_argue.jpg");
     
     /* Set a specific height */
     min-height: 300px; 

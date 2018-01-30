@@ -208,75 +208,82 @@ $(document).ready(function () {
       <ul class="nav navbar-nav">
         <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="caret caret-down"></span>
-     
-    биномиальные данные
+    tidyverse
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="1_binomial.html">1. Биномиальные данные</a>
-    </li>
-    <li>
-      <a href="2_binomial_ci.html">2. Binomial CI</a>
+      <a href="1_tidyverse.html">1. tidyverse</a>
     </li>
   </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="caret caret-down"></span>
-     
     меры согласия
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="3_agreement.html">3. Меры согласия</a>
+      <a href="2_agreement.html">2. Меры согласия</a>
     </li>
   </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="caret caret-down"></span>
+    биномиальные данные
      
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="3_binomial.html">3. Биномиальные данные</a>
+    </li>
+    <li>
+      <a href="4_binomial_ci.html">4. Binomial CI</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     multivariat analysis
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="4_PCA_CA_MCA.html">4. PCA, CA, MCA</a>
+      <a href="5_PCA.html">5. PCA</a>
     </li>
     <li>
-      <a href="5_Clustering.html">5. Кластеризация</a>
+      <a href="6_CA_MCA.html">6. CA, MCA</a>
+    </li>
+    <li>
+      <a href="7_Clustering.html">7. Кластеризация</a>
     </li>
   </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="caret caret-down"></span>
-     
     регрессия
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="6_regression.html">6. Ограничения на применения регрессии</a>
+      <a href="8_regression.html">8. Ограничения на применения регрессии</a>
     </li>
     <li>
-      <a href="7_mixed_effects.html">7. Регрессия со смешанными эффектами</a>
+      <a href="9_mixed_effects.html">9. Регрессия со смешанными эффектами</a>
     </li>
     <li>
-      <a href="8_nolinear.html">8. Нелинейная регрессия</a>
+      <a href="10_nolinear.html">9. Нелинейная регрессия</a>
     </li>
     <li>
-      <a href="9_ridge_lasso.html">9. Ридж и лассо регрессия</a>
+      <a href="11_ridge_lasso.html">11. Ридж и лассо регрессия</a>
     </li>
     <li>
-      <a href="10_gradient_boosting.html">10. Градиентный спуск</a>
+      <a href="12_gradient_boosting.html">12. Градиентный спуск</a>
     </li>
   </ul>
 </li>
@@ -301,17 +308,26 @@ $(document).ready(function () {
 <div class="section level3">
 <h3>Библиотеки:</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">packageVersion</span>(<span class="st">&quot;tidyverse&quot;</span>)</code></pre></div>
-<pre><code>## [1] &#39;1.1.1&#39;</code></pre>
+<pre><code>## [1] &#39;1.2.1&#39;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">packageVersion</span>(<span class="st">&quot;readxl&quot;</span>)</code></pre></div>
+<pre><code>## [1] &#39;1.0.0&#39;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">packageVersion</span>(<span class="st">&quot;mosaic&quot;</span>)</code></pre></div>
-<pre><code>## [1] &#39;1.1.0&#39;</code></pre>
+<pre><code>## [1] &#39;1.1.1&#39;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">packageVersion</span>(<span class="st">&quot;stringr&quot;</span>)</code></pre></div>
 <pre><code>## [1] &#39;1.2.0&#39;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">packageVersion</span>(<span class="st">&quot;bootstrap&quot;</span>)</code></pre></div>
 <pre><code>## [1] &#39;2017.2&#39;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">packageVersion</span>(<span class="st">&quot;irr&quot;</span>)</code></pre></div>
 <pre><code>## [1] &#39;0.84&#39;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">packageVersion</span>(<span class="st">&quot;ca&quot;</span>)</code></pre></div>
+<pre><code>## [1] &#39;0.70&#39;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">packageVersion</span>(<span class="st">&quot;MASS&quot;</span>)</code></pre></div>
+<pre><code>## [1] &#39;7.3.48&#39;</code></pre>
 </div>
 
+<br><br><br>
+<p><center> &copy; Г. Мороз 2018 с помощью RMarkdown. Исходный код на 
+<a href="https://github.com/agricolamz/2018_data_analysis_for_linguists"> GitHub <img src="https://assets-cdn.github.com/images/modules/logos_page/GitHub-Mark.png"  style="width:30px;height:30px;border:0"></a></center> </p>
 
 
 

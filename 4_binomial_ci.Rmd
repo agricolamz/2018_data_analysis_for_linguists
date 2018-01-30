@@ -1,5 +1,5 @@
 ---
-title: "2. Биномиальные доверительные интервалы"
+title: "4. Биномиальные доверительные интервалы"
 author: "Г. Мороз"
 ---
 
@@ -10,7 +10,7 @@ knitr::opts_chunk$set(message = FALSE, warning = FALSE)
 <style>
 .parallax {
     /* The image used */
-    background-image: url("2_conf.png");
+    background-image: url("4_conf.png");
 
     /* Set a specific height */
     min-height: 350px; 
