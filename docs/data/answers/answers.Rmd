@@ -1,0 +1,51 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+```{r}
+library(tidyverse)
+library(irr)
+```
+
+## hw1
+
+### 1.1
+
+```{r, eval = FALSE}
+zilo %>% 
+  distinct(stimulus, stimulus_source) %>% 
+  count(stimulus_source)
+```
+
+### 1.2
+
+```{r}
+zilo %>% 
+  select(s_id, stimulus, translation_ru, stimulus_source, class) %>% 
+  spread(key = s_id, value = class) ->
+  zilo_s
+agree(zilo_s[, -c(1:3)])
+```
+
+### 1.3
+
+```{r}
+zilo_s %>% 
+  select(`7`, `11`) %>% 
+  kappa2()
+```
+
+### 1.4
+```{r}
+kappam.fleiss(zilo_s[,-c(1:3)])
+```
+
+### 2.1
+```{r}
+sonets %>% 
+  distinct(translater) %>% 
+  count()
+```
+
+
