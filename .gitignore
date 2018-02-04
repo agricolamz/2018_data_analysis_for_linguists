@@ -2,4 +2,6 @@
 .Rhistory
 .RData
 .Ruserdata
-/sound/answers/*
+/data/answers/*
+/docs/data/answers/*
+
