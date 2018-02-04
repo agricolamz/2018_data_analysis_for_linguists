@@ -43,9 +43,22 @@ kappam.fleiss(zilo_s[,-c(1:3)])
 
 ### 2.1
 ```{r}
-sonets %>% 
-  distinct(translater) %>% 
+verbs %>% 
+  distinct(SubjectCode) %>% 
   count()
 ```
 
+### 2.2
+```{r}
+verbs %>% 
+  group_by(WordType, Gender) %>% 
+  summarise(mean = mean(GivenScore))
+```
 
+### 2.3
+```{r}
+sonets %>% 
+  group_by(translater) %>% 
+  summarise(mean = mean(number_syllables),
+            sd = sd(number_syllables))
+```

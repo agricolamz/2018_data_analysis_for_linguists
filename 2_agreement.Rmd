@@ -191,7 +191,26 @@ kappa2(zilo_classes_2s)
 
 <div class="parallax"></div>
 
-### 5. Каппа Фляйса
+### 5. Ранговые корреляции: тау Кендалл
+
+$$\tau = \frac{C-D}{C+D}$$
+
+```{r, echo = FALSE}
+data.frame(ranker_1 = 1:12,
+           ranker_2 = c(2, 1, 4, 3, 6, 5, 8, 7, 10, 9, 12, 11),
+           C = c(10, 10, 8, 8, 6, 6, 4, 4, 2, 2, 0, 0),
+           D = c(1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0))
+```
+
+```{r}
+data.frame(cor(sonet[, -1], method = "kendall"))
+```
+
+Бывает еще ранговая корреляция Спирмана (`cor(..., method = "spearman")`).
+
+<div class="parallax"></div>
+
+### 6. Каппа Фляйса
 Обощением каппы Коэна для оценщиков больше двух является каппа Фляйса. $k$ оценщиков распеделяют $n$ наблюдений по $s$ категориям.
 
 $\kappa = \frac{\bar{P}_o-\bar{P}_e}{1-\bar{P}_e},$
@@ -255,12 +274,11 @@ Fleiss_kappa <- (P_o-P_e)/(1-P_e)
 Fleiss_kappa <- unname(Fleiss_kappa)
 Fleiss_kappa
 kappam.fleiss(zilo_classes_short[,-c(1:3)])
-kappam.fleiss(marginal_verbs_short[,-c(1:3)])
 ```
 
 <div class="parallax"></div>
 
-### 6. Intra-class correlation coefficient (ICC)
+### 7. Intra-class correlation coefficient (ICC)
 
 В работе (Shrout, Fleiss, 1979) различают три ситуации:
 
@@ -274,11 +292,11 @@ icc(marginal_verbs_short[-c(1:3)], model = "twoway", type = "agreement")
 
 <div class="parallax"></div>
 
-### 7. Домашнее задание
-Домашнее задание нужно выполнять в отдельном `rmarkdown` файле, скачав данные [из своей папки](https://github.com/agricolamz/2018_data_analysis_for_linguists/tree/master/data/students) в репозитории курса. Получившиеся файлы следует помещать в соответствующую папку в своем репозитории на гитхабе. Более подробные инструкции [см. внизу этой страницы](file:///home/agricolamz/work/materials/2018_I_HSE_Data_Analysis_for_linguists/docs/index.html).
+### 8. Домашнее задание
+Домашнее задание нужно выполнять в отдельном `rmarkdown` файле, скачав данные [из своей папки](https://github.com/agricolamz/2018_data_analysis_for_linguists/tree/master/data/students) в репозитории курса. Получившиеся файлы следует помещать в соответствующую папку в своем репозитории на гитхабе. Более подробные инструкции [см. на этой странице](file:///home/agricolamz/work/materials/2018_I_HSE_Data_Analysis_for_linguists/docs/index.html).
 
 #### 1.1
-Скачайте датасет `hw1_1_zilo_class.csv` ([см. описание выше](https://agricolamz.github.io/2018_data_analysis_for_linguists/2_agreement.html#12_%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D0%B5:_%D0%B7%D0%B8%D0%BB%D0%BE%D0%B2%D1%81%D0%BA%D0%B8%D0%B9_%D1%8D%D0%BA%D1%81%D0%BF%D0%B5%D1%80%D0%B8%D0%BC%D0%B5%D0%BD%D1%82)). Выведите тиббл содержащий два столбца: `stimulus_source` и количество уникальных слов в датасете (`n`).
+Скачайте датасет `hw1_1_zilo_class.csv` (см. описание выше). Получите тиббл содержащий два столбца: `stimulus_source` и количество уникальных слов в датасете (`n`).
 
 #### 1.2
 Преобразуйте датасет `hw1_1_zilo_class.csv`. Посчитайте процент полного согласия всех спикеров.
@@ -293,6 +311,12 @@ icc(marginal_verbs_short[-c(1:3)], model = "twoway", type = "agreement")
 Представим, что Вы пишите статью, напишите короткий абзац, который бы обобщал результаты, полученные в предыдущих заданиях.
 
 #### 2.1
-Скачайте датасет `hw1_2_.csv` ([см. описание выше]())
+Скачайте датасет `hw1_2_verbs.csv` (см. описание выше). Посчитайте количество участников в датасете (в ответ выведите тибл с переменной `n`).
+
+#### 2.2
+Посчитайте среднюю оценку глаголов разного типа для каждого пола в датасете (в ответ выведите тибл с переменными `WordType`, `Gender` и `mean`).
+
+#### 2.3
+
 
 <div class="parallax"></div>
