@@ -449,7 +449,7 @@ div.tocify {
 </div>
 <div id="-" class="section level3">
 <h3>2. Биномиальное распределение</h3>
-<p>$P(k | n, p) =  p^k (1-p)^{n-k} = {n k} p^k (1-p)^{n-k}; 0 p 1; n, k &gt; 0 $</p>
+<p><span class="math display">\[P(k | n, p) = \frac{n!}{k!(n-k)!} \times p^k \times (1-p)^{n-k} =  {n \choose k} \times p^k \times (1-p)^{n-k}; 0 \leq p \leq 1; n, k &gt; 0\]</span></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">probabilities &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.23</span>, <span class="fl">0.33</span>, <span class="fl">0.69</span>)
 density &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">dbinom</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">83</span>, <span class="dt">size =</span> <span class="dv">83</span>, <span class="dt">prob =</span> probabilities[<span class="dv">1</span>]),
              <span class="kw">dbinom</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">83</span>, <span class="dt">size =</span> <span class="dv">83</span>, <span class="dt">prob =</span> probabilities[<span class="dv">2</span>]),
@@ -469,10 +469,14 @@ binomials <span class="op">%&gt;%</span><span class="st"> </span>
 
 </div>
 </div>
-<div id="-" class="section level3">
-<h3>3. Биномиальный тест</h3>
+<div id="---" class="section level3">
+<h3>3. Фриквентистский подход: Биномиальный тест</h3>
 <ul>
-<li>Нулевая гипотеза: вероятность количества успехов статистически не отличается от ожидаемой вероятности.</li>
+<li>Формулируем <strong>нулевую гипотезу</strong>: вероятность количества успехов статистически не отличается от ожидаемой вероятности.</li>
+<li>Формулируем <strong>альтернативную гипотезу</strong>: вероятность количества успехов статистически отличается от ожидаемой вероятности.</li>
+<li>Выбираем <strong>p-value</strong> (например, 0.05).</li>
+<li>Проводим статистический тест.</li>
+<li>Смотрим, какова вероятность получить такие или еще более экстремальные значения, при условии верной нулевой гипотезы.</li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">binomial_test &lt;-<span class="st"> </span><span class="kw">binom.test</span>(<span class="dt">x =</span> <span class="dv">27</span>, <span class="dt">n =</span> <span class="dv">83</span>, <span class="dt">p =</span> <span class="fl">0.23</span>)
 binomial_test</code></pre></div>
@@ -535,7 +539,7 @@ simulations <span class="op">%&gt;%</span><span class="st"> </span>
 </div>
 <div id="-" class="section level3">
 <h3>5. Бета распределение</h3>
-<p><span class="math inline">\(f(x; α, β) = \frac{1}{B(α, β)}\times x^{α-1}\times (1-x)^{β-1}; 0 \leq x \leq 1; α, β &gt; 0\)</span> Бета функция: $Β(α, β) =  =  $</p>
+<p><span class="math display">\[f(x; α, β) = \frac{1}{B(α, β)}\times x^{α-1}\times (1-x)^{β-1}; 0 \leq x \leq 1; α, β &gt; 0\]</span> Бета функция: <span class="math display">\[Β(α, β) = \frac{Γ(α)\times Γ(β)}{Γ(α+β)} = \frac{(α-1)!(β-1)!}{(α+β-1)!} \]</span></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">length =</span> <span class="dv">100</span>)
 alpha &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">23</span>, <span class="dv">33</span>, <span class="dv">69</span>)
 beta &lt;-<span class="st"> </span><span class="dv">83</span><span class="op">-</span>alpha
@@ -557,7 +561,7 @@ betas <span class="op">%&gt;%</span><span class="st"> </span>
 </div>
 </div>
 <div id="-" class="section level3">
-<h3>6. Байесовский подход</h3>
+<h3>6. Байесовский подход:</h3>
 <p><span class="math inline">\(P(θ|y) = \frac{P(θ)P(y|θ)}{P(y)}\)</span> <span class="math inline">\(P(θ|y) \propto P(θ)P(y|θ)\)</span></p>
 <div class="parallax">
 
