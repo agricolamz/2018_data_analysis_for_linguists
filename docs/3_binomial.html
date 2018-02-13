@@ -449,7 +449,7 @@ div.tocify {
 </div>
 <div id="-" class="section level3">
 <h3>2. Биномиальное распределение</h3>
-<p><span class="math display">\[P(k | n, p) = \frac{n!}{k!(n-k)!} \times p^k \times (1-p)^{n-k} =  {n \choose k} \times p^k \times (1-p)^{n-k}; 0 \leq p \leq 1; n, k &gt; 0\]</span></p>
+<p><span class="math display">\[P(k | n, θ) = \frac{n!}{k!(n-k)!} \times θ^k \times (1-θ)^{n-k} =  {n \choose k} \times θ^k \times (1-θ)^{n-k}; 0 \leq θ \leq 1; n, k &gt; 0\]</span></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">probabilities &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.23</span>, <span class="fl">0.33</span>, <span class="fl">0.69</span>)
 density &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">dbinom</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">83</span>, <span class="dt">size =</span> <span class="dv">83</span>, <span class="dt">prob =</span> probabilities[<span class="dv">1</span>]),
              <span class="kw">dbinom</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">83</span>, <span class="dt">size =</span> <span class="dv">83</span>, <span class="dt">prob =</span> probabilities[<span class="dv">2</span>]),
@@ -519,11 +519,10 @@ binomial_test</code></pre></div>
 <span class="st">  </span>simulations
 simulations <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">greater =</span> sum <span class="op">&gt;=</span><span class="st"> </span><span class="dv">27</span>) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">group_by</span>(greater) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">number =</span> <span class="kw">n</span>())</code></pre></div>
+<span class="st">  </span><span class="kw">count</span>(greater)</code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["greater"],"name":[1],"type":["lgl"],"align":["right"]},{"label":["number"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"FALSE","2":"960"},{"1":"TRUE","2":"40"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["greater"],"name":[1],"type":["lgl"],"align":["right"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"FALSE","2":"960"},{"1":"TRUE","2":"40"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">simulations <span class="op">%&gt;%</span><span class="st"> </span>
@@ -539,7 +538,7 @@ simulations <span class="op">%&gt;%</span><span class="st"> </span>
 </div>
 <div id="-" class="section level3">
 <h3>5. Бета распределение</h3>
-<p><span class="math display">\[f(x; α, β) = \frac{1}{B(α, β)}\times x^{α-1}\times (1-x)^{β-1}; 0 \leq x \leq 1; α, β &gt; 0\]</span> Бета функция: <span class="math display">\[Β(α, β) = \frac{Γ(α)\times Γ(β)}{Γ(α+β)} = \frac{(α-1)!(β-1)!}{(α+β-1)!} \]</span></p>
+<p><span class="math display">\[f(x; α, β) = \frac{x^{α-1}\times (1-x)^{β-1}}{B(α, β)}; 0 \leq x \leq 1; α, β &gt; 0\]</span> Бета функция: <span class="math display">\[Β(α, β) = \frac{Γ(α)\times Γ(β)}{Γ(α+β)} = \frac{(α-1)!(β-1)!}{(α+β-1)!} \]</span></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">length =</span> <span class="dv">100</span>)
 alpha &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">23</span>, <span class="dv">33</span>, <span class="dv">69</span>)
 beta &lt;-<span class="st"> </span><span class="dv">83</span><span class="op">-</span>alpha
@@ -562,7 +561,14 @@ betas <span class="op">%&gt;%</span><span class="st"> </span>
 </div>
 <div id="-" class="section level3">
 <h3>6. Байесовский подход:</h3>
-<p><span class="math inline">\(P(θ|y) = \frac{P(θ)P(y|θ)}{P(y)}\)</span> <span class="math inline">\(P(θ|y) \propto P(θ)P(y|θ)\)</span></p>
+<p><span class="math display">\[P(θ|Data) = \frac{P(θ)\times P(Data|θ)}{P(Data)}\]</span></p>
+<ul>
+<li>P(Data|θ) — likelihood</li>
+<li>P(θ) — prior</li>
+<li>P(Data) — evidence</li>
+<li>P(θ|Data) — posterior</li>
+</ul>
+<p><span class="math display">\[P(θ|Data) \propto P(θ)P(Data|θ)\]</span></p>
 <div class="parallax">
 
 </div>

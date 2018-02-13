@@ -49,7 +49,7 @@ library(mosaic)
 
 ### 2. Биномиальное  распределение
 
-$$P(k | n, p) = \frac{n!}{k!(n-k)!} \times p^k \times (1-p)^{n-k} =  {n \choose k} \times p^k \times (1-p)^{n-k}; 0 \leq p \leq 1; n, k > 0$$
+$$P(k | n, θ) = \frac{n!}{k!(n-k)!} \times θ^k \times (1-θ)^{n-k} =  {n \choose k} \times θ^k \times (1-θ)^{n-k}; 0 \leq θ \leq 1; n, k > 0$$
 
 ```{r}
 probabilities <- c(0.23, 0.33, 0.69)
@@ -113,8 +113,7 @@ do(1000)*
   simulations
 simulations %>% 
   mutate(greater = sum >= 27) %>% 
-  group_by(greater) %>% 
-  summarise(number = n())
+  count(greater)
 simulations %>% 
   ggplot(aes(sum))+
   geom_density(fill = "lightblue")+
@@ -156,8 +155,15 @@ $$Ε[X] = \frac{α}{α+β}; D[X] = \frac{α\times β}{(α+β)^2(α+β+1)}$$
 
 ### 6. Байесовский подход: 
 
-$$P(θ|y) = \frac{P(θ)P(y|θ)}{P(y)}$$
-$$P(θ|y) \propto P(θ)P(y|θ)$$
+$$P(θ|Data) = \frac{P(θ)\times P(Data|θ)}{P(Data)}$$
+
+* P(Data|θ) --- likelihood
+* P(θ) --- prior
+* P(Data) --- evidence
+* P(θ|Data) --- posterior
+
+$$P(θ|Data) \propto P(θ)P(Data|θ)$$
+
 
 
 <div class="parallax"></div>
