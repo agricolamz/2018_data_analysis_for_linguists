@@ -304,7 +304,7 @@ icc(sonet[,-1], model = "twoway", type = "agreement")
 
 <div class="parallax"></div>
 
-### 8. Домашнее задание
+### Домашнее задание до (до 20.02.2018)
 Домашнее задание нужно выполнять в отдельном `rmarkdown` файле, скачав данные [из своей папки](https://github.com/agricolamz/2018_data_analysis_for_linguists/tree/master/data/students) в репозитории курса. Получившиеся файлы следует помещать в соответствующую папку в своем репозитории на гитхабе. Более подробные инструкции [см. на этой странице](file:///home/agricolamz/work/materials/2018_I_HSE_Data_Analysis_for_linguists/docs/index.html).
 
 #### 1.1

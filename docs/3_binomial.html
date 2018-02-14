@@ -560,17 +560,97 @@ betas <span class="op">%&gt;%</span><span class="st"> </span>
 </div>
 </div>
 <div id="-" class="section level3">
-<h3>6. Байесовский подход:</h3>
-<p><span class="math display">\[P(θ|Data) = \frac{P(θ)\times P(Data|θ)}{P(Data)}\]</span></p>
+<h3>6. Байесовский подход</h3>
+<p>Байесовская статистика зиждится на формуле Байеса: <span class="math display">\[P(θ|Data) = \frac{P(θ)\times P(Data|θ)}{P(Data)}\]</span></p>
 <ul>
-<li>P(Data|θ) — likelihood</li>
-<li>P(θ) — prior</li>
-<li>P(Data) — evidence</li>
-<li>P(θ|Data) — posterior</li>
+<li><span class="math inline">\(P(Data|θ)\)</span> — likelihood</li>
+<li><span class="math inline">\(P(θ)\)</span> — prior</li>
+<li><span class="math inline">\(P(Data)\)</span> — evidence</li>
+<li><span class="math inline">\(P(θ|Data)\)</span> — posterior</li>
 </ul>
-<p><span class="math display">\[P(θ|Data) \propto P(θ)P(Data|θ)\]</span></p>
+<p>В фриквентисткой статистике есть некоторая вера в единое и непоколибимое значение <span class="math inline">\(θ\)</span> генеральной совокупности, которое мы пытаемся оценить. Каждый наш эксперимент — это попытка взять некоторую выборку и на основе <span class="math inline">\(\hatθ\)</span> этой выборки оценить <span class="math inline">\(θ\)</span> генеральной совокупности. Таким образом данные, это источник <span class="math inline">\(\hatθ\)</span>, некоторое приближение к <span class="math inline">\(θ\)</span>, и если приближение по каким-то причинам нас не устраивает, значит нужно взять выборку большего размера. В байесовской статистике обязательно иметь какие-то предварительные представления или гипотезы о наших данных (сильные или слабые, я покажу ниже, что имеется в виду), которые мы обновляем на основании данных, которые мы получили. Таким образом, в фриквентистской статистике <span class="math inline">\(θ\)</span> фиксировано, а данные вариативны (случайная выборка из генеральной совокупности), а в Байесовской статистике данные фиксированы, а <span class="math inline">\(θ\)</span> может меняться (с каждыми новыми данными, которые к нам поступают).</p>
+<p>Знаменатель формулы Байеса призван <em>“доводить”</em> полученную функцию плотности так чтобы ее интеграл был равен 1, то есть можно сказать, что произведение априорной вероятности на likelihood пропорционально апостериорной вероятности:</p>
+<p><span class="math display">\[P(θ|Data) \propto P(θ) \times P(Data|θ)\]</span></p>
+<p>Если мы вернемся к биномиальным данным, то легко можно показать, что likelihood имеет вид бета-распределения:</p>
+<p><span class="math display">\[P(Data|θ) = P(i \text{ бросков монеты}|θ) = \prod_{i=1}^{n}P(i\text{-того броска монеты}|θ) = \prod_{i=1}^{n}θ^{k_i}\times(1-θ)^{(1-k_i)} = \]</span> <span class="math display">\[ = θ^{\sum_{i=1}^{n}k_i}\times(1-θ)^{\sum_{i=1}^{n}(1-k_i)} = θ^{\text{# успехов}}\times(1-θ)^\text{# неудач}\]</span></p>
+<p>Что же касается априорной вероятности, то она в нашем случае, также должна иметь вид бета-распределения:</p>
+<p><span class="math display">\[θ^{\text{# успехов}}\times(1-θ)^\text{# неудач}\]</span></p>
+<p>И априорное распределение, и likelihood являются бета-распределениями, а главное при их перемножении получится так же бета-распределение, так что апостериорная вероятность имеет следующие вид:</p>
+<p><span class="math display">\[\left(θ^{k_{prior}}\times(1-θ)^{n_{prior} - k_{prior}}\right) \times \left(θ^{k_{data}}\times(1-θ)^{n_{data} - k_{data}}\right) = θ^{k_{prior} + k_{data}}\times(1-θ)^{n_{prior} + n_{data} - k_{prior} - k_{data}}\]</span></p>
+<p>Т. е. если у нас биномиальные данные, чтобы получить апостериорное распределение нужно просто прибавить к количеству априорных успехов, количество успехов в наших данных, а к количеству априорных неудач прибавить количество неудач в наших данных.</p>
+<p>От формул — к делу. У нас есть <span class="math inline">\(n\)</span> попыток (83), априорное <span class="math inline">\(\mu\)</span> (0.23), и количество успехов <span class="math inline">\(k\)</span> (27). Сначала, из априорного <span class="math inline">\(\mu\)</span> нужно получить какое-нибудь значение <span class="math inline">\(\alpha\)</span> и <span class="math inline">\(\beta\)</span> для создания бета распределения.</p>
+<p><span class="math display">\[\mu = \frac{\alpha}{\alpha+\beta} \Rightarrow \alpha = \mu \times (\alpha+\beta)\]</span></p>
+<p>Если вспомнить, что <span class="math inline">\(\alpha + \beta\ \)</span> это общее число наблюдений, то его можно взять из нашей задачи. Тогда:</p>
+<p><span class="math inline">\(\alpha_{aprior} = \mu \times n = 0.23 \times 83\)</span></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">alpha_prior &lt;-<span class="st"> </span><span class="fl">0.23</span><span class="op">*</span><span class="dv">83</span>
+alpha_prior</code></pre></div>
+<pre><code>## [1] 19.09</code></pre>
+<p>Вывести <span class="math inline">\(\beta_{prior}\)</span> тоже ничего не стоит:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">beta_prior &lt;-<span class="st"> </span><span class="fl">0.77</span><span class="op">*</span><span class="dv">83</span>
+beta_prior</code></pre></div>
+<pre><code>## [1] 63.91</code></pre>
+<p>Ну что же, теперь мы можем вывести апостериорные <span class="math inline">\(\alpha_{post}\)</span> и <span class="math inline">\(\beta_{post}\)</span>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">alpha_data &lt;-<span class="st"> </span><span class="dv">27</span>
+beta_data &lt;-<span class="st"> </span><span class="dv">83</span> <span class="op">-</span><span class="st"> </span><span class="dv">27</span>
+
+alpha_post &lt;-<span class="st"> </span>alpha_prior <span class="op">+</span><span class="st"> </span>alpha_data
+beta_post &lt;-<span class="st"> </span>beta_prior <span class="op">+</span><span class="st"> </span>beta_data</code></pre></div>
+<p>Мы готовы к визуализации:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">length =</span> <span class="dv">100</span>)
+<span class="kw">data_frame</span>(<span class="dt">p =</span> <span class="kw">rep</span>(x, <span class="dv">3</span>),
+           <span class="dt">density =</span> <span class="kw">c</span>(<span class="kw">dbeta</span>(x, alpha_prior, beta_prior),
+                       <span class="kw">dbeta</span>(x, alpha_data, beta_data),
+                       <span class="kw">dbeta</span>(x, alpha_post, beta_post)),
+           <span class="dt">type =</span> <span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;prior&quot;</span>, <span class="st">&quot;likelihood&quot;</span>, <span class="st">&quot;posterior&quot;</span>), <span class="dt">each =</span> <span class="dv">100</span>))<span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> p, <span class="dt">y =</span> density, <span class="dt">color =</span> type))<span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_line</span>()<span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
+<p><img src="3_binomial_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p>Пик апостериорной вероятности приходится на:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">alpha_post<span class="op">/</span>(alpha_post<span class="op">+</span>beta_post)</code></pre></div>
+<pre><code>## [1] 0.2776506</code></pre>
+<p>А что если у Вас нет никаких идей про априорное распределение? В таком случае, можно использовать неинформативное априорное распределение с <span class="math inline">\(\alpha = 1\)</span> и <span class="math inline">\(\beta = 1\)</span>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">length =</span> <span class="dv">100</span>)
+<span class="kw">data_frame</span>(<span class="dt">p =</span> <span class="kw">rep</span>(x, <span class="dv">3</span>),
+           <span class="dt">density =</span> <span class="kw">c</span>(<span class="kw">dbeta</span>(x, <span class="dv">1</span>, <span class="dv">1</span>),
+                       <span class="kw">dbeta</span>(x, alpha_data, beta_data),
+                       <span class="kw">dbeta</span>(x, alpha_data <span class="op">+</span><span class="st"> </span><span class="dv">1</span>, beta_data <span class="op">+</span><span class="st"> </span><span class="dv">1</span>)),
+           <span class="dt">type =</span> <span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;prior&quot;</span>, <span class="st">&quot;likelihood&quot;</span>, <span class="st">&quot;posterior&quot;</span>), <span class="dt">each =</span> <span class="dv">100</span>))<span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> p, <span class="dt">y =</span> density, <span class="dt">color =</span> type))<span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_line</span>()<span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
+<p><img src="3_binomial_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+Однако стоит помнить, что неинформативное априорное расперделение многие ругают и не одобряют.
 <div class="parallax">
 
+</div>
+</div>
+<div id="---27.02.2018" class="section level3">
+<h3>Домашнее задание (до 27.02.2018)</h3>
+<p>Домашнее задание нужно выполнять в отдельном <code>rmarkdown</code> файле, скачав данные <a href="https://github.com/agricolamz/2018_data_analysis_for_linguists/tree/master/data/students">из своей папки</a> в репозитории курса. Получившиеся файлы следует помещать в соответствующую папку в своем репозитории на гитхабе. Более подробные инструкции <a href="file:///home/agricolamz/work/materials/2018_I_HSE_Data_Analysis_for_linguists/docs/index.html">см. на этой странице</a>.</p>
+<p>В вашей папке ледит файл с тремя значениями: <span class="math inline">\(n\)</span> — количество попыток, <span class="math inline">\(k\)</span> — количество успехов, <span class="math inline">\(prior\)</span> — наши предворительные идеи относительно доли успехов.</p>
+<div id="section" class="section level4">
+<h4>1.1</h4>
+<p>Приведите результаты биномиального теста.</p>
+</div>
+<div id="section-1" class="section level4">
+<h4>1.2</h4>
+<p>Приведите результаты симуляции, используя <code>set.seed(42)</code>.</p>
+</div>
+<div id="section-2" class="section level4">
+<h4>1.3</h4>
+<p>Приведите среднее апостериорного распределения, используя <span class="math inline">\(prior\)</span> как средние априорного распределения, а <span class="math inline">\(n\)</span> как количество элементов для вычисления апостериорного распределения.</p>
+</div>
+<div id="section-3" class="section level4">
+<h4>1.4</h4>
+<p>Приведите среднее апостериорного распределения, используя неинформативное априорное распределение.</p>
+</div>
+<div id="section-4" class="section level4">
+<h4>1.5</h4>
+<p>Представим, что Вы пишите статью, напишите короткий абзац, который бы обобщал результаты, полученные в предыдущих заданиях. Не забывайте приводить результаты статистических тестов.</p>
+<div class="parallax">
+
+</div>
 </div>
 </div>
 
