@@ -347,6 +347,39 @@ posterior %>%
   coord_flip()
 ```
 
+```{r, echo= FALSE}
+chekhov %>% 
+  filter(word == "не") %>%
+  slice(1:30) %>% 
+  group_by(titles) %>% 
+  mutate(low_ci = binom.test(x = n, n = n_words)$conf.int[1],
+         up_ci = binom.test(x = n, n = n_words)$conf.int[2],
+         interval = "confidence") %>% 
+  ungroup() %>% 
+  select(trunc_titles, low_ci, up_ci, interval)->
+  df_1
+
+chekhov %>% 
+  filter(word == "не") %>%
+  slice(1:30) %>% 
+  group_by(titles) %>% 
+  mutate(alpha_post = n+alpha0,
+         beta_post = n_words-n+beta0,
+         average_post = alpha_post/(alpha_post+beta_post),
+         low_ci = qbeta(.025, alpha_post, beta_post),
+         up_ci = qbeta(.975, alpha_post, beta_post),
+         interval = "credible") %>% 
+  ungroup() %>% 
+  select(trunc_titles, low_ci, up_ci, interval)->
+  df_2
+
+rbind(df_1, df_2) %>% 
+  ggplot(aes(trunc_titles, ymin = low_ci, ymax = up_ci, color = interval)) +
+  geom_errorbar()+
+  coord_flip()+
+  theme_bw()
+```
+
 
 
 <div class="parallax"></div>

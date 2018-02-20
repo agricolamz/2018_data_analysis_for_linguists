@@ -567,10 +567,51 @@ weighted_mean</code></pre></div>
 </div>
 </div>
 </div>
-<div id="---" class="section level3">
-<h3>3. Фриквентисткий метод: доверительный интервал</h3>
-<p>Основная соль фриквинтистского доверительного интервала (по-английски confidence interval) основано на правиле трех сигм нормального распределения:</p>
+<div id="--" class="section level3">
+<h3>3. Хакерский метод: бутстрэп</h3>
+<p>Из наших данных возьмем 10000 выборок с повторением.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">42</span>)
+chekhov <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(word <span class="op">==</span><span class="st"> &quot;не&quot;</span>) -&gt;
+<span class="st">  </span>chekhov_bs
+
+chekhov_bs &lt;-<span class="st"> </span><span class="kw">bootstrap</span>(chekhov_bs<span class="op">$</span>average, <span class="dt">nboot =</span> <span class="dv">10000</span>, <span class="dt">theta =</span> mean)<span class="op">$</span>thetastar
+
+<span class="co"># ggplot работает только с датафреймами</span>
+chekhov_bs &lt;-<span class="st"> </span><span class="kw">data_frame</span>(<span class="dt">means =</span> chekhov_bs)  
+
+chekhov_bs <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(means)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">fill =</span> <span class="st">&quot;lightblue&quot;</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_bw</span>()<span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&#39;Средняя доля слова &quot;не&quot; на основе 305 рассказов А. Чехова&#39;</span>, <span class="dt">subtitle =</span> <span class="st">&quot;На основе 10000 бутстрэп-подвыборок&quot;</span>)</code></pre></div>
 <p><img src="4_binomial_ci_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chekhov_bs <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(means),
+            <span class="dt">q1 =</span> <span class="kw">quantile</span>(means, <span class="fl">0.025</span>),
+            <span class="dt">q2 =</span> <span class="kw">quantile</span>(means, <span class="fl">0.975</span>))-&gt;
+<span class="st">  </span>chekhov_stats
+chekhov_stats</code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["mean"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["q1"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["q2"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"0.02230418","2":"0.02127782","3":"0.02342567","_row":"2.5%"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chekhov_bs <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(means)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">fill =</span> <span class="st">&quot;lightblue&quot;</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_bw</span>()<span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&#39;Средняя доля слова &quot;не&quot; на основе 305 рассказов А. Чехова&#39;</span>, <span class="dt">subtitle =</span> <span class="st">&quot;Среднее и 95% бутстрэпнутый доверительный интервал на основе 10000 бутстрэп-подвыборок&quot;</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="kw">unlist</span>(chekhov_stats), <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">3</span>))</code></pre></div>
+<p><img src="4_binomial_ci_files/figure-html/unnamed-chunk-12-2.png" width="672" /></p>
+<div class="parallax">
+
+</div>
+</div>
+<div id="---" class="section level3">
+<h3>4. Фриквентисткий метод: доверительный интервал</h3>
+<p>Основная соль фриквинтистского доверительного интервала (по-английски confidence interval) основано на правиле трех сигм нормального распределения:</p>
+<p><img src="4_binomial_ci_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 <p><strong>z-score</strong>:</p>
 <ul>
 <li>95% данных находится в 1.96 стандартных отклонений</li>
@@ -609,54 +650,13 @@ weighted_mean</code></pre></div>
 <span class="st">  </span><span class="kw">coord_flip</span>()<span class="op">+</span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&#39;Среднее и 95% CI употребления &quot;не&quot; в рассказах А. Чехова&#39;</span>,
        <span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;&quot;</span>)</code></pre></div>
-<p><img src="4_binomial_ci_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
-<div class="parallax">
-
-</div>
-</div>
-<div id="--" class="section level3">
-<h3>4. Хакерский метод: бутстрэп</h3>
-<p>Из наших данных возьмем 10000 выборок с повторением.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">42</span>)
-chekhov <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">filter</span>(word <span class="op">==</span><span class="st"> &quot;не&quot;</span>) -&gt;
-<span class="st">  </span>chekhov_bs
-
-chekhov_bs &lt;-<span class="st"> </span><span class="kw">bootstrap</span>(chekhov_bs<span class="op">$</span>average, <span class="dt">nboot =</span> <span class="dv">10000</span>, <span class="dt">theta =</span> mean)<span class="op">$</span>thetastar
-
-<span class="co"># ggplot работает только с датафреймами</span>
-chekhov_bs &lt;-<span class="st"> </span><span class="kw">data_frame</span>(<span class="dt">means =</span> chekhov_bs)  
-
-chekhov_bs <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(means)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">fill =</span> <span class="st">&quot;lightblue&quot;</span>)<span class="op">+</span>
-<span class="st">  </span><span class="kw">theme_bw</span>()<span class="op">+</span>
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&#39;Средняя доля слова &quot;не&quot; на основе 305 рассказов А. Чехова&#39;</span>, <span class="dt">subtitle =</span> <span class="st">&quot;На основе 10000 бутстрэп-подвыборок&quot;</span>)</code></pre></div>
 <p><img src="4_binomial_ci_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chekhov_bs <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(means),
-            <span class="dt">q1 =</span> <span class="kw">quantile</span>(means, <span class="fl">0.025</span>),
-            <span class="dt">q2 =</span> <span class="kw">quantile</span>(means, <span class="fl">0.975</span>))-&gt;
-<span class="st">  </span>chekhov_stats
-chekhov_stats</code></pre></div>
-<div data-pagedtable="false">
-<script data-pagedtable-source type="application/json">
-{"columns":[{"label":["mean"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["q1"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["q2"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"0.02230418","2":"0.02127782","3":"0.02342567","_row":"2.5%"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chekhov_bs <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(means)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">fill =</span> <span class="st">&quot;lightblue&quot;</span>)<span class="op">+</span>
-<span class="st">  </span><span class="kw">theme_bw</span>()<span class="op">+</span>
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&#39;Средняя доля слова &quot;не&quot; на основе 305 рассказов А. Чехова&#39;</span>, <span class="dt">subtitle =</span> <span class="st">&quot;Среднее и 95% бутстрэпнутый доверительный интервал на основе 10000 бутстрэп-подвыборок&quot;</span>)<span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="kw">unlist</span>(chekhov_stats), <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">3</span>))</code></pre></div>
-<p><img src="4_binomial_ci_files/figure-html/unnamed-chunk-14-2.png" width="672" /></p>
 <div class="parallax">
 
 </div>
 </div>
-<div id="empirical-bayes-prior" class="section level3">
-<h3>4. Empirical Bayes prior</h3>
+<div id="empirical-bayes-estimation" class="section level3">
+<h3>5. Empirical Bayes estimation</h3>
 <p>Метод Empirical Bayes estimation – один из байесовских методов, в рамках которого нужно:</p>
 <ul>
 <li>произвести оценку априорного распределения вероятностей на основании имеющихся данных</li>
@@ -700,13 +700,39 @@ chekhov <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&#39;Частотность слова &quot;не&quot; на основе 305 рассказов А. Чехова&#39;</span>,
        <span class="dt">subtitle =</span> <span class="st">&quot;черной линией показано бета распределение с α = 5.283022 и β = 231.6328&quot;</span>)</code></pre></div>
 <p><img src="4_binomial_ci_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<p>Полученное распределение можно использовать как априорное распределение. Этот трюк и называется Empirical Bayes estimation.</p>
 <div class="parallax">
 
 </div>
 </div>
 <div id="--" class="section level3">
-<h3>5. Байесовский доверительный интервал</h3>
-<p>Байесовский доверительный <span class="math inline">\(k\)</span>-% интервал (по-английски credible interval) — это интервал <span class="math inline">\([\frac{k}{2}, 1-\frac{k}{2}]\)</span> от апостериорного распределения.</p>
+<h3>6. Байесовский доверительный интервал</h3>
+<p>Байесовский доверительный <span class="math inline">\(k\)</span>-% интервал (по-английски credible interval) — это интервал <span class="math inline">\([\frac{k}{2}, 1-\frac{k}{2}]\)</span> от апостериорного распределения. Давайте используем распределение, полученное в предыдущем разделе в качестве априорного для трдцети рассказов Чехова:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chekhov <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(word <span class="op">==</span><span class="st"> &quot;не&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">slice</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">30</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(titles) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">alpha_post =</span> n<span class="op">+</span>alpha0,
+         <span class="dt">beta_post =</span> n_words<span class="op">-</span>n<span class="op">+</span>beta0,
+         <span class="dt">average_post =</span> alpha_post<span class="op">/</span>(alpha_post<span class="op">+</span>beta_post),
+         <span class="dt">cred_int_l =</span> <span class="kw">qbeta</span>(.<span class="dv">025</span>, alpha_post, beta_post),
+         <span class="dt">cred_int_h =</span> <span class="kw">qbeta</span>(.<span class="dv">975</span>, alpha_post, beta_post)) -&gt;
+<span class="st">  </span>posterior
+
+posterior <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">select</span>(titles, n_words, average, average_post) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">arrange</span>(n_words)</code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["titles"],"name":[1],"type":["chr"],"align":["left"]},{"label":["n_words"],"name":[2],"type":["int"],"align":["right"]},{"label":["average"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["average_post"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"Не тлетворные мысли","2":"101","3":"0.04950495","4":"0.03043072"},{"1":"Мысли читателя газет и журналов","2":"107","3":"0.04672897","4":"0.02989982"},{"1":"Что лучше?","2":"122","3":"0.04098361","4":"0.02865023"},{"1":"Предписание","2":"129","3":"0.03875969","4":"0.02810215"},{"1":"Масленичные правила дисциплины","2":"192","3":"0.05208333","4":"0.03563175"},{"1":"Жизнь прекрасна!","2":"322","3":"0.09627329","4":"0.06491679"},{"1":"Язык до Киева доведет","2":"356","3":"0.04213483","4":"0.03420894"},{"1":"Самообольщение","2":"375","3":"0.04000000","4":"0.03314675"},{"1":"Совет","2":"393","3":"0.03816794","4":"0.03219958"},{"1":"Затмение Луны","2":"417","3":"0.03357314","4":"0.02948854"},{"1":"По-американски","2":"507","3":"0.05719921","4":"0.04608455"},{"1":"Двое в одном","2":"592","3":"0.03885135","4":"0.03412050"},{"1":"Теща-адвокат","2":"647","3":"0.04482226","4":"0.03878539"},{"1":"Дорогая собака","2":"681","3":"0.03817915","4":"0.03408049"},{"1":"Стена","2":"682","3":"0.03519062","4":"0.03186693"},{"1":"Смерть чиновника","2":"691","3":"0.03907381","4":"0.03479090"},{"1":"Дура, или Капитан в отставке","2":"772","3":"0.03756477","4":"0.03398006"},{"1":"Правила для начинающих авторов","2":"863","3":"0.03823870","4":"0.03480541"},{"1":"Депутат, или Повесть о том, как у Дездемонова 25 рублей пропало","2":"913","3":"0.03833516","4":"0.03503128"},{"1":"Праздничная повинность","2":"942","3":"0.04458599","4":"0.04010721"},{"1":"Суд","2":"1079","3":"0.03336423","4":"0.03137208"},{"1":"Психопаты","2":"1128","3":"0.03368794","4":"0.03171113"},{"1":"Не судьба!","2":"1141","3":"0.03593339","4":"0.03358915"},{"1":"Дипломат","2":"1177","3":"0.04163127","4":"0.03839198"},{"1":"Жених и папенька","2":"1290","3":"0.04031008","4":"0.03751551"},{"1":"Контрабас и флейта","2":"1320","3":"0.03409091","4":"0.03229656"},{"1":"Перед свадьбой","2":"1459","3":"0.04112406","4":"0.03849426"},{"1":"Упразднили!","2":"1528","3":"0.03664921","4":"0.03472292"},{"1":"Папаша","2":"1686","3":"0.04151839","4":"0.03915045"},{"1":"Двадцать девятое июня","2":"1920","3":"0.03593750","4":"0.03443946"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">posterior <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(titles, average_post, <span class="dt">ymin =</span> cred_int_l, <span class="dt">ymax =</span> cred_int_h))<span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_pointrange</span>()<span class="op">+</span>
+<span class="st">  </span><span class="kw">coord_flip</span>()</code></pre></div>
+<p><img src="4_binomial_ci_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p><img src="4_binomial_ci_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
 <div class="parallax">
 
 </div>
