@@ -6,7 +6,7 @@ editor_options:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+knitr::opts_chunk$set(message = FALSE, warning = FALSE, fig.height = 3)
 ```
 
 <style>
@@ -157,7 +157,45 @@ chekhov %>%
 
 <div class="parallax"></div>
 
-### 3. Фриквентисткий метод: доверительный интервал
+### 3. Хакерский метод: бутстрэп
+
+Из наших данных возьмем 10000 выборок с повторением.
+
+```{r}
+set.seed(42)
+chekhov %>% 
+  filter(word == "не") ->
+  chekhov_bs
+
+chekhov_bs <- bootstrap(chekhov_bs$average, nboot = 10000, theta = mean)$thetastar
+
+# ggplot работает только с датафреймами
+chekhov_bs <- data_frame(means = chekhov_bs)  
+
+chekhov_bs %>% 
+  ggplot(aes(means)) +
+  geom_histogram(fill = "lightblue")+
+  theme_bw()+
+  labs(title = 'Средняя доля слова "не" на основе 305 рассказов А. Чехова', subtitle = "На основе 10000 бутстрэп-подвыборок")
+
+chekhov_bs %>%
+  summarise(mean = mean(means),
+            q1 = quantile(means, 0.025),
+            q2 = quantile(means, 0.975))->
+  chekhov_stats
+chekhov_stats
+
+chekhov_bs %>% 
+  ggplot(aes(means)) +
+  geom_histogram(fill = "lightblue")+
+  theme_bw()+
+  labs(title = 'Средняя доля слова "не" на основе 305 рассказов А. Чехова', subtitle = "Среднее и 95% бутстрэпнутый доверительный интервал на основе 10000 бутстрэп-подвыборок")+
+  geom_vline(xintercept = unlist(chekhov_stats), lty = c(2, 3, 3))
+```
+
+<div class="parallax"></div>
+
+### 4. Фриквентисткий метод: доверительный интервал
 Основная соль фриквинтистского доверительного интервала (по-английски confidence interval) основано на правиле трех сигм нормального распределения:
 
 ```{r, echo = FALSE, fig.height= 2.5}
@@ -222,48 +260,9 @@ chekhov %>%
        x = "", y = "")
 ```
 
-
 <div class="parallax"></div>
 
-### 4. Хакерский метод: бутстрэп
-
-Из наших данных возьмем 10000 выборок с повторением.
-
-```{r}
-set.seed(42)
-chekhov %>% 
-  filter(word == "не") ->
-  chekhov_bs
-
-chekhov_bs <- bootstrap(chekhov_bs$average, nboot = 10000, theta = mean)$thetastar
-
-# ggplot работает только с датафреймами
-chekhov_bs <- data_frame(means = chekhov_bs)  
-
-chekhov_bs %>% 
-  ggplot(aes(means)) +
-  geom_histogram(fill = "lightblue")+
-  theme_bw()+
-  labs(title = 'Средняя доля слова "не" на основе 305 рассказов А. Чехова', subtitle = "На основе 10000 бутстрэп-подвыборок")
-
-chekhov_bs %>%
-  summarise(mean = mean(means),
-            q1 = quantile(means, 0.025),
-            q2 = quantile(means, 0.975))->
-  chekhov_stats
-chekhov_stats
-
-chekhov_bs %>% 
-  ggplot(aes(means)) +
-  geom_histogram(fill = "lightblue")+
-  theme_bw()+
-  labs(title = 'Средняя доля слова "не" на основе 305 рассказов А. Чехова', subtitle = "Среднее и 95% бутстрэпнутый доверительный интервал на основе 10000 бутстрэп-подвыборок")+
-  geom_vline(xintercept = unlist(chekhov_stats), lty = c(2, 3, 3))
-```
-
-<div class="parallax"></div>
-
-### 4. Empirical Bayes prior
+### 5. Empirical Bayes estimation
 
 Метод Empirical Bayes estimation -- один из байесовских методов, в рамках которого нужно:
 
@@ -282,12 +281,72 @@ chekhov %>%
   labs(title = 'Частотность слова "не" на основе 305 рассказов А. Чехова')
 ```
 
-В данном случае, данные можно подогнать под бета распределение $Χ \sim Beta(α_0, β_0)$ (это далеко не всегда так). Подгонку можно осуществлять множеством разных функций, я буду использовать функцию 
+В данном случае, данные можно подогнать под бета распределение $Χ \sim Beta(α_0, β_0)$ (это далеко не всегда так). Подгонку можно осуществлять множеством разных функций, но я воспользуюсь следующей системой уравнений:
 
+$$\mu = \frac{\alpha}{\alpha+\beta}$$
+$$\sigma = \frac{\alpha\times\beta}{(\alpha+\beta)^2\times(\alpha+\beta+1)}$$
+
+Из этой системы можно выразить $\alpha$ и $\beta$:
+
+$$\alpha = \left(\frac{1-\mu}{\sigma^2} - \frac{1}{\mu}\right)\times \mu^2$$
+$$\beta = \alpha\times\left(\frac{1}{\mu} - 1\right)$$
+
+```{r}
+mu <- mean(chekhov$average[chekhov$word == "не"])
+var <- var(chekhov$average[chekhov$word == "не"])
+alpha0 <- ((1 - mu) / var - 1 / mu) * mu ^ 2
+beta0 <- alpha0 * (1 / mu - 1)
+alpha0
+beta0
+```
+
+Посмотрим, насколько хорошо, получившееся распределение подходит к нашим данным:
+```{r}
+x <- seq(0, 0.1, length = 1000)
+estimation <- data_frame(
+  x = x,
+  density = c(dbeta(x, shape1 = alpha0, shape2 = beta0)))
+
+chekhov %>% 
+  filter(word == "не") %>% 
+  select(trunc_titles, word, average) %>% 
+  ggplot(aes(average)) +
+  geom_histogram(fill = "lightblue")+
+  geom_line(data = estimation, aes(x, density))+
+  theme_bw()+
+  labs(title = 'Частотность слова "не" на основе 305 рассказов А. Чехова',
+       subtitle = "черной линией показано бета распределение с α = 5.283022 и β = 231.6328")
+```
+
+Полученное распределение можно использовать как априорное распределение. Этот трюк и называется Empirical Bayes estimation. 
 
 <div class="parallax"></div>
 
-### 5. Байесовский доверительный интервал
-По-английски credible interval.
+### 6. Байесовский доверительный интервал
+Байесовский доверительный $k$-% интервал (по-английски credible interval) --- это интервал $[\frac{k}{2}, 1-\frac{k}{2}]$ от апостериорного распределения. Давайте используем распределение, полученное в предыдущем разделе в качестве априорного для трдцети рассказов Чехова:
+
+```{r}
+chekhov %>% 
+  filter(word == "не") %>%
+  slice(1:30) %>% 
+  group_by(titles) %>% 
+  mutate(alpha_post = n+alpha0,
+         beta_post = n_words-n+beta0,
+         average_post = alpha_post/(alpha_post+beta_post),
+         cred_int_l = qbeta(.025, alpha_post, beta_post),
+         cred_int_h = qbeta(.975, alpha_post, beta_post)) ->
+  posterior
+
+posterior %>% 
+  select(titles, n_words, average, average_post) %>% 
+  arrange(n_words)
+
+posterior %>% 
+  ggplot(aes(titles, average_post, ymin = cred_int_l, ymax = cred_int_h))+
+  geom_pointrange()+
+  coord_flip()
+```
+
+
 
 <div class="parallax"></div>

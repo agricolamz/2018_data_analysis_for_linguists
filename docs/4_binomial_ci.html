@@ -672,14 +672,41 @@ chekhov_stats</code></pre></div>
 <span class="st">  </span><span class="kw">theme_bw</span>()<span class="op">+</span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&#39;Частотность слова &quot;не&quot; на основе 305 рассказов А. Чехова&#39;</span>)</code></pre></div>
 <p><img src="4_binomial_ci_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
-<p>В данном случае, данные можно подогнать под бета распределение <span class="math inline">\(Χ \sim Beta(α_0, β_0)\)</span> (это далеко не всегда так). Подгонку можно осуществлять множеством разных функций, я буду использовать функцию</p>
+<p>В данном случае, данные можно подогнать под бета распределение <span class="math inline">\(Χ \sim Beta(α_0, β_0)\)</span> (это далеко не всегда так). Подгонку можно осуществлять множеством разных функций, но я воспользуюсь следующей системой уравнений:</p>
+<p><span class="math display">\[\mu = \frac{\alpha}{\alpha+\beta}\]</span> <span class="math display">\[\sigma = \frac{\alpha\times\beta}{(\alpha+\beta)^2\times(\alpha+\beta+1)}\]</span></p>
+<p>Из этой системы можно выразить <span class="math inline">\(\alpha\)</span> и <span class="math inline">\(\beta\)</span>:</p>
+<p><span class="math display">\[\alpha = \left(\frac{1-\mu}{\sigma^2} - \frac{1}{\mu}\right)\times \mu^2\]</span> <span class="math display">\[\beta = \alpha\times\left(\frac{1}{\mu} - 1\right)\]</span></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mu &lt;-<span class="st"> </span><span class="kw">mean</span>(chekhov<span class="op">$</span>average[chekhov<span class="op">$</span>word <span class="op">==</span><span class="st"> &quot;не&quot;</span>])
+var &lt;-<span class="st"> </span><span class="kw">var</span>(chekhov<span class="op">$</span>average[chekhov<span class="op">$</span>word <span class="op">==</span><span class="st"> &quot;не&quot;</span>])
+alpha0 &lt;-<span class="st"> </span>((<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>mu) <span class="op">/</span><span class="st"> </span>var <span class="op">-</span><span class="st"> </span><span class="dv">1</span> <span class="op">/</span><span class="st"> </span>mu) <span class="op">*</span><span class="st"> </span>mu <span class="op">^</span><span class="st"> </span><span class="dv">2</span>
+beta0 &lt;-<span class="st"> </span>alpha0 <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">/</span><span class="st"> </span>mu <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)
+alpha0</code></pre></div>
+<pre><code>## [1] 5.283022</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">beta0</code></pre></div>
+<pre><code>## [1] 231.6328</code></pre>
+<p>Посмотрим, насколько хорошо, получившееся распределение подходит к нашим данным:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="fl">0.1</span>, <span class="dt">length =</span> <span class="dv">1000</span>)
+estimation &lt;-<span class="st"> </span><span class="kw">data_frame</span>(
+  <span class="dt">x =</span> x,
+  <span class="dt">density =</span> <span class="kw">c</span>(<span class="kw">dbeta</span>(x, <span class="dt">shape1 =</span> alpha0, <span class="dt">shape2 =</span> beta0)))
+
+chekhov <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(word <span class="op">==</span><span class="st"> &quot;не&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">select</span>(trunc_titles, word, average) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(average)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">fill =</span> <span class="st">&quot;lightblue&quot;</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">data =</span> estimation, <span class="kw">aes</span>(x, density))<span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_bw</span>()<span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&#39;Частотность слова &quot;не&quot; на основе 305 рассказов А. Чехова&#39;</span>,
+       <span class="dt">subtitle =</span> <span class="st">&quot;черной линией показано бета распределение с α = 5.283022 и β = 231.6328&quot;</span>)</code></pre></div>
+<p><img src="4_binomial_ci_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
 <div class="parallax">
 
 </div>
 </div>
 <div id="--" class="section level3">
 <h3>5. Байесовский доверительный интервал</h3>
-<p>По-английски credible interval.</p>
+<p>Байесовский доверительный <span class="math inline">\(k\)</span>-% интервал (по-английски credible interval) — это интервал <span class="math inline">\([\frac{k}{2}, 1-\frac{k}{2}]\)</span> от апостериорного распределения.</p>
 <div class="parallax">
 
 </div>
