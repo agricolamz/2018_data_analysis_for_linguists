@@ -622,7 +622,7 @@ chekhov_stats</code></pre></div>
 <li>предположим что данные генеральной совокупности нормально распределены</li>
 <li>тогда доверительные интервалы выборок взятых из генеральной совокупности будут покрывать среднее генеральной совокупности</li>
 </ul>
-<p><span class="math display">\[\bar{x} \pm z \times \frac{\sigma}{\sqrt{n}}\text{, где } z = 1 - \frac{\alpha}{2}\]</span></p>
+<p><span class="math display">\[\bar{x} \pm z \times \frac{\sigma}{\sqrt{n}}\text{, где } z \text{ — это центральная } 1 - \frac{\alpha}{2} \text{ часть данных}\]</span></p>
 <p>Распространение этой логики на биномиальные данные называется интервал Вальда:</p>
 <p><span class="math display">\[\bar{x} = \theta; \sigma = \sqrt{\frac{\theta\times(1-\theta)}{n}}\]</span></p>
 <p>Тогда интервал Вальда:</p>
@@ -657,7 +657,7 @@ chekhov_stats</code></pre></div>
 </div>
 <div id="empirical-bayes-estimation" class="section level3">
 <h3>5. Empirical Bayes estimation</h3>
-<p>Метод Empirical Bayes estimation – один из байесовских методов, в рамках которого нужно:</p>
+<p>Метод Empirical Bayes estimation — один из байесовских методов, в рамках которого нужно:</p>
 <ul>
 <li>произвести оценку априорного распределения вероятностей на основании имеющихся данных</li>
 <li>использовать полученное априорное распределение для получение апостериорной оценки для каждого наблюдения</li>
@@ -728,9 +728,10 @@ posterior <span class="op">%&gt;%</span><span class="st"> </span>
   </script>
 </div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">posterior <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(titles, average_post, <span class="dt">ymin =</span> cred_int_l, <span class="dt">ymax =</span> cred_int_h))<span class="op">+</span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(trunc_titles, average_post, <span class="dt">ymin =</span> cred_int_l, <span class="dt">ymax =</span> cred_int_h))<span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_pointrange</span>()<span class="op">+</span>
-<span class="st">  </span><span class="kw">coord_flip</span>()</code></pre></div>
+<span class="st">  </span><span class="kw">coord_flip</span>()<span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
 <p><img src="4_binomial_ci_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
 <p><img src="4_binomial_ci_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
 <div class="parallax">
