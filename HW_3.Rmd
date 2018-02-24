@@ -7,7 +7,7 @@ editor_options:
 ---
 
 ### Домашнее задание 3 (до 27.02.2018)
-Домашнее задание нужно выполнять в отдельном `rmarkdown` файле, скачав данные [из своей папки](https://github.com/agricolamz/2018_data_analysis_for_linguists/tree/master/data/students) в репозитории курса. Получившиеся файлы следует помещать в соответствующую папку в своем репозитории на гитхабе. Более подробные инструкции [см. на этой странице](file:///home/agricolamz/work/materials/2018_I_HSE_Data_Analysis_for_linguists/docs/index.html).
+Домашнее задание нужно выполнять в отдельном `rmarkdown` файле, скачав данные [из своей папки](https://github.com/agricolamz/2018_data_analysis_for_linguists/tree/master/data/students) в репозитории курса. Получившиеся файлы следует помещать в соответствующую папку в своем репозитории на гитхабе. Более подробные инструкции [см. на этой странице](https://agricolamz.github.io/2018_data_analysis_for_linguists/index.html).
 
 В вашей папке ледит файл с тремя значениями: $n$ --- количество попыток, $k$ --- количество успехов, $prior$ ---  наши предворительные идеи относительно доли успехов.
 
