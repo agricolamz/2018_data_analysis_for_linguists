@@ -29,7 +29,7 @@ packageVersion("MASS")
 * добавьте в соответствующую папку файл с решением в формате `hw`, номер домашнего задания, `.Rmd`;
 * следуйте паттерну называния подпапок повторяющему [схему в Вашей папке](https://github.com/agricolamz/2018_data_analysis_for_linguists/tree/master/data/students) в репозитории курса;
 ```{bash, echo = FALSE, comment = ""}
-cd /home/agricolamz/work/materials/2018_I_HSE_Data_Analysis_for_linguists/data/students/sandrasimdi
+cd /home/agricolamz/work/materials/2018_I_HSE_Data_Analysis_for_linguists/data/answers/headshoter13
 tree
 ```
 Потом я буду автоматически обкачивать файлы `2018_hse_data_analysis/hw1_agreement/hw1.Rmd` из ваших репозиториев.
@@ -38,7 +38,7 @@ tree
 * Не используйте точные пути, все данные закачиваете из интернет-ссылок (например, `read_csv("интернет_ссылка")`)
 * фрагменты кода, посвященные конкретным заданиям должны выводить ответ в консоль.
 
-Календарь можно скачать [в форматье `.csv`](https://raw.githubusercontent.com/agricolamz/2018_data_analysis_for_linguists/master/data_analysis_calendar.csv) и импортировать в Google Calendar.
+Календарь можно скачать [в формате `.csv`](https://raw.githubusercontent.com/agricolamz/2018_data_analysis_for_linguists/master/data_analysis_calendar.csv) и импортировать в Google Calendar.
 
 ```{r, echo = FALSE, message=FALSE}
 library(tidyverse)
@@ -50,6 +50,7 @@ df %>%
          id = 1:n(),
          Subject = str_replace_all(Subject, "DA ", ""),
          Subject = str_replace_all(Subject, "class ", ""),
+         Subject = str_replace_all(Subject, " deadline", ""),
          Subject = paste0("<a href = 'https://agricolamz.github.io/2018_data_analysis_for_linguists/",
            str_replace_all(Subject, " ", "_"),
            ".html'>",

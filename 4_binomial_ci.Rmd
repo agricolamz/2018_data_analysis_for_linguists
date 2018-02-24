@@ -383,6 +383,9 @@ rbind(df_1, df_2) %>%
   xlab("")
 ```
 
+<div class="parallax"></div>
 
+```{r child = 'HW_4.Rmd'}
+```
 
 <div class="parallax"></div>
