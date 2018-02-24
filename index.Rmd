@@ -4,6 +4,8 @@ author: "Г. Мороз"
 output:
   html_document:
     toc: false
+editor_options: 
+  chunk_output_type: console
 ---
 
 ### Библиотеки:
@@ -35,3 +37,30 @@ tree
 * фрагменты кода, посвященные отдельным заданиям разделяйте заголовками третьего уровня, пробелом и номером задания "### 1.1", "### 1.2", "### 2.1" и т. д. При этом, пожалуйста больше нигде в коде три и больше знака решётки подряд не используйте;
 * Не используйте точные пути, все данные закачиваете из интернет-ссылок (например, `read_csv("интернет_ссылка")`)
 * фрагменты кода, посвященные конкретным заданиям должны выводить ответ в консоль.
+
+Календарь можно скачать [в форматье `.csv`](https://raw.githubusercontent.com/agricolamz/2018_data_analysis_for_linguists/master/data_analysis_calendar.csv) и импортировать в Google Calendar.
+
+```{r, echo = FALSE, message=FALSE}
+library(tidyverse)
+library(lubridate)
+library(timevis)
+df <- read_csv("data_analysis_calendar.csv")
+df %>% 
+  mutate(`Start Date` = dmy(`Start Date`),
+         id = 1:n(),
+         Subject = str_replace_all(Subject, "DA ", ""),
+         Subject = str_replace_all(Subject, "class ", ""),
+         Subject = paste0("<a href = 'https://agricolamz.github.io/2018_data_analysis_for_linguists/",
+           str_replace_all(Subject, " ", "_"),
+           ".html'>",
+           Subject,
+           "</a> <br>",
+           wday(`Start Date`, label = TRUE),
+           " ",
+           day(`Start Date`),
+           ".",
+           month(`Start Date`))) %>% 
+  select("start" = "Start Date", "content" = "Subject") %>% 
+  timevis()
+```
+
