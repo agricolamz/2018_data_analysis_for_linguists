@@ -311,7 +311,7 @@ chekhov %>%
   filter(word == "не") %>% 
   select(trunc_titles, word, average) %>% 
   ggplot(aes(average)) +
-  geom_histogram(fill = "lightblue")+
+  geom_density(fill = "lightblue")+
   geom_line(data = estimation, aes(x, density))+
   theme_bw()+
   labs(title = 'Частотность слова "не" на основе 305 рассказов А. Чехова',
