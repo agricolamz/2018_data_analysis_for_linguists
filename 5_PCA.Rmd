@@ -1,12 +1,12 @@
 ---
-title: "4. Методо главных компонент"
+title: "5. Уменьшение размерностей: PCA"
 author: "Г. Мороз"
 ---
 
 <style>
 .parallax {
     /* The image used */
-    background-image: url("1_coin.jpg");
+    background-image: url("5_PCA.jpg");
 
     /* Set a specific height */
     min-height: 300px; 
