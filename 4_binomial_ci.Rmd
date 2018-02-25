@@ -260,6 +260,8 @@ chekhov %>%
        x = "", y = "")
 ```
 
+В базовом пакете функция `binom.test()` не позволяет выбирать тип доверительного интервала. `ci.method = "Clopper-Pearson"` возможна, если включить библиотеку `mosaic`. 
+
 <div class="parallax"></div>
 
 ### 5. Empirical Bayes estimation
