@@ -38,7 +38,7 @@ tree
 * Не используйте точные пути, все данные закачиваете из интернет-ссылок (например, `read_csv("интернет_ссылка")`)
 * фрагменты кода, посвященные конкретным заданиям должны выводить ответ в консоль.
 
-Календарь можно скачать [в формате `.csv`](https://raw.githubusercontent.com/agricolamz/2018_data_analysis_for_linguists/master/data_analysis_calendar.csv) и импортировать в Google Calendar.
+Календарь можно скачать [в формате `.csv`](https://raw.githubusercontent.com/agricolamz/2018_data_analysis_for_linguists/master/data_analysis_calendar.csv) и импортировать в Google Calendar, MS Outlook и т. п.
 
 ```{r, echo = FALSE, message=FALSE}
 library(tidyverse)
