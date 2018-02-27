@@ -15,7 +15,7 @@ navbar:
       href: 3_binomial.html
     - text: 4. Binomial CI
       href: 4_binomial_ci.html
-  - text: уменьшение размерностей
+  - text: уменьшение размерности
     menu:
     - text: 5. PCA
       href: 5_PCA.html
