@@ -398,7 +398,7 @@ div.tocify {
 
 
 <h1 class="title toc-ignore"><ol start="5" style="list-style-type: decimal">
-<li>Уменьшение размерности: PCA</li>
+<li>Уменьшение размерности: PCA, LDA</li>
 </ol></h1>
 <h4 class="author"><em>Г. Мороз</em></h4>
 
@@ -428,7 +428,8 @@ div.tocify {
 <p>Метод главных компонент (PCA, Principal Component Analysis) применим к числовым данным, в которых строчки — это точки наблюдения, а столбцы — это исследуемые переменные. Данный метод часто приводят и используют как метод уменьшения размерности, однако я разделяю мнение, согласно которому это лишь метод смены перспективы, в результаты которого некоторое количество размерностей становится маловажными.</p>
 <div class="section level4">
 <h4>1.1 Библиотеки</h4>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggfortify)
+<span class="kw">library</span>(GGally)</code></pre></div>
 </div>
 <div id="--" class="section level4">
 <h4>1.2 Фамильная честь Вустеров</h4>
@@ -447,8 +448,7 @@ div.tocify {
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">wodehouse &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;https://goo.gl/8RJDwK&quot;</span>)
 <span class="kw">library</span>(GGally)
-<span class="kw">ggpairs</span>(wodehouse[,<span class="op">-</span><span class="dv">1</span>])<span class="op">+</span>
-<span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
+<span class="kw">ggpairs</span>(wodehouse[,<span class="op">-</span><span class="dv">1</span>])</code></pre></div>
 <p><img src="5_PCA_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 <div class="parallax">
 
@@ -518,7 +518,7 @@ div.tocify {
 </div>
 <div id="---" class="section level3">
 <h3>3. Собственный вектор, собственное значение</h3>
-<p>Как вы знаете матрицы можно перемножать. <a href="https://upload.wikimedia.org/wikipedia/commons/e/eb/Matrix_multiplication_diagram_2.svg">Подсказка</a>.</p>
+<p>Как вы знаете, матрицы можно перемножать. <a href="https://upload.wikimedia.org/wikipedia/commons/e/eb/Matrix_multiplication_diagram_2.svg">Подсказка</a>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m1 &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>), <span class="dt">nrow =</span> <span class="dv">2</span>)
 m2 &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>), <span class="dt">nrow =</span> <span class="dv">2</span>)
 m3 &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">2</span>), <span class="dt">nrow =</span> <span class="dv">2</span>)
@@ -683,6 +683,10 @@ PCA &lt;-<span class="st"> </span><span class="kw">prcomp</span>(wodehouse_<span
 <div class="section level3">
 <h3>7. Евангелия</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gospels &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;https://goo.gl/mdBVVe&quot;</span>)</code></pre></div>
+</div>
+<div id="--" class="section level3">
+<h3>8. Линейный дискриминантный анализ</h3>
+<p>Линейный дискриминантный анализ (Linear Discriminant Analysis, LDA) очень близок к PCA, но его основная цель — максимизировать разделяемость известных категорий. Так что если PCA пытается перейти к новым осям координат, беря за основу наибольшую дисперсию в многомерном пространстве, LDA переходит к новым координатам, стараясь оптимизировать разницу между средними и дисперсией известных групп.</p>
 <div class="parallax">
 
 </div>

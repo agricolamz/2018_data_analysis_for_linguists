@@ -1,5 +1,5 @@
 ---
-title: "5. Уменьшение размерности: PCA"
+title: "5. Уменьшение размерности: PCA, LDA"
 author: "Г. Мороз"
 editor_options: 
   chunk_output_type: console
@@ -32,7 +32,8 @@ knitr::opts_chunk$set(message = FALSE)
 
 #### 1.1 Библиотеки
 ```{r}
-library(tidyverse)
+library(ggfortify)
+library(GGally)
 ```
 
 #### 1.2 Фамильная честь Вустеров
@@ -52,8 +53,7 @@ library(tidyverse)
 ```{r}
 wodehouse <- read.csv("https://goo.gl/8RJDwK")
 library(GGally)
-ggpairs(wodehouse[,-1])+
-  theme_bw()
+ggpairs(wodehouse[,-1])
 ```
 
 
@@ -181,5 +181,9 @@ autoplot(PCA,
 ```{r}
 gospels <- read.csv("https://goo.gl/mdBVVe")
 ```
+
+### 8. Линейный дискриминантный анализ
+
+Линейный дискриминантный анализ (Linear Discriminant Analysis, LDA) очень близок к PCA, но его основная цель --- максимизировать разделяемость известных категорий. Так что если PCA пытается перейти к новым осям координат, беря за основу наибольшую дисперсию в многомерном пространстве, LDA переходит к новым координатам, стараясь оптимизировать разницу между средними и дисперсией известных групп.
 
 <div class="parallax"></div>
