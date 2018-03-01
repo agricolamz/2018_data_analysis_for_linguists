@@ -431,7 +431,7 @@ div.tocify {
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)</code></pre></div>
 </div>
 <div id="--" class="section level4">
-<h4>1.2 Фамильная честь вустеров</h4>
+<h4>1.2 Фамильная честь Вустеров</h4>
 <p>В данной лекции я буду использовать данные из романа П. Г. Вудхауза <a href="https://en.wikipedia.org/wiki/The_Code_of_the_Woosters">“Фамильная честь Вустеров”</a>. В датасете собраны несколько переменных:</p>
 <ul>
 <li>chapter — номер главы</li>
@@ -645,6 +645,10 @@ PCA</code></pre></div>
 ## Proportion of Variance 0.0173400 0.0091600 0.0045700 0.0008600
 ## Cumulative Proportion  0.9854100 0.9945700 0.9991400 1.0000000</code></pre>
 <p>Т. е. первые две компоненты объясняют почти 80 процентов дисперсии, это достаточно высокое значение, которое позволяет нам применять данный метод.</p>
+<p>В выдаче PCA мы видели порядок, который отображает порядок следования в датасете, чтобы не потерять информацию о главе, мы прибегнем к хитрости:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">wodehouse_<span class="dv">2</span> &lt;-<span class="st"> </span>wodehouse[,<span class="op">-</span><span class="dv">1</span>]
+<span class="kw">rownames</span>(wodehouse_<span class="dv">2</span>) &lt;-<span class="st"> </span>wodehouse[, <span class="dv">1</span>]
+PCA &lt;-<span class="st"> </span><span class="kw">prcomp</span>(wodehouse_<span class="dv">2</span>)</code></pre></div>
 <p>Дальнейшая визуализация возможна благодаря пакету <code>ggfortify</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggfortify)
 <span class="kw">autoplot</span>(PCA,
@@ -653,7 +657,7 @@ PCA</code></pre></div>
          <span class="dt">label =</span> <span class="ot">TRUE</span>,
          <span class="dt">loadings.label =</span> <span class="ot">TRUE</span>)<span class="op">+</span>
 <span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
-<p><img src="5_PCA_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p><img src="5_PCA_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
 <p>Числа на этом графике — номера глав романа, красные линии — оси старых осей координат. Сам график называется биплот. Чем ближе друг к другустарые оси координат, тем больше скоррелированы переменные (вообще, косинус угла между ними равен коэфициенту корреляции между соответствующими переменными).</p>
 <div class="parallax">
 
