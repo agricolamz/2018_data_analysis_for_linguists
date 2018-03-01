@@ -50,7 +50,7 @@ library(tidyverse)
 * сэр --- частотность появления имени в каждой из глав
 
 ```{r}
-wodehouse <- read.csv("https://goo.gl/Qux1gS", sep = "\t")
+wodehouse <- read.csv("https://goo.gl/8RJDwK")
 library(GGally)
 ggpairs(wodehouse[,-1])+
   theme_bw()
