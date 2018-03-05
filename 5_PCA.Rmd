@@ -32,6 +32,7 @@ knitr::opts_chunk$set(message = FALSE)
 
 #### 1.1 Библиотеки
 ```{r}
+library(tidyverse)
 library(ggfortify)
 library(GGally)
 ```
@@ -51,7 +52,7 @@ library(GGally)
 * сэр --- частотность появления имени в каждой из глав
 
 ```{r}
-wodehouse <- read.csv("https://goo.gl/8RJDwK")
+wodehouse <- read_csv("https://goo.gl/8RJDwK")
 library(GGally)
 ggpairs(wodehouse[,-1])
 ```
@@ -179,7 +180,7 @@ autoplot(PCA,
 
 ### 7. Евангелия
 ```{r}
-gospels <- read.csv("https://goo.gl/mdBVVe")
+gospels <- read_csv("https://goo.gl/mdBVVe")
 ```
 
 <div class="parallax"></div>
@@ -199,7 +200,7 @@ gospels <- read.csv("https://goo.gl/mdBVVe")
 * f2 --- вторая форманта
 
 ```{r}
-
+nanai <- read_csv("https://goo.gl/9uGBoQ")
 ```
 
 #### 9.2 Register variation in the British National Corpus
@@ -219,7 +220,7 @@ Dataset and discription from Natalia Levshina's package `Rling`. This is a data 
 * Num --- a numeric vector with relative frequencies of numerals.
 
 ```{r}
-
+reg_bnc <- read_csv("https://goo.gl/19QywL")
 ```
 
 <div class="parallax"></div>
