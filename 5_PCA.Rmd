@@ -182,8 +182,44 @@ autoplot(PCA,
 gospels <- read.csv("https://goo.gl/mdBVVe")
 ```
 
+<div class="parallax"></div>
+
 ### 8. Линейный дискриминантный анализ
 
 Линейный дискриминантный анализ (Linear Discriminant Analysis, LDA) очень близок к PCA, но его основная цель --- максимизировать разделяемость известных категорий. Так что если PCA пытается перейти к новым осям координат, беря за основу наибольшую дисперсию в многомерном пространстве, LDA переходит к новым координатам, стараясь оптимизировать разницу между средними и дисперсией известных групп.
+
+<div class="parallax"></div>
+
+### 9. Сравнение PCA и LDA
+#### 9.1  Нанайские данные
+
+В этом датасете представлены три нанайских гласных  i, ɪ и e, произнесенные нанайским носителем мужского пола из селения Джуен. Каждая строчка --- отдельное произнесение. Переменные:
+
+* f1 --- первая форманта
+* f2 --- вторая форманта
+
+```{r}
+
+```
+
+#### 9.2 Register variation in the British National Corpus
+Dataset and discription from Natalia Levshina's package `Rling`. This is a data set with relative frequencies (proportions) of different word classes in 69 subcorpora of the [British National Corpus](http://corpus.byu.edu/bnc) (the BYU-BNC version).
+
+* Reg --- a factor that describes the metaregister with levels Acad, Fiction, Misc, News, NonacProse and Spok
+* Ncomm --- a numeric vector with relative frequencies of common nouns.
+* Nprop --- a numeric vector with relative frequencies of proper nouns.
+* Vpres --- a numeric vector with relative frequencies of verbs in the present tense form, 3rd person singular.
+* Vpast --- a numeric vector with relative frequencies of verbs in the past tense form.
+* P1 --- a numeric vector with relative frequencies of the first-person pronouns.
+* P2 --- a numeric vector with relative frequencies of the second-person pronouns.
+* Adj --- a numeric vector with relative frequencies of adjectives.
+* ConjCoord --- a numeric vector with relative frequencies of coordinating conjunctions.
+* ConjSub --- a numeric vectorwith relative frequencies of subordinating conjunctions.
+* Interject --- a numeric vector with relative frequencies of interjections.
+* Num --- a numeric vector with relative frequencies of numerals.
+
+```{r}
+
+```
 
 <div class="parallax"></div>

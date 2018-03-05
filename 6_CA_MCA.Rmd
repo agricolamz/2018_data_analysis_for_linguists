@@ -55,4 +55,13 @@ ggpairs(wodehouse[,-1])
 
 ### 2. CA
 
+<div class="parallax"></div>
+
 ### 3. MCA
+
+<div class="parallax"></div>
+
+### 4. DCA
+Комбинация CA и  дискрименантного анализа называется Discriminant Correspondence Analysis.
+
+<div class="parallax"></div>
