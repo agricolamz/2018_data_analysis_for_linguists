@@ -306,7 +306,7 @@ pca <- prcomp(reg_bnc[, -1], center = TRUE, scale. = TRUE)
 summary(pca)
 prop.pca <- paste0(c("PCA1 ", "PCA2 "),
                    "(",
-                   round(pca$sdev^2/sum(pca$sdev^2), 2), 
+                   round(pca$sdev^2/sum(pca$sdev^2), 2)*100, 
                    "%)")
 prop.pca
 ```
@@ -317,7 +317,7 @@ lda <- MASS::lda(Reg ~ ., reg_bnc) # точка здесь означает вс
 lda
 prop.lda <- paste0(c("LDA1 ", "LDA2 "),
                    "(",
-                   round(lda$svd^2/sum(lda$svd^2), 2), 
+                   round(lda$svd^2/sum(lda$svd^2), 2)*100, 
                    "%)")
 prop.lda
 plda <- predict(object = lda, newdata = reg_bnc)

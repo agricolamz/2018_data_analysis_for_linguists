@@ -829,12 +829,12 @@ gridExtra<span class="op">::</span><span class="kw">grid.arrange</span>(p1, p2, 
 ## Cumulative Proportion  0.96911 0.98217 0.99206 1.00000</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">prop.pca &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="kw">c</span>(<span class="st">&quot;PCA1 &quot;</span>, <span class="st">&quot;PCA2 &quot;</span>),
                    <span class="st">&quot;(&quot;</span>,
-                   <span class="kw">round</span>(pca<span class="op">$</span>sdev<span class="op">^</span><span class="dv">2</span><span class="op">/</span><span class="kw">sum</span>(pca<span class="op">$</span>sdev<span class="op">^</span><span class="dv">2</span>), <span class="dv">2</span>), 
+                   <span class="kw">round</span>(pca<span class="op">$</span>sdev<span class="op">^</span><span class="dv">2</span><span class="op">/</span><span class="kw">sum</span>(pca<span class="op">$</span>sdev<span class="op">^</span><span class="dv">2</span>), <span class="dv">2</span>)<span class="op">*</span><span class="dv">100</span>, 
                    <span class="st">&quot;%)&quot;</span>)
 prop.pca</code></pre></div>
-<pre><code>##  [1] &quot;PCA1 (0.46%)&quot; &quot;PCA2 (0.17%)&quot; &quot;PCA1 (0.13%)&quot; &quot;PCA2 (0.07%)&quot;
-##  [5] &quot;PCA1 (0.06%)&quot; &quot;PCA2 (0.04%)&quot; &quot;PCA1 (0.03%)&quot; &quot;PCA2 (0.02%)&quot;
-##  [9] &quot;PCA1 (0.01%)&quot; &quot;PCA2 (0.01%)&quot; &quot;PCA1 (0.01%)&quot;</code></pre>
+<pre><code>##  [1] &quot;PCA1 (46%)&quot; &quot;PCA2 (17%)&quot; &quot;PCA1 (13%)&quot; &quot;PCA2 (7%)&quot;  &quot;PCA1 (6%)&quot; 
+##  [6] &quot;PCA2 (4%)&quot;  &quot;PCA1 (3%)&quot;  &quot;PCA2 (2%)&quot;  &quot;PCA1 (1%)&quot;  &quot;PCA2 (1%)&quot; 
+## [11] &quot;PCA1 (1%)&quot;</code></pre>
 <p>Применим LDA:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lda &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw">lda</span>(Reg <span class="op">~</span><span class="st"> </span>., reg_bnc) <span class="co"># точка здесь означает все остальные переменные</span>
 lda</code></pre></div>
@@ -887,11 +887,10 @@ lda</code></pre></div>
 ## 0.6095 0.2670 0.0782 0.0419 0.0034</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">prop.lda &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="kw">c</span>(<span class="st">&quot;LDA1 &quot;</span>, <span class="st">&quot;LDA2 &quot;</span>),
                    <span class="st">&quot;(&quot;</span>,
-                   <span class="kw">round</span>(lda<span class="op">$</span>svd<span class="op">^</span><span class="dv">2</span><span class="op">/</span><span class="kw">sum</span>(lda<span class="op">$</span>svd<span class="op">^</span><span class="dv">2</span>), <span class="dv">2</span>), 
+                   <span class="kw">round</span>(lda<span class="op">$</span>svd<span class="op">^</span><span class="dv">2</span><span class="op">/</span><span class="kw">sum</span>(lda<span class="op">$</span>svd<span class="op">^</span><span class="dv">2</span>), <span class="dv">2</span>)<span class="op">*</span><span class="dv">100</span>, 
                    <span class="st">&quot;%)&quot;</span>)
 prop.lda</code></pre></div>
-<pre><code>## [1] &quot;LDA1 (0.61%)&quot; &quot;LDA2 (0.27%)&quot; &quot;LDA1 (0.08%)&quot; &quot;LDA2 (0.04%)&quot;
-## [5] &quot;LDA1 (0%)&quot;</code></pre>
+<pre><code>## [1] &quot;LDA1 (61%)&quot; &quot;LDA2 (27%)&quot; &quot;LDA1 (8%)&quot;  &quot;LDA2 (4%)&quot;  &quot;LDA1 (0%)&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">plda &lt;-<span class="st"> </span><span class="kw">predict</span>(<span class="dt">object =</span> lda, <span class="dt">newdata =</span> reg_bnc)</code></pre></div>
 <p>Соединим все в один датасет:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dataset &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Reg =</span> reg_bnc[,<span class="st">&quot;Reg&quot;</span>],
