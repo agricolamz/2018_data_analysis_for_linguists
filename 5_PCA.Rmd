@@ -52,7 +52,7 @@ library(GGally)
 * сэр --- частотность появления имени в каждой из глав
 
 ```{r}
-wodehouse <- read_csv("https://goo.gl/8RJDwK")
+wodehouse <- read.csv("https://goo.gl/8RJDwK")
 library(GGally)
 ggpairs(wodehouse[,-1])
 ```
@@ -180,7 +180,7 @@ autoplot(PCA,
 
 ### 7. Евангелия
 ```{r}
-gospels <- read_csv("https://goo.gl/mdBVVe")
+gospels <- read.csv("https://goo.gl/mdBVVe")
 ```
 
 <div class="parallax"></div>
@@ -188,6 +188,8 @@ gospels <- read_csv("https://goo.gl/mdBVVe")
 ### 8. Линейный дискриминантный анализ
 
 Линейный дискриминантный анализ (Linear Discriminant Analysis, LDA) очень близок к PCA, но его основная цель --- максимизировать разделяемость известных категорий. Так что если PCA пытается перейти к новым осям координат, беря за основу наибольшую дисперсию в многомерном пространстве, LDA переходит к новым координатам, стараясь оптимизировать разницу между средними и дисперсией известных групп.
+
+![](LDA.png)
 
 <div class="parallax"></div>
 
@@ -201,7 +203,82 @@ gospels <- read_csv("https://goo.gl/mdBVVe")
 
 ```{r}
 nanai <- read_csv("https://goo.gl/9uGBoQ")
+nanai %>% 
+  ggplot(aes(f2, f1, label = sound, color = sound))+
+  geom_text()+
+  geom_rug()+
+  scale_y_reverse()+
+  scale_x_reverse()+
+  stat_ellipse()+
+  theme_bw()+
+  theme(legend.position = "none")+
+  labs(title = "Нанайские гласные в произнесении мужчины из селения Джуен")
 ```
+
+Применим PCA. Обязательно нормировать переменные:
+```{r}
+pca <- prcomp(nanai[, -1], center = TRUE, scale. = TRUE)
+summary(pca)
+prop.pca <- paste0(c("PCA1 ", "PCA2 "),
+                   "(",
+                   round(pca$sdev^2/sum(pca$sdev^2), 2), 
+                   "%)")
+prop.pca
+```
+
+Применим LDA:
+```{r}
+lda <- MASS::lda(sound ~ f1 + f2, nanai)
+lda
+prop.lda <- paste0(c("LDA1 ", "LDA2 "),
+                   "(",
+                   round(lda$svd^2/sum(lda$svd^2), 2), 
+                   "%)")
+prop.lda
+plda <- predict(object = lda, newdata = nanai)
+head(plda$x)
+```
+
+Соединим все в один датасет:
+```{r}
+dataset <- data.frame(sound = nanai[,"sound"],
+                      pca = pca$x, 
+                      lda = plda$x)
+```
+
+Визуализируем:
+```{r, fig.height= 7}
+nanai %>% 
+  ggplot(aes(f2, f1, label = sound, color = sound))+
+  geom_text()+
+  scale_y_reverse()+
+  scale_x_reverse()+
+  stat_ellipse()+
+  theme_bw()+
+  theme(legend.position = "none") ->
+  p1
+
+dataset %>% 
+  ggplot(aes(pca.PC1, pca.PC2, colour = sound, label = sound)) + 
+  geom_text() + 
+  labs(x = prop.pca[1], y = prop.pca[2])+
+  stat_ellipse() +
+  theme_bw()+
+  theme(legend.position = "none") ->
+  p2
+
+dataset %>% 
+  ggplot(aes(lda.LD1, lda.LD2, colour = sound, label = sound)) + 
+  geom_text() + 
+  labs(x = prop.lda[1], y = prop.lda[2])+
+  stat_ellipse() +
+  theme_bw()+
+  theme(legend.position = "none") ->
+  p3
+
+gridExtra::grid.arrange(p1, p2, p3)
+```
+
 
 #### 9.2 Register variation in the British National Corpus
 Dataset and discription from Natalia Levshina's package `Rling`. This is a data set with relative frequencies (proportions) of different word classes in 69 subcorpora of the [British National Corpus](http://corpus.byu.edu/bnc) (the BYU-BNC version).
@@ -220,7 +297,59 @@ Dataset and discription from Natalia Levshina's package `Rling`. This is a data 
 * Num --- a numeric vector with relative frequencies of numerals.
 
 ```{r}
-reg_bnc <- read_csv("https://goo.gl/19QywL")
+reg_bnc <- read.csv("https://goo.gl/19QywL")
+```
+
+Применим PCA. Обязательно нормировать переменные:
+```{r}
+pca <- prcomp(reg_bnc[, -1], center = TRUE, scale. = TRUE)
+summary(pca)
+prop.pca <- paste0(c("PCA1 ", "PCA2 "),
+                   "(",
+                   round(pca$sdev^2/sum(pca$sdev^2), 2), 
+                   "%)")
+prop.pca
+```
+
+Применим LDA:
+```{r}
+lda <- MASS::lda(Reg ~ ., reg_bnc) # точка здесь означает все остальные переменные
+lda
+prop.lda <- paste0(c("LDA1 ", "LDA2 "),
+                   "(",
+                   round(lda$svd^2/sum(lda$svd^2), 2), 
+                   "%)")
+prop.lda
+plda <- predict(object = lda, newdata = reg_bnc)
+```
+
+
+Соединим все в один датасет:
+```{r}
+dataset <- data.frame(Reg = reg_bnc[,"Reg"],
+                      pca = pca$x, 
+                      lda = plda$x)
+```
+
+Визуализируем:
+```{r, fig.height= 5}
+dataset %>% 
+  ggplot(aes(pca.PC1, pca.PC2, colour = Reg)) + 
+  geom_point() + 
+  labs(x = prop.pca[1], y = prop.pca[2])+
+  stat_ellipse() +
+  theme_bw() ->
+  p1
+
+dataset %>% 
+  ggplot(aes(lda.LD1, lda.LD2, colour = Reg)) + 
+  geom_point() + 
+  labs(x = prop.lda[1], y = prop.lda[2])+
+  stat_ellipse() +
+  theme_bw() ->
+  p2
+
+gridExtra::grid.arrange(p1, p2)
 ```
 
 <div class="parallax"></div>

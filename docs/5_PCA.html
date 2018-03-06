@@ -351,10 +351,10 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="5_PCA.html">5. PCA</a>
+      <a href="5_PCA.html">5. PCA, LDA</a>
     </li>
     <li>
-      <a href="6_CA_MCA.html">6. CA, MCA</a>
+      <a href="6_CA_MCA.html">6. CA, DCA, MCA</a>
     </li>
     <li>
       <a href="7_Clustering.html">7. Кластеризация</a>
@@ -369,19 +369,7 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="8_regression.html">8. Ограничения на применения регрессии</a>
-    </li>
-    <li>
-      <a href="9_mixed_effects.html">9. Регрессия со смешанными эффектами</a>
-    </li>
-    <li>
-      <a href="10_nolinear.html">9. Нелинейная регрессия</a>
-    </li>
-    <li>
-      <a href="11_ridge_lasso.html">11. Ридж и лассо регрессия</a>
-    </li>
-    <li>
-      <a href="12_gradient_boosting.html">12. Градиентный спуск</a>
+      <a href="8_mixed_effects.html">8. Регрессия со смешанными эффектами</a>
     </li>
   </ul>
 </li>
@@ -428,7 +416,8 @@ div.tocify {
 <p>Метод главных компонент (PCA, Principal Component Analysis) применим к числовым данным, в которых строчки — это точки наблюдения, а столбцы — это исследуемые переменные. Данный метод часто приводят и используют как метод уменьшения размерности, однако я разделяю мнение, согласно которому это лишь метод смены перспективы, в результаты которого некоторое количество размерностей становится маловажными.</p>
 <div class="section level4">
 <h4>1.1 Библиотеки</h4>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggfortify)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
+<span class="kw">library</span>(ggfortify)
 <span class="kw">library</span>(GGally)</code></pre></div>
 </div>
 <div id="--" class="section level4">
@@ -683,12 +672,253 @@ PCA &lt;-<span class="st"> </span><span class="kw">prcomp</span>(wodehouse_<span
 <div class="section level3">
 <h3>7. Евангелия</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gospels &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;https://goo.gl/mdBVVe&quot;</span>)</code></pre></div>
+<div class="parallax">
+
+</div>
 </div>
 <div id="--" class="section level3">
 <h3>8. Линейный дискриминантный анализ</h3>
 <p>Линейный дискриминантный анализ (Linear Discriminant Analysis, LDA) очень близок к PCA, но его основная цель — максимизировать разделяемость известных категорий. Так что если PCA пытается перейти к новым осям координат, беря за основу наибольшую дисперсию в многомерном пространстве, LDA переходит к новым координатам, стараясь оптимизировать разницу между средними и дисперсией известных групп.</p>
+<div class="figure">
+<img src="LDA.png" />
+
+</div>
 <div class="parallax">
 
+</div>
+</div>
+<div id="-pca--lda" class="section level3">
+<h3>9. Сравнение PCA и LDA</h3>
+<div id="-" class="section level4">
+<h4>9.1 Нанайские данные</h4>
+<p>В этом датасете представлены три нанайских гласных i, ɪ и e, произнесенные нанайским носителем мужского пола из селения Джуен. Каждая строчка — отдельное произнесение. Переменные:</p>
+<ul>
+<li>f1 — первая форманта</li>
+<li>f2 — вторая форманта</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nanai &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://goo.gl/9uGBoQ&quot;</span>)
+nanai <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(f2, f1, <span class="dt">label =</span> sound, <span class="dt">color =</span> sound))<span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_text</span>()<span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_rug</span>()<span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_y_reverse</span>()<span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_x_reverse</span>()<span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_ellipse</span>()<span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_bw</span>()<span class="op">+</span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Нанайские гласные в произнесении мужчины из селения Джуен&quot;</span>)</code></pre></div>
+<p><img src="5_PCA_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p>Применим PCA. Обязательно нормировать переменные:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pca &lt;-<span class="st"> </span><span class="kw">prcomp</span>(nanai[, <span class="op">-</span><span class="dv">1</span>], <span class="dt">center =</span> <span class="ot">TRUE</span>, <span class="dt">scale. =</span> <span class="ot">TRUE</span>)
+<span class="kw">summary</span>(pca)</code></pre></div>
+<pre><code>## Importance of components:
+##                           PC1    PC2
+## Standard deviation     1.2959 0.5663
+## Proportion of Variance 0.8397 0.1603
+## Cumulative Proportion  0.8397 1.0000</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">prop.pca &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="kw">c</span>(<span class="st">&quot;PCA1 &quot;</span>, <span class="st">&quot;PCA2 &quot;</span>),
+                   <span class="st">&quot;(&quot;</span>,
+                   <span class="kw">round</span>(pca<span class="op">$</span>sdev<span class="op">^</span><span class="dv">2</span><span class="op">/</span><span class="kw">sum</span>(pca<span class="op">$</span>sdev<span class="op">^</span><span class="dv">2</span>), <span class="dv">2</span>), 
+                   <span class="st">&quot;%)&quot;</span>)
+prop.pca</code></pre></div>
+<pre><code>## [1] &quot;PCA1 (0.84%)&quot; &quot;PCA2 (0.16%)&quot;</code></pre>
+<p>Применим LDA:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lda &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw">lda</span>(sound <span class="op">~</span><span class="st"> </span>f1 <span class="op">+</span><span class="st"> </span>f2, nanai)
+lda</code></pre></div>
+<pre><code>## Call:
+## lda(sound ~ f1 + f2, data = nanai)
+## 
+## Prior probabilities of groups:
+##         ɪ         e         i 
+## 0.1733967 0.3776722 0.4489311 
+## 
+## Group means:
+##         f1       f2
+## ɪ 458.9413 1907.553
+## e 452.8164 1295.328
+## i 318.2667 2092.761
+## 
+## Coefficients of linear discriminants:
+##             LD1         LD2
+## f1 -0.009603642 0.024154629
+## f2  0.006947067 0.003913338
+## 
+## Proportion of trace:
+##    LD1    LD2 
+## 0.9072 0.0928</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">prop.lda &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="kw">c</span>(<span class="st">&quot;LDA1 &quot;</span>, <span class="st">&quot;LDA2 &quot;</span>),
+                   <span class="st">&quot;(&quot;</span>,
+                   <span class="kw">round</span>(lda<span class="op">$</span>svd<span class="op">^</span><span class="dv">2</span><span class="op">/</span><span class="kw">sum</span>(lda<span class="op">$</span>svd<span class="op">^</span><span class="dv">2</span>), <span class="dv">2</span>), 
+                   <span class="st">&quot;%)&quot;</span>)
+prop.lda</code></pre></div>
+<pre><code>## [1] &quot;LDA1 (0.91%)&quot; &quot;LDA2 (0.09%)&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">plda &lt;-<span class="st"> </span><span class="kw">predict</span>(<span class="dt">object =</span> lda, <span class="dt">newdata =</span> nanai)
+<span class="kw">head</span>(plda<span class="op">$</span>x)</code></pre></div>
+<pre><code>##         LD1         LD2
+## 1  2.755845  0.08781396
+## 2  1.414956  0.29058264
+## 3 -3.272616 -5.98204507
+## 4  4.981263 -0.65448203
+## 5  2.237146 -0.75823208
+## 6  6.042266  0.62783102</code></pre>
+<p>Соединим все в один датасет:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dataset &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">sound =</span> nanai[,<span class="st">&quot;sound&quot;</span>],
+                      <span class="dt">pca =</span> pca<span class="op">$</span>x, 
+                      <span class="dt">lda =</span> plda<span class="op">$</span>x)</code></pre></div>
+<p>Визуализируем:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nanai <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(f2, f1, <span class="dt">label =</span> sound, <span class="dt">color =</span> sound))<span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_text</span>()<span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_y_reverse</span>()<span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_x_reverse</span>()<span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_ellipse</span>()<span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_bw</span>()<span class="op">+</span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span>) -&gt;
+<span class="st">  </span>p1
+
+dataset <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(pca.PC1, pca.PC2, <span class="dt">colour =</span> sound, <span class="dt">label =</span> sound)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_text</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> prop.pca[<span class="dv">1</span>], <span class="dt">y =</span> prop.pca[<span class="dv">2</span>])<span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_ellipse</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_bw</span>()<span class="op">+</span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span>) -&gt;
+<span class="st">  </span>p2
+
+dataset <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(lda.LD1, lda.LD2, <span class="dt">colour =</span> sound, <span class="dt">label =</span> sound)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_text</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> prop.lda[<span class="dv">1</span>], <span class="dt">y =</span> prop.lda[<span class="dv">2</span>])<span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_ellipse</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_bw</span>()<span class="op">+</span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span>) -&gt;
+<span class="st">  </span>p3
+
+gridExtra<span class="op">::</span><span class="kw">grid.arrange</span>(p1, p2, p3)</code></pre></div>
+<p><img src="5_PCA_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+</div>
+<div id="register-variation-in-the-british-national-corpus" class="section level4">
+<h4>9.2 Register variation in the British National Corpus</h4>
+<p>Dataset and discription from Natalia Levshina’s package <code>Rling</code>. This is a data set with relative frequencies (proportions) of different word classes in 69 subcorpora of the <a href="http://corpus.byu.edu/bnc">British National Corpus</a> (the BYU-BNC version).</p>
+<ul>
+<li>Reg — a factor that describes the metaregister with levels Acad, Fiction, Misc, News, NonacProse and Spok</li>
+<li>Ncomm — a numeric vector with relative frequencies of common nouns.</li>
+<li>Nprop — a numeric vector with relative frequencies of proper nouns.</li>
+<li>Vpres — a numeric vector with relative frequencies of verbs in the present tense form, 3rd person singular.</li>
+<li>Vpast — a numeric vector with relative frequencies of verbs in the past tense form.</li>
+<li>P1 — a numeric vector with relative frequencies of the first-person pronouns.</li>
+<li>P2 — a numeric vector with relative frequencies of the second-person pronouns.</li>
+<li>Adj — a numeric vector with relative frequencies of adjectives.</li>
+<li>ConjCoord — a numeric vector with relative frequencies of coordinating conjunctions.</li>
+<li>ConjSub — a numeric vectorwith relative frequencies of subordinating conjunctions.</li>
+<li>Interject — a numeric vector with relative frequencies of interjections.</li>
+<li>Num — a numeric vector with relative frequencies of numerals.</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">reg_bnc &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;https://goo.gl/19QywL&quot;</span>)</code></pre></div>
+<p>Применим PCA. Обязательно нормировать переменные:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pca &lt;-<span class="st"> </span><span class="kw">prcomp</span>(reg_bnc[, <span class="op">-</span><span class="dv">1</span>], <span class="dt">center =</span> <span class="ot">TRUE</span>, <span class="dt">scale. =</span> <span class="ot">TRUE</span>)
+<span class="kw">summary</span>(pca)</code></pre></div>
+<pre><code>## Importance of components:
+##                           PC1    PC2    PC3     PC4     PC5     PC6    PC7
+## Standard deviation     2.2513 1.3683 1.1730 0.88886 0.80320 0.64940 0.5480
+## Proportion of Variance 0.4607 0.1702 0.1251 0.07183 0.05865 0.03834 0.0273
+## Cumulative Proportion  0.4607 0.6310 0.7560 0.82786 0.88650 0.92484 0.9521
+##                            PC8     PC9    PC10    PC11
+## Standard deviation     0.43204 0.37908 0.32981 0.29551
+## Proportion of Variance 0.01697 0.01306 0.00989 0.00794
+## Cumulative Proportion  0.96911 0.98217 0.99206 1.00000</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">prop.pca &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="kw">c</span>(<span class="st">&quot;PCA1 &quot;</span>, <span class="st">&quot;PCA2 &quot;</span>),
+                   <span class="st">&quot;(&quot;</span>,
+                   <span class="kw">round</span>(pca<span class="op">$</span>sdev<span class="op">^</span><span class="dv">2</span><span class="op">/</span><span class="kw">sum</span>(pca<span class="op">$</span>sdev<span class="op">^</span><span class="dv">2</span>), <span class="dv">2</span>), 
+                   <span class="st">&quot;%)&quot;</span>)
+prop.pca</code></pre></div>
+<pre><code>##  [1] &quot;PCA1 (0.46%)&quot; &quot;PCA2 (0.17%)&quot; &quot;PCA1 (0.13%)&quot; &quot;PCA2 (0.07%)&quot;
+##  [5] &quot;PCA1 (0.06%)&quot; &quot;PCA2 (0.04%)&quot; &quot;PCA1 (0.03%)&quot; &quot;PCA2 (0.02%)&quot;
+##  [9] &quot;PCA1 (0.01%)&quot; &quot;PCA2 (0.01%)&quot; &quot;PCA1 (0.01%)&quot;</code></pre>
+<p>Применим LDA:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lda &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw">lda</span>(Reg <span class="op">~</span><span class="st"> </span>., reg_bnc) <span class="co"># точка здесь означает все остальные переменные</span>
+lda</code></pre></div>
+<pre><code>## Call:
+## lda(Reg ~ ., data = reg_bnc)
+## 
+## Prior probabilities of groups:
+##       Acad    Fiction       Misc       News NonacProse       Spok 
+## 0.08695652 0.04347826 0.20289855 0.23188406 0.08695652 0.34782609 
+## 
+## Group means:
+##                Ncomm      Nprop      Vpres      Vpast          P1
+## Acad       0.2549420 0.02266485 0.02904719 0.02126151 0.004105998
+## Fiction    0.1955041 0.04178816 0.03038170 0.04548496 0.030593736
+## Misc       0.2343928 0.03550175 0.02651374 0.02315834 0.013141775
+## News       0.2378307 0.07106673 0.02822461 0.03365907 0.007803970
+## NonacProse 0.2499477 0.04212051 0.02589905 0.02704461 0.004550642
+## Spok       0.1687050 0.01799012 0.03893423 0.02438672 0.030547406
+##                      P2        Adj  ConjCoord    ConjSub    Interject
+## Acad       0.0005405686 0.09482774 0.03543711 0.02442643 0.0001529274
+## Fiction    0.0157916198 0.06244320 0.03530775 0.02052828 0.0032991461
+## Misc       0.0056901996 0.07606038 0.03649929 0.02321892 0.0004648388
+## News       0.0020222830 0.07388502 0.03036116 0.01913741 0.0003298421
+## NonacProse 0.0027800044 0.08578270 0.03628245 0.02212339 0.0002005514
+## Spok       0.0219079840 0.05286300 0.03723121 0.03175828 0.0118121512
+##                    Num
+## Acad       0.027937153
+## Fiction    0.008623133
+## Misc       0.023046086
+## News       0.026427816
+## NonacProse 0.024857053
+## Spok       0.022938509
+## 
+## Coefficients of linear discriminants:
+##                  LD1         LD2        LD3         LD4          LD5
+## Ncomm     -14.975910   33.038613  -13.75794   -9.762794   -0.3627041
+## Nprop     -31.817659    1.680262  -51.20818  -26.679090  -17.4961099
+## Vpres      21.949722   77.322406  -17.27444  137.775687   26.8626816
+## Vpast     -19.768647   80.118231   10.44288   93.006137  -19.1976952
+## P1         29.248688  107.556231   83.43757   36.133339   88.1194007
+## P2        -24.775453  131.904744   12.86914   23.705959 -105.8680052
+## Adj       -31.055573  -31.813406   65.91946   99.586559  -14.1475120
+## ConjCoord 112.139915 -163.557542  -35.33204 -159.069109  -61.6664488
+## ConjSub    91.669633 -125.858658 -173.82587  -33.940312  -58.0035162
+## Interject   3.624572 -128.365272 -100.95408  -16.955043  -33.7161488
+## Num        75.705268  -95.261979  -28.39224   79.729523   41.6955600
+## 
+## Proportion of trace:
+##    LD1    LD2    LD3    LD4    LD5 
+## 0.6095 0.2670 0.0782 0.0419 0.0034</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">prop.lda &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="kw">c</span>(<span class="st">&quot;LDA1 &quot;</span>, <span class="st">&quot;LDA2 &quot;</span>),
+                   <span class="st">&quot;(&quot;</span>,
+                   <span class="kw">round</span>(lda<span class="op">$</span>svd<span class="op">^</span><span class="dv">2</span><span class="op">/</span><span class="kw">sum</span>(lda<span class="op">$</span>svd<span class="op">^</span><span class="dv">2</span>), <span class="dv">2</span>), 
+                   <span class="st">&quot;%)&quot;</span>)
+prop.lda</code></pre></div>
+<pre><code>## [1] &quot;LDA1 (0.61%)&quot; &quot;LDA2 (0.27%)&quot; &quot;LDA1 (0.08%)&quot; &quot;LDA2 (0.04%)&quot;
+## [5] &quot;LDA1 (0%)&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">plda &lt;-<span class="st"> </span><span class="kw">predict</span>(<span class="dt">object =</span> lda, <span class="dt">newdata =</span> reg_bnc)</code></pre></div>
+<p>Соединим все в один датасет:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dataset &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Reg =</span> reg_bnc[,<span class="st">&quot;Reg&quot;</span>],
+                      <span class="dt">pca =</span> pca<span class="op">$</span>x, 
+                      <span class="dt">lda =</span> plda<span class="op">$</span>x)</code></pre></div>
+<p>Визуализируем:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dataset <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(pca.PC1, pca.PC2, <span class="dt">colour =</span> Reg)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> prop.pca[<span class="dv">1</span>], <span class="dt">y =</span> prop.pca[<span class="dv">2</span>])<span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_ellipse</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_bw</span>() -&gt;
+<span class="st">  </span>p1
+
+dataset <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(lda.LD1, lda.LD2, <span class="dt">colour =</span> Reg)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> prop.lda[<span class="dv">1</span>], <span class="dt">y =</span> prop.lda[<span class="dv">2</span>])<span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_ellipse</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_bw</span>() -&gt;
+<span class="st">  </span>p2
+
+gridExtra<span class="op">::</span><span class="kw">grid.arrange</span>(p1, p2)</code></pre></div>
+<p><img src="5_PCA_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<div class="parallax">
+
+</div>
 </div>
 </div>
 

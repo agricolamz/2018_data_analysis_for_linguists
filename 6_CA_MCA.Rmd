@@ -6,7 +6,7 @@ author: "Г. Мороз"
 <style>
 .parallax {
     /* The image used */
-    background-image: url("1_coin.jpg");
+    background-image: url("6_DCA.jpg");
 
     /* Set a specific height */
     min-height: 300px; 
