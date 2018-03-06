@@ -586,7 +586,14 @@ ca</code></pre></div>
 <div id="mca" class="section level3">
 <h3>3. MCA</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">MCA &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw">mca</span>(dutch_caus[,<span class="op">-</span><span class="dv">1</span>])
-dutch_caus &lt;-<span class="st"> </span><span class="kw">cbind</span>(dutch_caus, MCA<span class="op">$</span>rs)
+MCA</code></pre></div>
+<pre><code>## Call:
+## MASS::mca(df = dutch_caus[, -1])
+## 
+## Multiple correspondence analysis of 500 cases of 7 factors
+## 
+## Correlations 0.577 0.458  cumulative % explained  9.62 17.25</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dutch_caus &lt;-<span class="st"> </span><span class="kw">cbind</span>(dutch_caus, MCA<span class="op">$</span>rs)
 dutch_caus <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="st">`</span><span class="dt">1</span><span class="st">`</span>, <span class="st">`</span><span class="dt">2</span><span class="st">`</span>, <span class="dt">color =</span> Aux))<span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>()<span class="op">+</span>

@@ -103,6 +103,7 @@ autoplot(PCA,
 ### 3. MCA
 ```{r}
 MCA <- MASS::mca(dutch_caus[,-1])
+MCA
 dutch_caus <- cbind(dutch_caus, MCA$rs)
 dutch_caus %>% 
   ggplot(aes(`1`, `2`, color = Aux))+
