@@ -22,11 +22,13 @@ navbar:
     - text: 6. CA, DCA, MCA
       href: 6_CA_MCA.html
     - text: 7. Кластеризация
-      href: 7_Clustering.html
+      href: 7_Clustering.pdf
   - text: регрессия
     menu:
-    - text: 8. Регрессия со смешанными эффектами
-      href: 8_mixed_effects.html
+    - text: 8. Еще о регрессионных моделях
+      href: 8_more_linear_regression.html
+    - text: 9. Регрессия со смешанными эффектами
+      href: 9_mixed_effects_models.html
 output_dir: docs
 output:
   html_document:
