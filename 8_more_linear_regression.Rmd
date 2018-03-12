@@ -1,0 +1,48 @@
+---
+title: "8. Еще немножко про линейную регрессию"
+author: "Г. Мороз"
+---
+
+<style>
+.parallax {
+    /* The image used */
+    background-image: url("1_coin.jpg");
+
+    /* Set a specific height */
+    min-height: 300px; 
+
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: auto;
+}
+</style>
+
+<div class="parallax"></div>
+
+
+### 1. Введение
+Некоторые думают, что линейная регрессия решит все их проблемы (по крайней мере те из них, которые связаны с предсказанием какой-то числовой переменной). Это так. Но нужно быть осторожным --- у регрессии есть свои ограничения на применение.
+
+#### 1.1 Библиотеки
+```{r}
+library(tidyverse)
+```
+
+#### 1.2 Lexical Decision Task data
+Dataset and description from [Rling package by Natalia Levshina](https://benjamins.com/sites/z.195/content/package.html). This data set contains 100 randomly selected words from the English Lexicon Project data (Balota et al. 2007), their lengths, mean reaction times and corpus frequencies.
+
+```{r}
+
+```
+
+
+### 1. Линейность взаимосвязь
+
+### 1. Линейность взаимосвязь
+
+
+<div class="parallax"></div>
+
+### 2. Операции со строками
