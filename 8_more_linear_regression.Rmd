@@ -1,5 +1,5 @@
 ---
-title: "8. Ограничения на использования линейной регрессии"
+title: "8. Ограничения на использования линейной регрессии и смешанные регрессионные модели"
 author: "Г. Мороз"
 editor_options: 
   chunk_output_type: inline
@@ -188,11 +188,15 @@ ldt %>%
 
 Тоже решается преобазованием данных.
 
+<div class="parallax"></div>
+
 ### 5. Мультиколлинеарность
 Линейная связь между некоторыми предикторами в модели.
 
 * корреляционная матрица
 * VIF (Variance inflation factor), `car::vif()`
+
+<div class="parallax"></div>
 
 ### 6. Независимость наблюдений
 Наблюдения должны быть независимы.
@@ -283,3 +287,5 @@ lapsyd %>%
   geom_line(data = fortify(fit5), aes(x = count_consonant, y = .fitted, color = area))
 anova(fit5, fit4, fit3, fit2, fit1)
 ```
+
+<div class="parallax"></div>
