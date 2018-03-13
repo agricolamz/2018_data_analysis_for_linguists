@@ -432,6 +432,7 @@ div.tocify {
 <h4>1.1 Библиотеки</h4>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
 <span class="kw">library</span>(lme4)
+<span class="kw">library</span>(lmerTest)
 <span class="kw">library</span>(lingtypology) <span class="co"># only for linguistic mapping</span></code></pre></div>
 </div>
 <div id="lexical-decision-task-data" class="section level4">
@@ -499,7 +500,7 @@ m1</code></pre></div>
 ## Multiple R-squared:  0.1264, Adjusted R-squared:  0.1174 
 ## F-statistic: 14.17 on 1 and 98 DF,  p-value: 0.0002843</code></pre>
 <div class="section level4">
-<h4>2.1 Логорифмирование</h4>
+<h4>2.1 Логарифмирование</h4>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ldt <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(Mean_RT, <span class="kw">log</span>(Freq)))<span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>()<span class="op">+</span>
@@ -668,7 +669,8 @@ m1<span class="op">$</span>adj.r.squared</code></pre></div>
 <p><img src="8_more_linear_regression_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fit2 &lt;-<span class="st"> </span><span class="kw">lmer</span>(count_vowel <span class="op">~</span><span class="st"> </span>count_consonant <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>area), <span class="dt">data =</span> lapsyd)
 <span class="kw">summary</span>(fit2)</code></pre></div>
-<pre><code>## Linear mixed model fit by REML [&#39;lmerMod&#39;]
+<pre><code>## Linear mixed model fit by REML t-tests use Satterthwaite approximations
+##   to degrees of freedom [lmerMod]
 ## Formula: count_vowel ~ count_consonant + (1 | area)
 ##    Data: lapsyd
 ## 
@@ -685,9 +687,11 @@ m1<span class="op">$</span>adj.r.squared</code></pre></div>
 ## Number of obs: 402, groups:  area, 6
 ## 
 ## Fixed effects:
-##                 Estimate Std. Error t value
-## (Intercept)       7.8928     0.9852   8.011
-## count_consonant  -0.0111     0.0240  -0.463
+##                 Estimate Std. Error       df t value Pr(&gt;|t|)    
+## (Intercept)       7.8928     0.9852   8.4000   8.011 3.24e-05 ***
+## count_consonant  -0.0111     0.0240 399.9000  -0.463    0.644    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Correlation of Fixed Effects:
 ##             (Intr)
@@ -701,9 +705,11 @@ m1<span class="op">$</span>adj.r.squared</code></pre></div>
 <span class="st">  </span><span class="kw">theme_bw</span>()<span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">data =</span> <span class="kw">fortify</span>(fit2), <span class="kw">aes</span>(<span class="dt">x =</span> count_consonant, <span class="dt">y =</span> .fitted, <span class="dt">color =</span> area))</code></pre></div>
 <p><img src="8_more_linear_regression_files/figure-html/unnamed-chunk-14-2.png" width="672" /></p>
+<p>Если мы предполагаем скоррелированность свободных эффектов:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fit3 &lt;-<span class="st"> </span><span class="kw">lmer</span>(count_vowel <span class="op">~</span><span class="st"> </span>count_consonant <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">+</span>count_consonant<span class="op">|</span>area), <span class="dt">data =</span> lapsyd)
 <span class="kw">summary</span>(fit3)</code></pre></div>
-<pre><code>## Linear mixed model fit by REML [&#39;lmerMod&#39;]
+<pre><code>## Linear mixed model fit by REML t-tests use Satterthwaite approximations
+##   to degrees of freedom [lmerMod]
 ## Formula: count_vowel ~ count_consonant + (1 + count_consonant | area)
 ##    Data: lapsyd
 ## 
@@ -721,9 +727,11 @@ m1<span class="op">$</span>adj.r.squared</code></pre></div>
 ## Number of obs: 402, groups:  area, 6
 ## 
 ## Fixed effects:
-##                  Estimate Std. Error t value
-## (Intercept)      7.866281   1.555096   5.058
-## count_consonant -0.005108   0.056987  -0.090
+##                  Estimate Std. Error        df t value Pr(&gt;|t|)   
+## (Intercept)      7.866281   1.555096  4.209000   5.058  0.00627 **
+## count_consonant -0.005108   0.056987  3.630000  -0.090  0.93330   
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Correlation of Fixed Effects:
 ##             (Intr)
@@ -736,10 +744,11 @@ m1<span class="op">$</span>adj.r.squared</code></pre></div>
        <span class="dt">caption =</span> <span class="st">&quot;data from LAPSyD&quot;</span>)<span class="op">+</span>
 <span class="st">  </span><span class="kw">theme_bw</span>()<span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">data =</span> <span class="kw">fortify</span>(fit3), <span class="kw">aes</span>(<span class="dt">x =</span> count_consonant, <span class="dt">y =</span> .fitted, <span class="dt">color =</span> area))</code></pre></div>
-<p><img src="8_more_linear_regression_files/figure-html/unnamed-chunk-14-3.png" width="672" /></p>
+<p><img src="8_more_linear_regression_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fit4 &lt;-<span class="st"> </span><span class="kw">lmer</span>(count_vowel <span class="op">~</span><span class="st"> </span>count_consonant <span class="op">+</span><span class="st"> </span>(<span class="dv">0</span><span class="op">+</span>count_consonant<span class="op">|</span>area), <span class="dt">data =</span> lapsyd)
 <span class="kw">summary</span>(fit4)</code></pre></div>
-<pre><code>## Linear mixed model fit by REML [&#39;lmerMod&#39;]
+<pre><code>## Linear mixed model fit by REML t-tests use Satterthwaite approximations
+##   to degrees of freedom [lmerMod]
 ## Formula: count_vowel ~ count_consonant + (0 + count_consonant | area)
 ##    Data: lapsyd
 ## 
@@ -756,9 +765,11 @@ m1<span class="op">$</span>adj.r.squared</code></pre></div>
 ## Number of obs: 402, groups:  area, 6
 ## 
 ## Fixed effects:
-##                 Estimate Std. Error t value
-## (Intercept)      8.68579    0.59439  14.613
-## count_consonant -0.05519    0.04649  -1.187
+##                  Estimate Std. Error        df t value Pr(&gt;|t|)    
+## (Intercept)       8.68579    0.59439 396.90000  14.613   &lt;2e-16 ***
+## count_consonant  -0.05519    0.04649   8.70000  -1.187    0.267    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Correlation of Fixed Effects:
 ##             (Intr)
@@ -771,10 +782,12 @@ m1<span class="op">$</span>adj.r.squared</code></pre></div>
        <span class="dt">caption =</span> <span class="st">&quot;data from LAPSyD&quot;</span>)<span class="op">+</span>
 <span class="st">  </span><span class="kw">theme_bw</span>()<span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">data =</span> <span class="kw">fortify</span>(fit4), <span class="kw">aes</span>(<span class="dt">x =</span> count_consonant, <span class="dt">y =</span> .fitted, <span class="dt">color =</span> area))</code></pre></div>
-<p><img src="8_more_linear_regression_files/figure-html/unnamed-chunk-14-4.png" width="672" /></p>
+<p><img src="8_more_linear_regression_files/figure-html/unnamed-chunk-15-2.png" width="672" /></p>
+<p>Если мы не предполагаем скоррелированность свободных эффектов:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fit5 &lt;-<span class="st"> </span><span class="kw">lmer</span>(count_vowel <span class="op">~</span><span class="st"> </span>count_consonant <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>area) <span class="op">+</span><span class="st"> </span>(<span class="dv">0</span><span class="op">+</span>count_consonant<span class="op">|</span>area), <span class="dt">data =</span> lapsyd)
 <span class="kw">summary</span>(fit5)</code></pre></div>
-<pre><code>## Linear mixed model fit by REML [&#39;lmerMod&#39;]
+<pre><code>## Linear mixed model fit by REML t-tests use Satterthwaite approximations
+##   to degrees of freedom [lmerMod]
 ## Formula: 
 ## count_vowel ~ count_consonant + (1 | area) + (0 + count_consonant |  
 ##     area)
@@ -794,9 +807,11 @@ m1<span class="op">$</span>adj.r.squared</code></pre></div>
 ## Number of obs: 402, groups:  area, 6
 ## 
 ## Fixed effects:
-##                 Estimate Std. Error t value
-## (Intercept)      8.19243    1.15107   7.117
-## count_consonant -0.02700    0.04326  -0.624
+##                 Estimate Std. Error       df t value Pr(&gt;|t|)   
+## (Intercept)      8.19243    1.15107  4.74500   7.117  0.00105 **
+## count_consonant -0.02700    0.04326  2.98800  -0.624  0.57699   
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Correlation of Fixed Effects:
 ##             (Intr)
@@ -809,12 +824,36 @@ m1<span class="op">$</span>adj.r.squared</code></pre></div>
        <span class="dt">caption =</span> <span class="st">&quot;data from LAPSyD&quot;</span>)<span class="op">+</span>
 <span class="st">  </span><span class="kw">theme_bw</span>()<span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">data =</span> <span class="kw">fortify</span>(fit5), <span class="kw">aes</span>(<span class="dt">x =</span> count_consonant, <span class="dt">y =</span> .fitted, <span class="dt">color =</span> area))</code></pre></div>
-<p><img src="8_more_linear_regression_files/figure-html/unnamed-chunk-14-5.png" width="672" /></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">anova</span>(fit5, fit4, fit3, fit2, fit1)</code></pre></div>
+<p><img src="8_more_linear_regression_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fit0 &lt;-<span class="st"> </span><span class="kw">lmer</span>(count_vowel <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>area) <span class="op">+</span><span class="st"> </span>(<span class="dv">0</span><span class="op">+</span>count_consonant<span class="op">|</span>area), <span class="dt">data =</span> lapsyd)
+<span class="kw">summary</span>(fit0)</code></pre></div>
+<pre><code>## summary from lme4 is returned
+## some computational error has occurred in lmerTest</code></pre>
+<pre><code>## Linear mixed model fit by REML [&#39;lmerMod&#39;]
+## Formula: count_vowel ~ 1 + (1 | area) + (0 + count_consonant | area)
+##    Data: lapsyd
+## 
+## REML criterion at convergence: 2235.6
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -1.5959 -0.6161 -0.2501  0.4886  4.7375 
+## 
+## Random effects:
+##  Groups   Name            Variance  Std.Dev.
+##  area     (Intercept)      5.274772 2.29669 
+##  area.1   count_consonant  0.003656 0.06046 
+##  Residual                 14.471231 3.80411 
+## Number of obs: 402, groups:  area, 6
+## 
+## Fixed effects:
+##             Estimate Std. Error t value
+## (Intercept)    7.868      1.032   7.622</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">anova</span>(fit5, fit4, fit3, fit2, fit1, fit0)</code></pre></div>
 <pre><code>## refitting model(s) with ML (instead of REML)</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Df"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["AIC"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["BIC"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["logLik"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["deviance"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Chisq"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["Chi Df"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["Pr(>Chisq)"],"name":[8],"type":["dbl"],"align":["right"]}],"data":[{"1":"3","2":"2277.784","3":"2289.774","4":"-1135.892","5":"2271.784","6":"NA","7":"NA","8":"NA","_rn_":"fit1"},{"1":"4","2":"2254.759","3":"2270.744","4":"-1123.379","5":"2246.759","6":"25.025615","7":"1","8":"5.657372e-07","_rn_":"fit4"},{"1":"4","2":"2245.779","3":"2261.765","4":"-1118.890","5":"2237.779","6":"8.979261","7":"0","8":"0.000000e+00","_rn_":"fit2"},{"1":"5","2":"2246.878","3":"2266.861","4":"-1118.439","5":"2236.878","6":"0.900898","7":"1","8":"3.425410e-01","_rn_":"fit5"},{"1":"6","2":"2245.663","3":"2269.642","4":"-1116.832","5":"2233.663","6":"3.214982","7":"1","8":"7.296702e-02","_rn_":"fit3"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Df"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["AIC"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["BIC"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["logLik"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["deviance"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Chisq"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["Chi Df"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["Pr(>Chisq)"],"name":[8],"type":["dbl"],"align":["right"]}],"data":[{"1":"3","2":"2277.784","3":"2289.774","4":"-1135.892","5":"2271.784","6":"NA","7":"NA","8":"NA","_rn_":"..4"},{"1":"4","2":"2254.759","3":"2270.744","4":"-1123.379","5":"2246.759","6":"25.0256149","7":"1","8":"5.657372e-07","_rn_":"..1"},{"1":"4","2":"2245.779","3":"2261.765","4":"-1118.890","5":"2237.779","6":"8.9792613","7":"0","8":"0.000000e+00","_rn_":"..3"},{"1":"4","2":"2245.361","3":"2261.347","4":"-1118.680","5":"2237.361","6":"0.4183410","7":"0","8":"0.000000e+00","_rn_":"..5"},{"1":"5","2":"2246.878","3":"2266.861","4":"-1118.439","5":"2236.878","6":"0.4825569","7":"1","8":"4.872664e-01","_rn_":"object"},{"1":"6","2":"2245.663","3":"2269.642","4":"-1116.832","5":"2233.663","6":"3.2149815","7":"1","8":"7.296702e-02","_rn_":"..2"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <div class="parallax">

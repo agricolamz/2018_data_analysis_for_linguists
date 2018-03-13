@@ -31,6 +31,7 @@ editor_options:
 ```{r, message=FALSE, warning=FALSE}
 library(tidyverse)
 library(lme4)
+library(lmerTest)
 library(lingtypology) # only for linguistic mapping
 ```
 
@@ -78,7 +79,7 @@ m1 <- summary(lm(Mean_RT~Freq, data = ldt))
 m1
 ```
 
-#### 2.1 Логорифмирование
+#### 2.1 Логарифмирование
 
 ```{r}
 ldt %>% 
@@ -249,7 +250,10 @@ lapsyd %>%
        caption = "data from LAPSyD")+
   theme_bw()+
   geom_line(data = fortify(fit2), aes(x = count_consonant, y = .fitted, color = area))
+```
 
+Если мы предполагаем скоррелированность свободных эффектов:
+```{r}
 fit3 <- lmer(count_vowel ~ count_consonant + (1+count_consonant|area), data = lapsyd)
 summary(fit3)
 
@@ -273,7 +277,11 @@ lapsyd %>%
        caption = "data from LAPSyD")+
   theme_bw()+
   geom_line(data = fortify(fit4), aes(x = count_consonant, y = .fitted, color = area))
+```
 
+
+Если мы не предполагаем скоррелированность свободных эффектов:
+```{r}
 fit5 <- lmer(count_vowel ~ count_consonant + (1|area) + (0+count_consonant|area), data = lapsyd)
 summary(fit5)
 
@@ -285,7 +293,11 @@ lapsyd %>%
        caption = "data from LAPSyD")+
   theme_bw()+
   geom_line(data = fortify(fit5), aes(x = count_consonant, y = .fitted, color = area))
-anova(fit5, fit4, fit3, fit2, fit1)
+
+fit0 <- lmer(count_vowel ~ 1 + (1|area) + (0+count_consonant|area), data = lapsyd)
+summary(fit0)
+
+anova(fit5, fit4, fit3, fit2, fit1, fit0)
 ```
 
 <div class="parallax"></div>
