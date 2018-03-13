@@ -77,9 +77,19 @@ rownames(wodehouse) <- wodehouse$chapter
 ca <- ca(wodehouse[-1])
 ca
 summary(ca) # extended results
-plot(ca) # symmetric map
-plot(ca, mass = TRUE, contrib = "absolute", map =
-   "rowgreen", arrows = c(FALSE, TRUE))
+wodehouse_col <- data.frame(ca$colcoord)
+wodehouse_col$rows <- rownames(ca$colcoord)
+
+wodehouse_row <- data.frame(ca$rowcoord)
+wodehouse_row$rows <- rownames(ca$rowcoord)
+
+wodehouse_col %>% 
+  ggplot(aes(Dim1, Dim2, label = rows))+
+  geom_text(color = "blue")+
+  geom_text(data = wodehouse_row, color = "red")+
+  theme_bw()+
+  labs(x = "Dim1 (42.1%)",
+       y = "Dim2 (32.6%)")
 ```
 
 Сравните с соответствующими данными PCA:
@@ -105,16 +115,25 @@ autoplot(PCA,
 MCA <- MASS::mca(dutch_caus[,-1])
 MCA
 dutch_caus <- cbind(dutch_caus, MCA$rs)
+variables <- as_data_frame(MCA$cs)
+variables$var_names <- rownames(MCA$cs)
 dutch_caus %>% 
-  ggplot(aes(`1`, `2`, color = Aux))+
-  geom_point()+
-  stat_ellipse()+
-  theme_bw()
+  ggplot(aes(`1`, `2`))+
+  geom_point(aes(color = Aux))+
+  stat_ellipse(aes(color = Aux))+
+  geom_text(data = variables, aes(`1`, `2`, label = var_names))+
+  theme_bw()+
+  scale_x_continuous(limits = c(-0.015, 0.02))
 ```
 
 <div class="parallax"></div>
 
 ### 4. DCA
 Комбинация CA и  дискрименантного анализа называется Discriminant Correspondence Analysis.
+
+<div class="parallax"></div>
+
+```{r child = 'HW_5.Rmd'}
+```
 
 <div class="parallax"></div>
