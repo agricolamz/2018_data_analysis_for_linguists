@@ -1,0 +1,48 @@
+---
+title: "9. Логистическая и мультиномиальная регрессия"
+author: "Г. Мороз"
+---
+
+<style>
+.parallax {
+    /* The image used */
+    background-image: url("9_logit_multinom.jpg");
+
+    /* Set a specific height */
+    min-height: 400px; 
+
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: auto;
+}
+</style>
+
+<div class="parallax"></div>
+
+### 0. Введение
+Логистическая (logit, logistic) и мультиномиальная (multinomial) регрессия применяются в случаях, когда зависимая переменная является категориальной:
+
+* с двумя значениями (логистическая регрессия)
+* с более чем двумя значениями (мультиномиальная регрессия)
+
+#### 0.1 Библиотеки
+```{r}
+library(tidyverse)
+```
+
+#### 0.2 Количество согласных и абруптивные звуки
+```{r}
+ej_n_cons <- read_csv("")
+```
+
+
+### 1. Логистическая регрессия
+
+<div class="parallax"></div>
+
+### 2. Мультиномиальная регрессия
+
+<div class="parallax"></div>
+

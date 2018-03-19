@@ -27,8 +27,8 @@ navbar:
     menu:
     - text: 8. Еще о регрессионных моделях
       href: 8_more_linear_regression.html
-    - text: 9. Регрессия со смешанными эффектами
-      href: 9_mixed_effects_models.html
+    - text: 9. Логистическая и мультиномиальная регрессии
+      href: 9_logit_multinom.html
 output_dir: docs
 output:
   html_document:

@@ -24,10 +24,10 @@ editor_options:
 <div class="parallax"></div>
 
 
-### 1. Введение
+### 0. Введение
 Некоторые думают, что линейная регрессия решит все их проблемы (по крайней мере те из них, которые связаны с предсказанием какой-то числовой переменной). Это так. Но нужно быть осторожным --- у регрессии есть свои ограничения на применение.
 
-#### 1.1 Библиотеки
+#### 0.1 Библиотеки
 ```{r, message=FALSE, warning=FALSE}
 library(tidyverse)
 library(lme4)
@@ -35,7 +35,7 @@ library(lmerTest)
 library(lingtypology) # only for linguistic mapping
 ```
 
-#### 1.2 Lexical Decision Task data
+#### 0.2 Lexical Decision Task data
 Dataset and description from [Rling package by Natalia Levshina](https://benjamins.com/sites/z.195/content/package.html). This data set contains 100 randomly selected words from the English Lexicon Project data (Balota et al. 2007), their lengths, mean reaction times and corpus frequencies.
 
 ```{r, message=FALSE, warning=FALSE}
@@ -43,7 +43,7 @@ ldt <- read_csv("https://goo.gl/ToxfU6")
 ldt
 ```
 
-#### 1.3 LAPSyD
+#### 0.3 LAPSyD
 In this dataset we have number of consonants and vowels in 402 languages collected from LAPSyD database (http://www.lapsyd.ddl.ish-lyon.cnrs.fr/lapsyd/). There is an variable of the area based on Glottolog (http://glottolog.org/). In this part we will try to make models that predict number of vowels by number of consonants.
 
 ```{r, warning= FALSE}
@@ -56,7 +56,7 @@ map.feature(lapsyd$name,
             label.hide = TRUE)
 ```
 
-### 2. Нелинейность взаимосвязи
+### 1. Нелинейность взаимосвязи
 Давайте посмотрим на простой график:
 
 ```{r}
@@ -79,7 +79,7 @@ m1 <- summary(lm(Mean_RT~Freq, data = ldt))
 m1
 ```
 
-#### 2.1 Логарифмирование
+#### 1.1 Логарифмирование
 
 ```{r}
 ldt %>% 
@@ -163,7 +163,7 @@ bandwidth = seq(-5, 5, 0.01)) %>%
 
 <div class="parallax"></div>
 
-### 3. Нормальность распределение остатков
+### 2. Нормальность распределение остатков
 
 Линейная регрессия предполагает нормальность распределения остатков. Когда связь не линейна, то остатки тоже будут распределены не нормально.
 
@@ -178,7 +178,7 @@ qqline(m3$residuals)
 
 <div class="parallax"></div>
 
-### 4. Гетероскидастичность
+### 3. Гетероскидастичность
 Распределение остатков непостоянно (т. е. не гомоскидастичны):
 ```{r}
 ldt %>% 
@@ -191,7 +191,7 @@ ldt %>%
 
 <div class="parallax"></div>
 
-### 5. Мультиколлинеарность
+### 4. Мультиколлинеарность
 Линейная связь между некоторыми предикторами в модели.
 
 * корреляционная матрица
@@ -199,7 +199,7 @@ ldt %>%
 
 <div class="parallax"></div>
 
-### 6. Независимость наблюдений
+### 5. Независимость наблюдений
 Наблюдения должны быть независимы.
 
 ```{r}
