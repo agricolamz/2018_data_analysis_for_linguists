@@ -1,6 +1,8 @@
 ---
 title: "9. Логистическая и мультиномиальная регрессия"
 author: "Г. Мороз"
+editor_options: 
+  chunk_output_type: console
 ---
 
 <style>
@@ -28,17 +30,158 @@ author: "Г. Мороз"
 * с более чем двумя значениями (мультиномиальная регрессия)
 
 #### 0.1 Библиотеки
-```{r}
+```{r, message=FALSE}
 library(tidyverse)
 ```
 
 #### 0.2 Количество согласных и абруптивные звуки
+В датасет собрано 19 языков, со следующими переменными:
+
+* language --- переменная, содержащая язык
+* ejectives --- бинарная переменная, обозначающая наличие абруптивных ("yes"/"no")
+* consonants --- переменная, содержащая информацию о количестве согласных
+* vowels --- переменная, содержащая информацию о количестве гласных
+
+```{r, message=FALSE}
+ej_n_cons <- read.csv("https://goo.gl/DsRMve")
+ej_n_cons %>% 
+  ggplot(aes(ejectives, consonants, fill = ejectives, label = language))+
+  geom_boxplot(show.legend = FALSE)+
+  geom_jitter() +
+  theme_bw() ->
+  ej_n_cons_plot
+plotly::ggplotly(ej_n_cons_plot, tooltip = c("label"))
+```
+
+<div class="parallax"></div>
+
+### 1. Логистическая регрессия
+Мы хотим чего-то такого:
+$$\underbrace{y}_{[-\infty, +\infty]}=\underbrace{\mbox{β}_0+\mbox{β}_1\cdot x_1+\mbox{β}_2\cdot x_2 + \dots +\mbox{β}_k\cdot x_k +\mbox{ε}_i}_{[-\infty, +\infty]}$$
+Вероятность — (в классической статистике) отношение количества успехов к общему числу событий:
+$$p = \frac{\mbox{# успехов}}{\mbox{# неудач} + \mbox{# успехов}}, \mbox{область значений: }[0, 1]$$
+Шансы — отношение количества успехов к количеству неудач:
+$$odds = \frac{p}{1-p} = \frac{p\mbox{(успеха)}}{p\mbox{(неудачи)}}, \mbox{область значений: }[0, +\infty]$$
+Натуральный логарифм шансов:
+$$\log(odds), \mbox{область значений: }[-\infty, +\infty]$$
+
+Но, что нам говорит логарифм шансов? Как нам его интерпретировать?
+
 ```{r}
-ej_n_cons <- read_csv("")
+data_frame(n = 10,
+           success = 1:9,
+           failure = n - success,
+           prob.1 = success/(success+failure),
+           odds = success/failure,
+           log_odds = log(odds),
+           prob.2 = exp(log_odds)/(1+exp(log_odds)))
+```
+
+Как связаны вероятность и логарифм шансов:
+$$\log(odds) = \log\left(\frac{p}{1-p}\right)$$
+$$p = \frac{\exp(\log(odds))}{1+\exp(\log(odds))}$$
+
+Как связаны вероятность и логарифм шансов:
+
+```{r}
+data_frame(p = seq(0, 1, 0.001),
+           log_odds = log(p/(1-p))) %>% 
+  ggplot(aes(log_odds, p))+
+  geom_line()+
+  labs(x = latex2exp::TeX("$log\\left(\\frac{p}{1-p}\\right)$"))+
+  theme_bw()
+```
+
+### 1.1 Почему не линейную регрессию?
+```{r}
+lm_0 <- lm(as.integer(ejectives)~1, data = ej_n_cons)
+lm_1 <- lm(as.integer(ejectives)~consonants, data = ej_n_cons)
+lm_0
+lm_1
+```
+Первая модель:
+$$ejectives = 1.316 \times consonants$$
+Вторая модель:
+$$ejectives = 0.4611 + 0.0353 \times consonants$$
+
+```{r}
+ej_n_cons %>% 
+  ggplot(aes(consonants, as.integer(ejectives)))+
+  geom_point()+
+  geom_smooth(method = "lm")+
+  theme_bw()+
+  labs(y = "ejectives (yes = 2, no = 1)")
+```
+
+### 1.2 Логит: модель без предиктора
+Будьте осторожны, `glm` не работает с тибблом.
+```{r}
+logit_0 <- glm(ejectives~1, family = "binomial", data = ej_n_cons)
+summary(logit_0)
+logit_0$coefficients
+table(ej_n_cons$ejectives)
+log(6/13) # β0
+6/(13+6) # p
+exp(log(6/13))/(1+exp(log(6/13))) # p
+```
+
+### 1.3 Логит: модель c одним числовым предиктором
+```{r}
+logit_1 <- glm(ejectives~consonants, family = "binomial", data = ej_n_cons)
+summary(logit_1)
+logit_1$coefficients
+
+ej_n_cons %>% 
+  mutate(ejectives = as.integer(ejectives)-1) %>% 
+  ggplot(aes(consonants, ejectives)) +
+  geom_point()+
+  theme_bw()+
+  geom_smooth(method = "glm", 
+              method.args = list(family = "binomial"),
+              se = FALSE)
+```
+
+Какова вероятность, что в языке с 29 согласными есть абруптивные?
+```{r}
+logit_1$coefficients
+```
+
+$$\log\left({\frac{p}{1-p}}\right)=\beta_0+\beta_1\times consinants$$
+$$\log\left({\frac{p}{1-p}}\right)=-12.1123347 + 0.4576095 \times 29 = 1.158341$$
+$$p = \frac{e^{1.158341}}{1+e^{1.158341}} = 0.7610311$$
+
+```{r}
+# log(odds)
+predict(logit_1, newdata = data.frame(consonants = 29))
+# p
+predict(logit_1, newdata = data.frame(consonants = 29), type = "response")
+```
+
+### 1.4 Логит: модель c одним категориальным предиктором
+```{r}
+logit_2 <- glm(ejectives~area, family = "binomial", data = ej_n_cons)
+summary(logit_2)
+logit_2$coefficients
+table(ej_n_cons$ejectives, ej_n_cons$area)
+log(1/6) # Eurasia
+log(3/1) # North America
 ```
 
 
-### 1. Логистическая регрессия
+
+### 1.5 Логит: множественная регрессия
+```{r}
+logit_3 <- glm(ejectives~consonants+area, family = "binomial", data = ej_n_cons)
+summary(logit_3)
+```
+
+### 1.6 Логит: сравнение моделей
+```{r}
+AIC(logit_0)
+AIC(logit_1)
+AIC(logit_2)
+AIC(logit_3)
+```
 
 <div class="parallax"></div>
 
