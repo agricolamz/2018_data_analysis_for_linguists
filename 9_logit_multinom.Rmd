@@ -287,6 +287,8 @@ marginal_verbs %>%
   scale_x_log10()
 ```
 
+<div class="parallax"></div>
+
 ### 3. Мультиномиальная регрессия
 ```{r}
 mult <- nnet::multinom(sound~f1+f2, data = nanai)
