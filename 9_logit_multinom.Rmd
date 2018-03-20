@@ -23,6 +23,10 @@ editor_options:
 
 <div class="parallax"></div>
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(fig.width= 9)
+```
+
 ### 0. Введение
 Логистическая (logit, logistic) и мультиномиальная (multinomial) регрессия применяются в случаях, когда зависимая переменная является категориальной:
 
@@ -32,6 +36,8 @@ editor_options:
 #### 0.1 Библиотеки
 ```{r, message=FALSE}
 library(tidyverse)
+library(pscl)
+library(nnet)
 ```
 
 #### 0.2 Количество согласных и абруптивные звуки
@@ -52,6 +58,55 @@ ej_n_cons %>%
   ej_n_cons_plot
 plotly::ggplotly(ej_n_cons_plot, tooltip = c("label"))
 ```
+
+#### 0.3 Данные: исследование маргинальных русских глаголов
+Данные взяты из [исследования [Endresen, Janda 2015]](https://goo.gl/GC4RjQ), посвященное исследованию маргинальных глаголов изменения состояния в русском языке. Испытуемые (70 школьников, 51 взрослый) оценивали по [шкале Ликерта (1...5)](https://goo.gl/R4gHiq) приемлемость глаголов с приставками _о-_ и _у-_:
+
+* широко используемуе в СРЛЯ (_освежить_, _уточнить_)
+* встретившие всего несколько раз в корпусе (_оржавить_, _увкуснить_)
+* искусственные слова (_ономить_, _укампить_)
+
+```{r}
+marginal_verbs <- read_csv("https://goo.gl/6Phok3")
+head(marginal_verbs)
+```
+
+Переменные в датасете:
+
+* Gender
+* Age
+* AgeGroup — взрослые или школьники
+* Education
+* City
+* SubjectCode — код испытуемого
+* Score — оценка, поставленная испытуемым (A — самая высокая, E  — самая низкая)
+* GivenScore — оценка, поставленная испытуемым (5 — самая высокая, 1  — самая низкая)
+* Stimulus
+* Prefix
+* WordType — тип слова: частотное, редкое, искусственное
+* CorpusFrequency — частотность в корпусе
+
+#### 0.4  Нанайские данные
+
+В этом датасете представлены три нанайских гласных  i, ɪ и e, произнесенные нанайским носителем мужского пола из селения Джуен. Каждая строчка --- отдельное произнесение. Переменные:
+
+* f1 --- первая форманта
+* f2 --- вторая форманта
+
+```{r}
+nanai <- read_csv("https://goo.gl/9uGBoQ")
+nanai %>% 
+  ggplot(aes(f2, f1, label = sound, color = sound))+
+  geom_text()+
+  geom_rug()+
+  scale_y_reverse()+
+  scale_x_reverse()+
+  stat_ellipse()+
+  theme_bw()+
+  theme(legend.position = "none")+
+  labs(title = "Нанайские гласные в произнесении мужчины из селения Джуен")
+```
+
 
 <div class="parallax"></div>
 
@@ -146,7 +201,7 @@ ej_n_cons %>%
 logit_1$coefficients
 ```
 
-$$\log\left({\frac{p}{1-p}}\right)=\beta_0+\beta_1\times consinants$$
+$$\log\left({\frac{p}{1-p}}\right)_i=\beta_0+\beta_1\times consinants_i + \epsilon_i$$
 $$\log\left({\frac{p}{1-p}}\right)=-12.1123347 + 0.4576095 \times 29 = 1.158341$$
 $$p = \frac{e^{1.158341}}{1+e^{1.158341}} = 0.7610311$$
 
@@ -183,9 +238,76 @@ AIC(logit_2)
 AIC(logit_3)
 ```
 
+Для того, чтобы интерпретировать коэффициенты нужно проделать трансформацю:
+```{r}
+(exp(logit_1$coefficients)-1)*100
+```
+Перед нами процентное изменние шансов при увеличении независимой переменной на 1.
+
+Было предложено много аналогов R$^2$, например, McFadden's R squared:
+```{r}
+pscl::pR2(logit_1)
+```
+
 <div class="parallax"></div>
 
-### 2. Мультиномиальная регрессия
+### 2. Порядковая логистическая регрессия
+```{r}
+marginal_verbs$Score <- factor(marginal_verbs$Score)
+levels(marginal_verbs$Score)
+ordinal <- MASS::polr(Score~Prefix+WordType+CorpusFrequency, data = marginal_verbs)
+summary(ordinal)
+ordinal$coefficients
+```
+
+Как и раньше, можно преобразовать коэффициенты:
+```{r}
+(exp(ordinal$coefficients)-1)*100
+```
+
+$$\log(\frac{p(A)}{p(B|C|D|E)}) = -2.6275 + 0.136619412 \times Prefixu + 1.340602696 \times WordTypenonce -$$    
+$$-4.655327418 \times WordTypestandard -0.001014583\times CorpusFrequency$$
+$$\log(\frac{p(A|B)}{p(C|D|E)}) = -1.4531 + 0.136619412 \times Prefixu + 1.340602696 \times WordTypenonce$$
+$$-4.655327418 \times WordTypestandard -0.001014583\times CorpusFrequency$$
+$$\log(\frac{p(A|B|C)}{p(D|E)}) = -0.2340 + 0.136619412 \times Prefixu + 1.340602696 \times WordTypenonce$$
+$$-4.655327418 \times WordTypestandard -0.001014583\times CorpusFrequency$$
+$$\log(\frac{p(A|B|C|D)}{p(E)}) = 0.7324 + 0.136619412 \times Prefixu + 1.340602696 \times WordTypenonce$$
+$$-4.655327418 \times WordTypestandard -0.001014583\times CorpusFrequency$$
+
+```{r}
+head(predict(ordinal))
+head(predict(ordinal, type = "probs"))
+marginal_verbs$probability <- predict(ordinal, type = "probs")
+marginal_verbs %>%
+  mutate(CorpusFrequency = CorpusFrequency+1) %>% 
+  ggplot(aes(CorpusFrequency, probability, color = Score))+
+  geom_point()+
+  facet_grid(Prefix~WordType)+
+  theme_bw()+
+  scale_x_log10()
+```
+
+### 3. Мультиномиальная регрессия
+```{r}
+mult <- nnet::multinom(sound~f1+f2, data = nanai)
+mult
+```
+
+$$\log(\frac{p(e)}{p(ɪ)}) = 40.88718 -0.02298543\times f1 -0.019176619\times f2$$
+$$\log(\frac{p(i)}{p(ɪ)}) = 18.15078 -0.06593461\times f1 +  0.003949284\times f2$$
+
+```{r}
+nanai %>% 
+  mutate(prediction = predict(mult),
+         correctness = sound == prediction) %>% 
+  ggplot(aes(f1, f2, label = sound, color = correctness))+
+  geom_text(aes(size = !correctness), show.legend = FALSE)+
+  scale_y_reverse()+
+  scale_x_reverse()+
+  theme_bw()+
+  labs(title = "Нанайские гласные в произнесении мужчины из селения Джуен",
+       subtitle = "мультиномиальная регрессия")
+```
 
 <div class="parallax"></div>
 
