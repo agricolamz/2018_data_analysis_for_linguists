@@ -279,8 +279,8 @@ head(predict(ordinal))
 head(predict(ordinal, type = "probs"))
 marginal_verbs <- cbind(marginal_verbs, predict(ordinal, type = "probs"))
 marginal_verbs %>%
-  gather(cols, value, A:E) %>% 
-  ggplot(aes(x = cols, y = value, fill = cols)) +
+  gather(score, predictions, A:E) %>% 
+  ggplot(aes(x = score, y = predictions, fill = score)) +
   geom_col(position = "dodge")+
   facet_grid(Prefix~WordType)+
   theme_bw()
