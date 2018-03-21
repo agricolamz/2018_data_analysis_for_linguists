@@ -1,6 +1,8 @@
 name: ''
 navbar:
   left:
+  - icon: fa-home
+    href: index.html
   - text: tidyverse
     menu:
     - text: 1. tidyverse
