@@ -18,6 +18,11 @@ packageVersion("bootstrap")
 packageVersion("irr")
 packageVersion("ca")
 packageVersion("MASS")
+packageVersion("ggfortify")
+packageVersion("lme4")
+packageVersion("lmerTest")
+packageVersion("pscl")
+packageVersion("nnet")
 ```
 
 ### Как выполнять домашние задания?
